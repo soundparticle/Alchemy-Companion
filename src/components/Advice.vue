@@ -6,8 +6,10 @@
       <li v-for="tip in advice"
         :key="tip.id"
         >
-        {{ advice.title }} &nbsp; {{ advice.text }}
+        <hr>
+        Tip from: {{ tip.first_name }} &nbsp; <strong>{{ tip.title }} : </strong> &nbsp; {{ tip.text }}
       </li>
+      <hr>
     </ul>
   </div>
 </template>
