@@ -53,7 +53,7 @@ container {
     margin: 20px;
     box-shadow: 10px 10px 35px 2px;
     border-radius: 35px;
-    background-color: steelblue;    
+    background-color: steelblue;
 }
 
 </style>
