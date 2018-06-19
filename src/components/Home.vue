@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Daily Home Page</h1>
+    <h1>Welcome to Your Bootcamp Companion App</h1>
         
     <section v-if="humor">
       <p>Dont' take things too seriously!</P>
@@ -22,9 +22,6 @@ export default {
       error: null
     };
   },
-  // computed: {
-  //     n = todaysDate
-  //   },
   computed: {
     todaysDate() {
       var d = new Date();

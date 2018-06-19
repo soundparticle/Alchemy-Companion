@@ -26,6 +26,7 @@ export default {
       error: null
     };
   },
+  props: ['user'],
   created() {
     getWorkspaces()
       .then(workspaces => {

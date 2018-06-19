@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Resources Viewport</h1>
+    <h1>Coding Resources</h1>
       <pre v-if="error">{{ error }}</pre>
       <ul v-if="resources">
         <li v-for="item in resources"
@@ -11,7 +11,6 @@
         </li>
         <hr>
       </ul>
-    <router-view></router-view>
   </div>
 </template>
 
@@ -25,6 +24,7 @@ export default {
       error: null
     };
   },
+  props: ['user'],
   created() {
     getResources()
       .then(resources => {
