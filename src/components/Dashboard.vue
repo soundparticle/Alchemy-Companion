@@ -7,12 +7,13 @@
       <router-link to="/dashboard/favorites">Your Favorites</router-link>
       &nbsp;
     </nav>
-    <router-view></router-view>
+    <router-view :user="user"></router-view>
   </div>
 </template>
 
 <script>
 export default {
+  props: ['user'],
 
 };
 </script>

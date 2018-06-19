@@ -1,12 +1,12 @@
 <template>
   <div>
     <h2>App Info Page</h2>
-    <container id="app-info">
-    <div class="app-info">
-        <h3>About: Alchemy +Ultra</h3>
-        <p>Description coming soon!</p>
-    </div>
-</container>
+        <div id="app-info">
+            <div class="app-info">
+            <h3>About: Alchemy +Ultra</h3>
+            <p>Description coming soon!</p>
+            </div>
+        </div>
   </div>
 </template>
 

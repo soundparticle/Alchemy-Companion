@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import { signUp, signIn } from '../services/api';
 import FormControl from './FormControl.vue';
 const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -77,10 +78,14 @@ export default {
         return;
       }
 
-      // this.error = null;
-      // const action = this.isSignUp ? signUp : signIn;
-      // action(this.credentials)
-      //   .then
+      this.error = null;
+      const action = this.isSignUp ? signUp : signIn;
+      action(this.credentials)
+        .then(user => {
+          this.onUser(user);
+          this.$router.push('/');
+        })
+        .catch(err => this.error = err);
     }
   }
 };

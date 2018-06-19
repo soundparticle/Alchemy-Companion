@@ -24,6 +24,7 @@ export default {
       error: null
     };
   },
+  props: ['user'],
   created() {
     getAdvice()
       .then(advice => {
