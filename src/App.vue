@@ -1,8 +1,7 @@
 <template>
   <div id="app">
-   <h1>Main App Page</h1>
    <nav>
-     <router-link to="/">Home</router-link>
+     <router-link exact to="/">Home</router-link>
      &nbsp;
      <router-link to="/about">About</router-link>
      &nbsp;
@@ -12,27 +11,52 @@
      &nbsp;
      <router-link to="/advice">Advice</router-link>
      &nbsp;
-     <router-link to="/dashboard">Your Dashboard</router-link>
+     <router-link v-if="user" to="/dashboard">Your Dashboard</router-link>
      &nbsp;
-     <router-link to="/auth">Sign In</router-link>
-
+     <router-link v-if="!user" to="/auth">Sign In</router-link>
+     <a v-else @click.prevent="handleLogout">Logout</a>
    </nav>
-   <router-view></router-view>
+   <pre>{{user}}</pre>
+   <router-view :on-user="handleUser" :user="user"></router-view>
   </div>
 </template>
 
 <script>
-
-
 export default {
-  name: 'app',
-  components: {
-
+  data() {
+    return {
+      user: null
+    };
+  },
+  created() {
+    const raw = localStorage.user;
+    if(raw) {
+      try {
+        this.user = JSON.parse(raw);
+      }
+      catch (err) {
+        localStorage.removeItem('user');
+      }
+    }
+  },
+  methods: {
+    handleUser(user) {
+      this.user = user;
+      localStorage.user = JSON.stringify(user);
+    },
+    handleLogout() {
+      localStorage.removeItem('user');
+      this.user = null;
+    }
   }
 };
 </script>
 
 <style>
+pre {
+  color: red;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
