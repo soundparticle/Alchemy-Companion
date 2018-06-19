@@ -14,6 +14,7 @@
      &nbsp;
      <router-link to="/dashboard">Your Dashboard</router-link>
      &nbsp;
+     <router-link to="/auth">Sign In</router-link>
 
    </nav>
    <router-view></router-view>
