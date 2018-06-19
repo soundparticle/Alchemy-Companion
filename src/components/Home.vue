@@ -3,7 +3,9 @@
     <h1>Daily Home Page</h1>
     <section>
       <p>Dont' take things too seriously!</P>
-      <img src="https://i.redditmedia.com/0ygjKXO3mq9oNEYwp5Prkdamaf55VCXIkk_77qRPHb0.jpg?s=befa078a11bea66a05f619cd60dbcdaa">
+      <img :src="humor[2].url"
+        :key="humor.id"
+        >
     </section>
 
     <section>
@@ -19,7 +21,24 @@
 </template>
 
 <script>
+import { getHumor } from '../services/api';
+
 export default {
+  data() {
+    return {
+      humor: null,
+      error: null
+    };
+  },
+  created() {
+    getHumor()
+      .then(humor => {
+        this.humor = humor;
+      })
+      .catch(err => {
+        this.error = err;
+      });
+  }
 
 };
 </script>
