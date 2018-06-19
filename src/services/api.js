@@ -31,6 +31,7 @@ function getHeaders(hasBody) {
   return headers;
 }
 
+//ADVICE
 export function getAdvice() {
   return fetch(ADVICE_URL, {
     headers: getHeaders(true)
@@ -38,6 +39,34 @@ export function getAdvice() {
     .then(responseHandler);
 }
 
+export function addAdvice(advice) {
+  return fetch(ADVICE_URL, {
+    method: 'POST',
+    headers: getHeaders(true),
+    body: JSON.stringify(advice)
+  })
+    .then(responseHandler);
+}
+
+export function updateAdvice(advice) {
+  return fetch(`${ADVICE_URL}/${advice.id}`, {
+    method: 'PUT',
+    headers: getHeaders(true),
+    body: JSON.stringify(advice)
+  })
+    .then(responseHandler);
+}
+
+export function removeAdvice(id) {
+  return fetch(`${ADVICE_URL}/${id}`, {
+    method: 'DELETE',
+    headers: getHeaders()
+  })
+    .then(responseHandler);
+}
+
+
+//RESOURCES
 export function getResources() {
   return fetch(RESOURCES_URL, {
     headers: getHeaders(true)
@@ -45,6 +74,8 @@ export function getResources() {
     .then(responseHandler);
 }
 
+
+//WORKSPACES
 export function getWorkspaces() {
   return fetch(WORKSPACES_URL, {
     headers: getHeaders(true)
@@ -52,6 +83,8 @@ export function getWorkspaces() {
     .then(responseHandler);
 }
 
+
+//HUMOR
 export function getHumor() {
   return fetch(HUMOR_URL, {
     headers: getHeaders(true)
@@ -59,6 +92,9 @@ export function getHumor() {
     .then(responseHandler);
 }
 
+
+
+//SIGNUP SIGNIN
 export function signUp(credentials) {
   return fetch(`${AUTH_URL}/signup`, {
     method: 'POST',

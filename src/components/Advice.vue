@@ -7,7 +7,7 @@
         :key="tip.id"
         >
         <hr>
-        <h3> ( {{ tip.upvotes }} ) </h3> &nbsp; Tip from {{ tip.first_name }}: &nbsp; <strong>{{ tip.title }} &nbsp; - </strong> &nbsp; {{ tip.text }}
+        <h3> ( {{ tip.upvotes }} ) </h3> &nbsp; Tip from {{ tip.firstName }}: &nbsp; <strong>{{ tip.title }} &nbsp; - </strong> &nbsp; {{ tip.text }}
       </li>
       <hr>
     </ul>
