@@ -8,18 +8,48 @@
       &nbsp;
       <router-link to="/resources/add">Add a Resource</router-link>
       &nbsp;
-      
     </nav>
+      <pre v-if="error">{{ error }}</pre>
+      <ul v-if="resources">
+        <li v-for="item in resources"
+          :key="item.id"
+          >
+          <hr>
+          Link from: {{ item.first_name }} &nbsp; <strong>{{ item.title }} : </strong> &nbsp; <a :href="item.url"> {{ item.description }} </a>
+        </li>
+        <hr>
+      </ul>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-export default {
+import { getResources } from '../services/api';
 
+export default {
+  data() {
+    return {
+      resources: null,
+      error: null
+    };
+  },
+  created() {
+    getResources()
+      .then(resources => {
+        this.resources = resources;
+      })
+      .catch(err => {
+        this.error = err;
+      });
+  }
 };
 </script>
 
-<style>
-
+<style scoped>
+ul {
+  list-style: none;
+}
+pre {
+  color: red;
+}
 </style>

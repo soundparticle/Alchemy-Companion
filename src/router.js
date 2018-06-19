@@ -21,7 +21,8 @@ export default new VueRouter({
       component: About,
       children: [
         { path: 'app', component: AppInfo },
-        { path: 'us', component: Us }
+        { path: 'us', component: Us },
+        { path: '', redirect: 'app' }
       ]
     },
     { path: '/workspaces', component: Workspaces },
@@ -38,7 +39,8 @@ export default new VueRouter({
       component: Dashboard,
       children: [
         { path: 'posts', component: UserPosts },
-        { path: 'favorites', component: UserFavorites }
+        { path: 'favorites', component: UserFavorites },
+        { path: '', redirect: 'favorites' }
       ]
     },
   ]
