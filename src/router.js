@@ -12,6 +12,7 @@ import Backend from './components/Backend.vue';
 import AddResource from './components/AddResource.vue';
 import AppInfo from './components/AppInfo.vue';
 import Us from './components/Us.vue';
+import AuthForm from './components/AuthForm.vue';
 
 export default new VueRouter({
 
@@ -43,6 +44,7 @@ export default new VueRouter({
         { path: '', redirect: 'favorites' }
       ]
     },
+    { path: '/auth', component: AuthForm }
   ]
 });
 
