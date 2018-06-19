@@ -1,21 +1,13 @@
 <template>
   <div>
     <h1>Daily Home Page</h1>
-    <section>
+        
+    <section v-if="humor">
       <p>Dont' take things too seriously!</P>
-      <img :src="humor[2].url"
+      
+      <img :src="humor[todaysDate].url"
         :key="humor.id"
         >
-    </section>
-
-    <section>
-      <div>
-        <form id="entry-form">
-          <h2>Create An Account</h2>
-
-        <input type="text" id="userName">
-        </form>
-      </div>
     </section>
   </div>
 </template>
@@ -29,6 +21,16 @@ export default {
       humor: null,
       error: null
     };
+  },
+  // computed: {
+  //     n = todaysDate
+  //   },
+  computed: {
+    todaysDate() {
+      var d = new Date();
+      var n = d.getDate();
+      return n;
+    }
   },
   created() {
     getHumor()
