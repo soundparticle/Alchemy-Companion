@@ -1,10 +1,10 @@
 <template>
   <div>
     <h1>Welcome to Your Bootcamp Companion App</h1>
-        
+
     <section v-if="humor">
       <p>Dont' take things too seriously!</P>
-      
+
       <img :src="humor[todaysDate].url"
         :key="humor.id"
         >
@@ -43,5 +43,8 @@ export default {
 </script>
 
 <style>
+  img {
+    
+  }
 
 </style>
