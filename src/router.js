@@ -5,11 +5,8 @@ import Workspaces from './components/Workspaces.vue';
 import Advice from './components/Advice.vue';
 import Resources from './components/Resources.vue';
 import Dashboard from './components/Dashboard.vue';
-import Frontend from './components/Frontend.vue';
 import UserPosts from './components/UserPosts.vue';
 import UserFavorites from './components/UserFavorites.vue';
-import Backend from './components/Backend.vue';
-import AddResource from './components/AddResource.vue';
 import AppInfo from './components/AppInfo.vue';
 import Us from './components/Us.vue';
 import AuthForm from './components/AuthForm.vue';
@@ -28,14 +25,7 @@ export default new VueRouter({
     },
     { path: '/workspaces', component: Workspaces },
     { path: '/advice', component: Advice },
-    { path: '/resources',
-      component: Resources,
-      children: [
-        { path: 'frontend', component: Frontend },
-        { path: 'backend', component: Backend },
-        { path: 'add', component: AddResource }
-      ]
-    },
+    { path: '/resources', component: Resources },
     { path: '/dashboard',
       component: Dashboard,
       children: [

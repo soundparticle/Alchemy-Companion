@@ -7,7 +7,7 @@
         :key="location.id"
         >
         <hr>
-        Tip from: {{ location.first_name }} &nbsp; <strong>{{ location.title }} </strong> &nbsp; is a {{ location.workspace_type }}
+        <h3> ( {{ location.upvotes }} ) </h3> &nbsp; Tip from {{ location.first_name }}: &nbsp; <strong>{{ location.title }} </strong> &nbsp; is a {{ location.workspace_type }}
         <p></p>
         Located at {{ location.address }} : &nbsp; <em> {{location.description}} </em>
       </li>
@@ -44,5 +44,8 @@ ul {
 }
 pre {
   color: red;
+}
+h3 {
+  display: inline;
 }
 </style>
