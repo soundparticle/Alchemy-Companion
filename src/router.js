@@ -3,6 +3,7 @@ import Home from './components/Home.vue';
 import About from './components/About.vue';
 import Workspaces from './components/Workspaces.vue';
 import Advice from './components/Advice.vue';
+import AddAdvice from './components/AddAdvice.vue';
 import Resources from './components/Resources.vue';
 import Dashboard from './components/Dashboard.vue';
 import UserPosts from './components/UserPosts.vue';
@@ -24,7 +25,12 @@ export default new VueRouter({
       ]
     },
     { path: '/workspaces', component: Workspaces },
-    { path: '/advice', component: Advice },
+    { path: '/advice',
+      component: Advice,
+      children: [
+        { path: 'add', component: AddAdvice }
+      ]
+    },
     { path: '/resources', component: Resources },
     { path: '/dashboard',
       component: Dashboard,

@@ -1,6 +1,10 @@
 <template>
   <div>
     <h1>Advice Page</h1>
+    <nav>
+      <router-link to="/add"> Add Advice </router-link>
+    </nav>
+      <router-view></router-view>
     <pre v-if="error">{{ error }}</pre>
     <ul v-if="advice">
       <li v-for="tip in advice"
