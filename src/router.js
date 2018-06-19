@@ -32,8 +32,7 @@ export default new VueRouter({
       children: [
         { path: 'frontend', component: Frontend },
         { path: 'backend', component: Backend },
-        { path: 'add', component: AddResource },
-        { path: '', redirect: 'frontend' }
+        { path: 'add', component: AddResource }
       ]
     },
     { path: '/dashboard',
