@@ -4,6 +4,8 @@ const RESOURCES_URL = `${URL}/resources`;
 const WORKSPACES_URL = `${URL}/workspaces`;
 const HUMOR_URL = `${URL}/humor`;
 const AUTH_URL = `${URL}/auth`;
+const USER_URL = `${URL}/users`;
+const SAVED_URL = `${URL}/saved`;
 const VOTES_URL = `${URL}/votes`;
 
 function responseHandler(response) {
@@ -110,6 +112,42 @@ export function signIn(credentials) {
 }
 
 
+// DASHBOARD
+export function getUser(id) {
+  return fetch(`${USER_URL}/${id}`, {
+    headers: getHeaders(true),
+  })
+    .then(responseHandler);
+}
+
+export function getSavedAdvice(id) {
+  return fetch(`${SAVED_URL}/advice/${id}`, {
+    headers: getHeaders(true),
+  })
+    .then(responseHandler);
+}
+
+export function getSavedResources(id) {
+  return fetch(`${SAVED_URL}/resources/${id}`, {
+    headers: getHeaders(true),
+  })
+    .then(responseHandler);
+}
+
+export function getSavedWorkspaces(id) {
+  return fetch(`${SAVED_URL}/workspaces/${id}`, {
+    headers: getHeaders(true),
+  })
+    .then(responseHandler);
+}
+
+export function deleteSaved(id) {
+  return fetch(`${SAVED_URL}/${id}`, {
+    method: 'DELETE',
+    headers: getHeaders(true),
+  })
+    .then(responseHandler);
+}
 
 // VOTES
 export function getVotes(userID) {
