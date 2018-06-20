@@ -1,14 +1,13 @@
 <template>
   <div>
-    <h1>Welcome to Your Bootcamp Companion App</h1>
-
-    <section v-if="humor">
-      <p>Dont' take things too seriously!</P>
-
+    <div id="home">
+    <h2>Welcome to Your Bootcamp Companion App</h2>
+    <section class="daily-image" v-if="humor">
       <img :src="humor[todaysDate].url"
         :key="humor.id"
         >
     </section>
+    </div>
   </div>
 </template>
 
@@ -43,5 +42,27 @@ export default {
 </script>
 
 <style>
-
+#home {
+  display: grid;
+  grid-template-columns: 20px 50px auto 50px 20px;
+  grid-template-rows: 5px 40px 40px auto 40px 20px;
+}
+h2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-column-start: 3;
+  grid-column-end: span 1;
+  grid-row-start: 2;
+  grid-row-end: span 1;
+}
+.daily-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-column-start: 3;
+  grid-column-end: span 1;
+  grid-row-start: 4;
+  grid-row-end: span 1;
+}
 </style>
