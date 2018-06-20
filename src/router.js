@@ -26,14 +26,13 @@ export default new VueRouter({
     { path: '/workspaces', component: Workspaces },
     { path: '/advice', component: Advice },
     { path: '/resources', component: Resources },
-    { path: '/dashboard',
-      component: Dashboard,
-      children: [
-        { path: 'posts', component: UserPosts },
-        { path: 'favorites', component: UserFavorites },
-        { path: '', redirect: 'favorites' }
-      ]
-    },
+    { path: '/dashboard', component: Dashboard },
+      // children: [
+      //   { path: 'posts', component: UserPosts },
+        // { path: 'favorites', component: UserFavorites },
+        // { path: '', redirect: 'favorites' }
+    //   ]
+    // },
     { path: '/auth', component: AuthForm }
   ]
 });
