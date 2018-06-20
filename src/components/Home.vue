@@ -13,12 +13,11 @@
 
 <script>
 import { getHumor } from '../services/api';
-
 export default {
   data() {
     return {
       humor: null,
-      error: null
+      error: null,
     };
   },
   computed: {
