@@ -14,8 +14,11 @@
           :user="user"
           :onRemove="handleRemove"
           :votes="votes"
+          :savedPosts="savedPosts"
+          :onSave="handleSave"
           :onUpVote="handleUpVote"
           :onNoVote="handleNoVote"
+          :onUpdate="handleUpdate"
         />
       </ul>
     </div>
@@ -23,7 +26,17 @@
 </template>
 
 <script>
-import { getAdvice, addAdvice, removeAdvice, getVotes, noVote, upVote } from '../services/api';
+import {
+  getAdvice,
+  addAdvice,
+  updateAdvice,
+  removeAdvice,
+  getVotes,
+  noVote,
+  upVote,
+  savePost,
+  getSavedAdvice
+} from '../services/api';
 import Tip from './Tip';
 
 
@@ -32,7 +45,8 @@ export default {
     return {
       advice: null,
       votes: null,
-      error: null
+      error: null,
+      savedPosts: null
     };
   },
   props: ['user'],
@@ -44,10 +58,14 @@ export default {
       .catch(err => {
         this.error = err;
       });
-    if(this.user.id) {
+    if(this.user) {
       getVotes(this.user.id)
         .then(votes => {
           this.votes = votes;
+        });
+      getSavedAdvice(this.user.id)
+        .then(saved => {
+          this.savedPosts = saved;
         });
     }
   },
@@ -61,6 +79,17 @@ export default {
           saved.upvotes = 0;
           this.advice.push(saved);
           this.$router.push('/advice');
+        });
+    },
+    handleUpdate(advice) {
+      return updateAdvice(advice)
+        .then(saved => {
+          saved.firstName = this.user.firstName;
+          saved.lastName = this.user.lastName;
+          const index = this.advice.findIndex(tip => tip.id === saved.id);
+          if(index === -1) return;
+          saved.upvotes = this.advice[index].upvotes;
+          this.advice.splice(index, 1, saved);
         });
     },
     handleRemove(id) {
@@ -84,7 +113,6 @@ export default {
           this.votes.push(saved);
           this.advice[id].upvote++;
         });
-
     },
     handleNoVote(id) {
       const index = this.votes.findIndex(vote => vote.postID === id);
@@ -93,8 +121,15 @@ export default {
           this.votes.splice(index, 1);
           this.advice[id].upvote--;
         });
+    },
+    handleSave(id) {
+      const post = {
+        postID: id,
+        userID: this.user.id,
+        tableID: 1
+      };
+      return savePost(post);
     }
-
   },
   components: {
     Tip
