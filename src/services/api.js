@@ -156,3 +156,21 @@ export function getVotes(userID) {
   })
     .then(responseHandler);
 }
+
+export function upVote(vote) {
+  return fetch(VOTES_URL, {
+    method: 'POST',
+    headers: getHeaders(true),
+    body: JSON.stringify(vote)
+  })
+    .then(responseHandler);
+}
+
+export function noVote(id) {
+  return fetch(`${VOTES_URL}/${id}`, {
+    method: 'DELETE',
+    headers: getHeaders()
+  })
+    .then(responseHandler);
+}
+
