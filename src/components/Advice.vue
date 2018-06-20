@@ -2,16 +2,16 @@
   <div>
     <h1>Advice Page</h1>
     <nav>
-      <router-link to="/add"> Add Advice </router-link>
+      <router-link to="/advice/add"> Add Advice </router-link>
     </nav>
-      <router-view></router-view>
+      <router-view :onAdd="handleAdd"></router-view>
     <pre v-if="error">{{ error }}</pre>
     <ul v-if="advice">
       <li v-for="tip in advice"
         :key="tip.id"
         >
         <hr>
-        <h3><button>⬆️</button>( {{ tip.upvotes }} ) </h3> &nbsp; Tip from {{ tip.first_name }}: &nbsp; <strong>{{ tip.title }} &nbsp; - </strong> &nbsp; {{ tip.text }} <button>⭐</button><button>&#x274C;</button><button>✏️</button>
+        <h3><button>⬆️</button>( {{ tip.upvotes }} ) </h3> &nbsp; Tip from {{ tip.firstName }}: &nbsp; <strong>{{ tip.title }} &nbsp; - </strong> &nbsp; {{ tip.text }} <button>⭐</button><button>&#x274C;</button><button>✏️</button>
       </li>
       <hr>
     </ul>
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { getAdvice } from '../services/api';
+import { getAdvice, addAdvice } from '../services/api';
 
 export default {
   data() {
@@ -27,6 +27,19 @@ export default {
       advice: null,
       error: null
     };
+  },
+  methods: {
+    handleAdd(advice) {
+      advice.authorID = this.user.id;
+      return addAdvice(advice)
+        .then(saved => {
+          saved.firstName = this.user.firstName;
+          saved.lastName = this.user.lastName;
+          saved.upvotes = 0;
+          this.advice.push(saved);
+          this.$router.push('/advice');
+        });
+    }
   },
   props: ['user'],
   created() {

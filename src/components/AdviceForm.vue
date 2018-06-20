@@ -1,5 +1,6 @@
 <template>
   <section>
+    <h1>{{ edit }}</h1>
     <form @submit.prevent="handleSubmit">
       <FormControl label="Title">
         <input type="text"
@@ -14,34 +15,37 @@
 
       <FormControl>
         <button type="submit">{{ label }}</button>
-        <button
+        <!-- <button
           v-if="onCancel"
           @click="onCancel">
           Cancel
-        </button>
+        </button> -->
       </FormControl>
     </form>
-    <pre>{{ error }}</pre>
+    <!-- <pre>{{ error }}</pre> -->
   </section>
 </template>
 
 <script>
 import FormControl from './FormControl';
-const initAdvice = () => {
-  return {
-    title: '',
-    text: ''
-  };
-};
 export default {
+  data() {
+    return {
+      edit: {
+        title: '',
+        text: ''
+      }
+    };
+  },
   components: {
     FormControl
   },
-  props: {
-    
-  }
-
-
+  methods: {
+    handleSubmit() {
+      this.onEdit(this.edit);
+    }
+  },
+  props: ['onEdit', 'label']
 };
 </script>
 
