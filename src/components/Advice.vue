@@ -25,14 +25,39 @@
 </template>
 
 <script>
-import { getAdvice, addAdvice, removeAdvice } from '../services/api';
+import { getAdvice, addAdvice, removeAdvice, getVotes } from '../services/api';
 
 export default {
   data() {
     return {
       advice: null,
+      votes: null,
       error: null
     };
+  },
+  props: ['user'],
+  created() {
+    getAdvice()
+      .then(advice => {
+        this.advice = advice;
+      })
+      .catch(err => {
+        this.error = err;
+      });
+    if(this.user.id) {
+      getVotes(this.user.id)
+        .then(votes => {
+          this.votes = votes;
+        });
+    }
+  },
+  computed: {
+    votedPosts() {
+      if(this.user.id) {
+        this.advice.forEach(a => a.voted = true);
+        return this.advice;
+      }
+    }
   },
   methods: {
     handleAdd(advice) {
@@ -47,7 +72,6 @@ export default {
         });
     },
     handleRemove(id) {
-
       if(confirm('Are you sure you want to delete?')) {
         return removeAdvice(id)
           .then(()=> {
@@ -57,16 +81,6 @@ export default {
           });
       }
     }
-  },
-  props: ['user'],
-  created() {
-    getAdvice()
-      .then(advice => {
-        this.advice = advice;
-      })
-      .catch(err => {
-        this.error = err;
-      });
   }
 };
 </script>
