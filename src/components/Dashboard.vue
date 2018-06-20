@@ -19,7 +19,7 @@
           <h3>{{ advice.title }}</h3>
           <p>{{ advice.text }}</p>
           <h4>{{ advice.firstName }} {{ advice.lastName }}</h4>
-          <button>Remove</button>
+          <button @click="handleDelete(advice.id)" type="submit">Remove</button>
         </li>
       </ul>
 
@@ -44,6 +44,9 @@
           <a :href="workspace.url">Go to external link</a>
           <h4>{{ workspace.firstName }} {{ workspace.lastName }}</h4>
           <button>Remove</button>
+
+          {{ workspace.id }}
+          
         </li>
       </ul>
 
@@ -88,6 +91,17 @@ export default {
       });
   },
 
+  methods: {
+     handleDelete(id) {
+      return deleteSaved(id)
+        .then(() => {
+          get()
+            .then(cocktails => {
+              this.cocktails = cocktails;
+            });
+        });
+    },
+
   props: ['user'],
 
 };
@@ -104,6 +118,9 @@ ul {
   display: flex;
   justify-content: space-evenly;
   margin-top: 50px;
+  padding: 30px;
+  border-style: solid;
+  border-radius: 10px;
 }
 
 #saved-posts {

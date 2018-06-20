@@ -144,3 +144,11 @@ export function getSavedWorkspaces(id) {
   })
     .then(responseHandler);
 }
+
+export function deleteSaved(id) {
+  return fetch(`${SAVED_URL}/${id}`, {
+    method: 'DELETE',
+    headers: getHeaders(true),
+  })
+    .then(responseHandler);
+}
