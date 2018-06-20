@@ -1,13 +1,23 @@
 <template>
   <div>
     <h1>Workspace Resources Page</h1>
-  <pre v-if="error">{{ error }}</pre>
-    <ul v-if="workspaces">
+    <pre v-if="error">{{ error }}</pre>
+    <ul v-if="location">
       <li v-for="location in workspaces"
         :key="location.id"
+        :onRemove="handleRemove"
         >
+        <button
+          :class="{ upvoted: votedPost }"
+          @click="handleVote">⬆️</button>
         <hr>
-        <h3> ( {{ location.upvotes }} ) </h3> &nbsp; Tip from {{ location.first_name }}: &nbsp; <strong>{{ location.title }} </strong> &nbsp; is a {{ location.workspace_type }}
+        <h3> ( {{ location.upvotes }} ) </h3>
+        <button>⭐</button>
+        <button v-if="user.id === location.authorID" @click="onRemove(location.id)">❌</button>
+        <button v-if="user.id === location.authorID">✏️</button>
+        &nbsp; location from {{ location.first_name }}:
+        &nbsp; <strong>{{ location.title }} </strong>
+        &nbsp; is a {{ location.workspace_type }}
         <p></p>
         Located at {{ location.address }} : &nbsp; <em> {{location.description}} </em>
       </li>
@@ -17,12 +27,13 @@
 </template>
 
 <script>
-import { getWorkspaces } from '../services/api';
+import { getWorkspaces, removeLocation } from '../services/api';
 
 export default {
   data() {
     return {
       workspaces: null,
+      location: null,
       error: null
     };
   },
@@ -35,7 +46,24 @@ export default {
       .catch(err => {
         this.error = err;
       });
-  }
+  },
+  methods: {
+    // handleVote() {
+    //   this.votedPost ? this.onNoVote(this.location.id) : this.onUpVote(this.location.id);
+    // }
+    handleRemove(id) {
+      if(confirm('Are you sure you want to delete?')) {
+        return removeLocation(id)
+          .then(()=> {
+            const index = this.location.findIndex(tip => tip.id === id);
+            if(index === -1) return;
+            this.location.splice(index, 1);
+          });
+      }
+    },
+  
+  },
+
 };
 </script>
 
