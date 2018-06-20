@@ -12,6 +12,7 @@
           @click="handleVote">⬆️</button>
         <hr>
         <h3> ( {{ location.upvotes }} ) </h3>
+        <button>💬</button>
         <button>⭐</button>
         <button v-if="user.id === location.authorID" @click="onRemove(location.id)">❌</button>
         <button v-if="user.id === location.authorID">✏️</button>
@@ -37,7 +38,7 @@ export default {
       error: null
     };
   },
-  props: ['user'],
+  props: ['user', 'onRemove'],
   created() {
     getWorkspaces()
       .then(workspaces => {
@@ -48,20 +49,20 @@ export default {
       });
   },
   methods: {
-    // handleVote() {
-    //   this.votedPost ? this.onNoVote(this.location.id) : this.onUpVote(this.location.id);
-    // }
+    handleVote() {
+      this.votedPost ? this.onNoVote(this.location.id) : this.onUpVote(this.location.id);
+    },
     handleRemove(id) {
       if(confirm('Are you sure you want to delete?')) {
         return removeLocation(id)
           .then(()=> {
-            const index = this.location.findIndex(tip => tip.id === id);
+            const index = this.location.findIndex(location => location.id === id);
             if(index === -1) return;
             this.location.splice(index, 1);
           });
       }
     },
-  
+
   },
 
 };
