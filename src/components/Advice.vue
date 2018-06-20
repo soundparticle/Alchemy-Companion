@@ -7,18 +7,14 @@
       <router-view :onAdd="handleAdd"></router-view>
     <pre v-if="error">{{ error }}</pre>
     <ul v-if="advice">
-      <li v-for="tip in advice"
+      <Tip  v-for="tip in advice"
         :key="tip.id"
-        >
-        <hr>
-        <h3><button>⬆️</button>( {{ tip.upvotes }} ) </h3>
-        &nbsp; Tip from {{ tip.firstName }}
-        &nbsp; <strong>{{ tip.title }}
-        &nbsp; - </strong> &nbsp; {{ tip.text }}
-        <button>⭐</button>
-        <button v-if="user.id === tip.authorID" @click="handleRemove(tip.id)">&#x274C;</button>
-        <button v-if="user.id === tip.authorID">✏️</button>
-      </li>
+        :tip="tip"
+        :user="user"
+        :onRemove="handleRemove"
+        :votes="votes"
+      />
+       
       <hr>
     </ul>
   </div>
@@ -26,6 +22,7 @@
 
 <script>
 import { getAdvice, addAdvice, removeAdvice, getVotes } from '../services/api';
+import Tip from './Tip';
 
 export default {
   data() {
@@ -51,14 +48,6 @@ export default {
         });
     }
   },
-  computed: {
-    votedPosts() {
-      if(this.user.id) {
-        this.advice.forEach(a => a.voted = true);
-        return this.advice;
-      }
-    }
-  },
   methods: {
     handleAdd(advice) {
       advice.authorID = this.user.id;
@@ -81,6 +70,10 @@ export default {
           });
       }
     }
+    
+  },
+  components: {
+    Tip
   }
 };
 </script>
