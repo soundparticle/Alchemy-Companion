@@ -15,6 +15,7 @@
         :votes="votes"
         :onUpVote="handleUpVote"
         :onNoVote="handleNoVote"
+        :onUpdate="handleUpdate"
       />
 
       <hr>
@@ -23,7 +24,15 @@
 </template>
 
 <script>
-import { getAdvice, addAdvice, removeAdvice, getVotes, noVote, upVote } from '../services/api';
+import {
+  getAdvice,
+  addAdvice,
+  updateAdvice,
+  removeAdvice,
+  getVotes,
+  noVote,
+  upVote
+} from '../services/api';
 import Tip from './Tip';
 
 
@@ -63,6 +72,17 @@ export default {
           this.$router.push('/advice');
         });
     },
+    handleUpdate(advice) {
+      return updateAdvice(advice)
+        .then(saved => {
+          saved.firstName = this.user.firstName;
+          saved.lastName = this.user.lastName;
+          const index = this.advice.findIndex(tip => tip.id === saved.id);
+          if(index === -1) return;
+          saved.upvotes = this.advice[index].upvotes;
+          this.advice.splice(index, 1, saved);
+        });
+    },
     handleRemove(id) {
       if(confirm('Are you sure you want to delete?')) {
         return removeAdvice(id)
@@ -84,7 +104,6 @@ export default {
           this.votes.push(saved);
           this.advice[id].upvote++;
         });
-
     },
     handleNoVote(id) {
       const index = this.votes.findIndex(vote => vote.postID === id);
@@ -94,7 +113,6 @@ export default {
           this.advice[id].upvote--;
         });
     }
-
   },
   components: {
     Tip
