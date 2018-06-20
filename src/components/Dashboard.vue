@@ -30,7 +30,7 @@
           <p>{{ resource.description }}</p>
           <a :href="resource.url">Go to external link</a>
           <h4>{{ resource.firstName }} {{ resource.lastName }}</h4>
-          <button>Remove</button>
+          <button @click="handleDelete(resource.id)" type="submit">Remove</button>
         </li>
       </ul>
 
@@ -43,10 +43,7 @@
           <p>{{ workspace.address }}</p>
           <a :href="workspace.url">Go to external link</a>
           <h4>{{ workspace.firstName }} {{ workspace.lastName }}</h4>
-          <button>Remove</button>
-
-          {{ workspace.id }}
-          
+          <button @click="handleDelete(workspace.id)" type="submit">Remove</button>     
         </li>
       </ul>
 
@@ -56,7 +53,7 @@
 
 <script>
 
-import { getUser, getSavedAdvice, getSavedResources, getSavedWorkspaces } from '../services/api';
+import { getUser, getSavedAdvice, getSavedResources, getSavedWorkspaces, deleteSaved } from '../services/api';
 
 export default {
   data() {
@@ -92,16 +89,25 @@ export default {
   },
 
   methods: {
-     handleDelete(id) {
+    handleDelete(id) {
       return deleteSaved(id)
         .then(() => {
-          get()
-            .then(cocktails => {
-              this.cocktails = cocktails;
-            });
+          if(this.savedAdvice.findIndex(advice => advice.id === id) > -1) {
+            let index = this.savedAdvice.findIndex(advice => advice.id === id);
+            this.savedAdvice.splice(index, 1);
+          }
+          else if(this.savedResources.findIndex(resource => resource.id === id) > -1) {
+            let index = this.savedResources.findIndex(resource => resource.id === id);
+            this.savedResources.splice(index, 1);
+          }
+          else if(this.savedWorkspaces.findIndex(workspace => workspace.id === id) > -1) {
+            let index = this.savedWorkspaces.findIndex(workspace => workspace.id === id);
+            this.savedWorkspaces.splice(index, 1);
+          }
+          else return;
         });
-    },
-
+    }
+  },
   props: ['user'],
 
 };
