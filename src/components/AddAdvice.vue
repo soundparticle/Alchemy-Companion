@@ -1,7 +1,6 @@
 <template>
   <section>
     <AdviceForm
-      label="Add"
       :on-edit="onAdd"/>
       <h1>advice here</h1>
   </section>

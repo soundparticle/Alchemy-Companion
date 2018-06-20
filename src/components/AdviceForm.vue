@@ -1,6 +1,5 @@
 <template>
   <section>
-    <h1>{{ edit }}</h1>
     <form @submit.prevent="handleSubmit">
       <FormControl label="Title">
         <input type="text"
@@ -14,12 +13,12 @@
       </FormControl>
 
       <FormControl>
-        <button type="submit">{{ label }}</button>
-        <!-- <button
+        <button type="submit" @click="handleSubmit">Submit</button>
+        <button
           v-if="onCancel"
-          @click="onCancel">
+          @click.prevent="onCancel">
           Cancel
-        </button> -->
+        </button>
       </FormControl>
     </form>
     <!-- <pre>{{ error }}</pre> -->
@@ -31,7 +30,7 @@ import FormControl from './FormControl';
 export default {
   data() {
     return {
-      edit: {
+      edit: this.tip ? Object.assign({}, this.tip) : {
         title: '',
         text: ''
       }
@@ -45,7 +44,7 @@ export default {
       this.onEdit(this.edit);
     }
   },
-  props: ['onEdit', 'label']
+  props: ['onEdit', 'onCancel', 'tip']
 };
 </script>
 
