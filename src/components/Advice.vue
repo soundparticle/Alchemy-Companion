@@ -13,16 +13,19 @@
         :user="user"
         :onRemove="handleRemove"
         :votes="votes"
+        :onUpVote="handleUpVote"
+        :onNoVote="handleNoVote"
       />
-       
+
       <hr>
     </ul>
   </div>
 </template>
 
 <script>
-import { getAdvice, addAdvice, removeAdvice, getVotes } from '../services/api';
+import { getAdvice, addAdvice, removeAdvice, getVotes, noVote, upVote } from '../services/api';
 import Tip from './Tip';
+
 
 export default {
   data() {
@@ -69,8 +72,29 @@ export default {
             this.advice.splice(index, 1);
           });
       }
+    },
+    handleUpVote(id) {
+      const vote = {
+        postID: id,
+        userID: this.user.id,
+        tableID: 1
+      };
+      return upVote(vote)
+        .then(saved => {
+          this.votes.push(saved);
+          this.advice[id].upvote++;
+        });
+
+    },
+    handleNoVote(id) {
+      const index = this.votes.findIndex(vote => vote.postID === id);
+      return noVote(this.votes[index].id)
+        .then(()=> {
+          this.votes.splice(index, 1);
+          this.advice[id].upvote--;
+        });
     }
-    
+
   },
   components: {
     Tip

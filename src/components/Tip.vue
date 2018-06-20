@@ -2,7 +2,7 @@
   <li>
     <button
       :class="{ upvoted: votedPost }"
-      >⬆️</button>
+      @click="handleVote">⬆️</button>
     <h3>( {{ tip.upvotes }} ) {{ tip.title }}</h3>
     <p>{{ tip.text }}</p>
     <h6>Submitted by {{ tip.firstName }} {{ tip.lastName }}</h6>
@@ -14,13 +14,18 @@
 
 <script>
 export default {
-  props: ['tip', 'user', 'onRemove', 'votes'],
+  props: ['tip', 'user', 'onRemove', 'votes', 'onUpVote', 'onNoVote'],
   computed: {
     votedPost() {
       if(this.votes) {
         const votedPostIDs = this.votes.map(v => v.postID);
         return votedPostIDs.includes(this.tip.id);
       }
+    }
+  },
+  methods: {
+    handleVote() {
+      this.votedPost ? this.onNoVote(this.tip.id) : this.onUpVote(this.tip.id);
     }
   }
   
