@@ -5,6 +5,7 @@
       <ul v-if="resources">
         <li v-for="item in resources"
           :key="item.id"
+          :onRemove="handleRemove"
           >
           <hr>
           <h3> ( {{ item.upvotes }} ) </h3>

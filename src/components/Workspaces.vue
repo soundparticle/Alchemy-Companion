@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Workspace Resources Page</h1>
-  <pre v-if="error">{{ error }}</pre>
+    <pre v-if="error">{{ error }}</pre>
     <ul v-if="location">
       <li v-for="location in workspaces"
         :key="location.id"
