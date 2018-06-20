@@ -112,7 +112,7 @@ export function signIn(credentials) {
 }
 
 
-// DASHBOARD
+// DASHBOARD-SAVED
 export function getUser(id) {
   return fetch(`${USER_URL}/${id}`, {
     headers: getHeaders(true),
@@ -145,6 +145,15 @@ export function deleteSaved(id) {
   return fetch(`${SAVED_URL}/${id}`, {
     method: 'DELETE',
     headers: getHeaders(true),
+  })
+    .then(responseHandler);
+}
+
+export function savePost(post) {
+  return fetch(SAVED_URL, {
+    method: 'POST',
+    headers: getHeaders(true),
+    body: JSON.stringify(post)
   })
     .then(responseHandler);
 }

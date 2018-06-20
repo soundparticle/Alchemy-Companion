@@ -13,6 +13,8 @@
         :user="user"
         :onRemove="handleRemove"
         :votes="votes"
+        :savedPosts="savedPosts"
+        :onSave="handleSave"
         :onUpVote="handleUpVote"
         :onNoVote="handleNoVote"
         :onUpdate="handleUpdate"
@@ -31,7 +33,9 @@ import {
   removeAdvice,
   getVotes,
   noVote,
-  upVote
+  upVote,
+  savePost,
+  getSavedAdvice
 } from '../services/api';
 import Tip from './Tip';
 
@@ -41,7 +45,8 @@ export default {
     return {
       advice: null,
       votes: null,
-      error: null
+      error: null,
+      savedPosts: null
     };
   },
   props: ['user'],
@@ -53,10 +58,14 @@ export default {
       .catch(err => {
         this.error = err;
       });
-    if(this.user.id) {
+    if(this.user) {
       getVotes(this.user.id)
         .then(votes => {
           this.votes = votes;
+        });
+      getSavedAdvice(this.user.id)
+        .then(saved => {
+          this.savedPosts = saved;
         });
     }
   },
@@ -112,6 +121,14 @@ export default {
           this.votes.splice(index, 1);
           this.advice[id].upvote--;
         });
+    },
+    handleSave(id) {
+      const post = {
+        postID: id,
+        userID: this.user.id,
+        tableID: 1
+      };
+      return savePost(post);
     }
   },
   components: {

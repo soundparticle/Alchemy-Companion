@@ -2,15 +2,20 @@
   <li>
     <div v-if="!updating">
       <button
+        v-if="user"
         :class="{ upvoted: votedPost }"
         @click="handleVote">⬆️</button>
       <h3>( {{ tip.upvotes }} ) {{ tip.title }}</h3>
       <p>{{ tip.text }}</p>
       <h6>Submitted by {{ tip.firstName }} {{ tip.lastName }}</h6>
-      <button>💬</button>
-      <button>⭐</button>
-      <button v-if="user.id === tip.authorID" @click="onRemove(tip.id)">❌</button>
-      <button v-if="user.id === tip.authorID" @click="updating = true">✏️</button>
+
+      <div v-if="user">
+        <button>💬</button>
+        <button @click="handleSave" :disabled="savedPost === 'saved'">{{ savedPost }}</button>
+        <button v-if="user.id === tip.authorID" @click="onRemove(tip.id)">❌</button>
+        <button v-if="user.id === tip.authorID" @click="updating = true">✏️</button>
+      </div>
+
     </div>
     <AdviceForm
       v-if="updating"
@@ -26,15 +31,32 @@ import AdviceForm from './AdviceForm';
 export default {
   data() {
     return {
-      updating: false
+      updating: false,
     };
   },
-  props: ['tip', 'user', 'onRemove', 'votes', 'onUpVote', 'onNoVote', 'onUpdate'],
+  props: [
+    'tip',
+    'user',
+    'onRemove',
+    'votes',
+    'onUpVote',
+    'onNoVote',
+    'onUpdate',
+    'savedPosts',
+    'onSave'
+  ],
   computed: {
     votedPost() {
       if(this.votes) {
         const votedPostIDs = this.votes.map(v => v.postID);
         return votedPostIDs.includes(this.tip.id);
+      }
+    },
+    savedPost() {
+      if(this.savedPosts) {
+        const savedPostIDs = this.savedPosts.map(s => s.postID);
+        //return savedPostIDs.includes(this.tip.id);
+        return savedPostIDs.includes(this.tip.id) ? 'saved' : '⭐';
       }
     }
   },
@@ -49,6 +71,12 @@ export default {
       return this.onUpdate(toUpdate)
         .then(() => {
           this.updating = false;
+        });
+    },
+    handleSave() {
+      return this.onSave(this.tip.id)
+        .then(saved => {
+          this.savedPosts.push(saved);
         });
     }
   },
