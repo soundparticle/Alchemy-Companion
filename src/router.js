@@ -6,8 +6,6 @@ import Advice from './components/Advice.vue';
 import AddAdvice from './components/AddAdvice.vue';
 import Resources from './components/Resources.vue';
 import Dashboard from './components/Dashboard.vue';
-import UserPosts from './components/UserPosts.vue';
-import UserFavorites from './components/UserFavorites.vue';
 import AppInfo from './components/AppInfo.vue';
 import Us from './components/Us.vue';
 import AuthForm from './components/AuthForm.vue';
@@ -33,12 +31,6 @@ export default new VueRouter({
     },
     { path: '/resources', component: Resources },
     { path: '/dashboard', component: Dashboard },
-      // children: [
-      //   { path: 'posts', component: UserPosts },
-        // { path: 'favorites', component: UserFavorites },
-        // { path: '', redirect: 'favorites' }
-    //   ]
-    // },
     { path: '/auth', component: AuthForm }
   ]
 });

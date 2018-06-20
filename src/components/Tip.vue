@@ -8,11 +8,14 @@
       <h3>( {{ tip.upvotes }} ) {{ tip.title }}</h3>
       <p>{{ tip.text }}</p>
       <h6>Submitted by {{ tip.firstName }} {{ tip.lastName }}</h6>
+
       <div v-if="user">
+        <button>💬</button>
         <button @click="handleSave" :disabled="savedPost === 'saved'">{{ savedPost }}</button>
         <button v-if="user.id === tip.authorID" @click="onRemove(tip.id)">❌</button>
         <button v-if="user.id === tip.authorID" @click="updating = true">✏️</button>
       </div>
+
     </div>
     <AdviceForm
       v-if="updating"

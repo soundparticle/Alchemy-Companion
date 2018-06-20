@@ -3,11 +3,19 @@
     <h1>Coding Resources</h1>
       <pre v-if="error">{{ error }}</pre>
       <ul v-if="resources">
-        <li v-for="item in resources"
-          :key="item.id"
+        <li v-for="resource in resources"
+          :key="resource.id"
+          :onRemove="handleRemove"
           >
           <hr>
-          <h3> ( {{ item.upvotes }} ) </h3> &nbsp; Link from {{ item.first_name }}: &nbsp; <strong> {{ item.title }} &nbsp; - </strong> &nbsp; <a :href="item.url"> {{ item.description }} </a>
+          <h3> ( {{ item.upvotes }} ) </h3>
+          <button>💬</button>
+          <button>⭐</button>
+          <button v-if="user.id === resource.authorID" @click="onRemove(resource.id)">❌</button>
+          <button v-if="user.id === resource.authorID">✏️</button>
+          &nbsp; Link from {{ resource.first_name }}:
+          &nbsp; <strong> {{ resource.title }}&nbsp; - </strong>
+          &nbsp; <a :href="resource.url"> {{ resource.description }} </a>
         </li>
         <hr>
       </ul>
@@ -15,16 +23,17 @@
 </template>
 
 <script>
-import { getResources } from '../services/api';
+import { getResources, removeResource } from '../services/api';
 
 export default {
   data() {
     return {
       resources: null,
+      resource: null,
       error: null
     };
   },
-  props: ['user'],
+  props: ['user', 'onRemove'],
   created() {
     getResources()
       .then(resources => {
@@ -33,7 +42,23 @@ export default {
       .catch(err => {
         this.error = err;
       });
-  }
+  },
+  methods: {
+    handleVote() {
+      this.votedPost ? this.onNoVote(this.resource.id) : this.onUpVote(this.resource.id);
+    },
+    handleRemove(id) {
+      if(confirm('Are you sure you want to delete?')) {
+        return removeResource(id)
+          .then(()=> {
+            const index = this.resource.findIndex(resource => resource.id === id);
+            if(index === -1) return;
+            this.resource.splice(index, 1);
+          });
+      }
+    },
+
+  },
 };
 </script>
 
