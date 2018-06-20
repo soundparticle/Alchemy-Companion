@@ -4,6 +4,7 @@ const RESOURCES_URL = `${URL}/resources`;
 const WORKSPACES_URL = `${URL}/workspaces`;
 const HUMOR_URL = `${URL}/humor`;
 const AUTH_URL = `${URL}/auth`;
+const VOTES_URL = `${URL}/votes`;
 
 function responseHandler(response) {
   if(response.ok) return response.json();
@@ -108,3 +109,12 @@ export function signIn(credentials) {
     .then(responseHandler);
 }
 
+
+
+// VOTES
+export function getVotes(userID) {
+  return fetch(`${VOTES_URL}/${userID}`, {
+    headers: getHeaders(true)
+  })
+    .then(responseHandler);
+}
