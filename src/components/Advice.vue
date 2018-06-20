@@ -1,24 +1,24 @@
 <template>
   <div>
-    <h1>Advice Page</h1>
-    <nav>
-      <router-link to="/advice/add"> Add Advice </router-link>
-    </nav>
-      <router-view :onAdd="handleAdd"></router-view>
-    <pre v-if="error">{{ error }}</pre>
-    <ul v-if="advice">
-      <Tip  v-for="tip in advice"
-        :key="tip.id"
-        :tip="tip"
-        :user="user"
-        :onRemove="handleRemove"
-        :votes="votes"
-        :onUpVote="handleUpVote"
-        :onNoVote="handleNoVote"
-      />
-
-      <hr>
-    </ul>
+    <div id="advice">
+      <div class="advice-header">
+        <h3>Smart Advice From Smart People.</h3>
+        <router-link to="/advice/add"> Click Here to Share! </router-link>
+      </div>
+      <router-view class="advice-router" :onAdd="handleAdd"></router-view>
+      <pre v-if="error">{{ error }}</pre>
+      <ul class="advice-list" v-if="advice">
+        <Tip class="each-Tip" v-for="tip in advice"
+          :key="tip.id"
+          :tip="tip"
+          :user="user"
+          :onRemove="handleRemove"
+          :votes="votes"
+          :onUpVote="handleUpVote"
+          :onNoVote="handleNoVote"
+        />
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -103,13 +103,77 @@ export default {
 </script>
 
 <style scoped>
+#advice {
+  display: grid;
+  grid-template-columns: 10px 50px auto 50px 20px;
+  grid-template-rows: 5px 40px 5px auto auto 40px 20px;
+}
+
+@-webkit-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@-moz-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+
+.advice-header {
+  border-radius: 0px 0px 15px 15px;
+  background: linear-gradient(270deg, #2c3e50, #2980b9);
+  background-size: 400% 400%;
+  -webkit-animation: AnimationName 30s ease infinite;
+  -moz-animation: AnimationName 30s ease infinite;
+  animation: AnimationName 30s ease infinite;
+  z-index: -5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-content: space-evenly;
+  grid-column-start: 1;
+  grid-column-end: span 5;
+  grid-row-start: 2;
+  grid-row-end: 2;
+}
+.advice-router {
+  grid-column-start: 1;
+  grid-column-end: span 5;
+  grid-row-start: 4;
+  grid-row-end: 4;
+}
+.advice-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+  grid-column-start: 1;
+  grid-column-end: span 5;
+  grid-row-start: 5;
+  grid-row-end: 5;
+}
+
 ul {
   list-style: none;
+  border-radius: 15px 15px 15px 15px;
+  background: linear-gradient(270deg, #80b5eb, #2980b9);
+  background-size: 400% 400%;
+  -webkit-animation: AnimationName 30s ease infinite;
+  -moz-animation: AnimationName 30s ease infinite;
+  animation: AnimationName 30s ease infinite;
 }
 pre {
   color: red;
 }
 h3 {
+  color: white;
   display: inline;
 }
 </style>
