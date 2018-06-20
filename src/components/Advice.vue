@@ -11,7 +11,13 @@
         :key="tip.id"
         >
         <hr>
-        <h3><button>⬆️</button>( {{ tip.upvotes }} ) </h3> &nbsp; Tip from {{ tip.firstName }}: &nbsp; <strong>{{ tip.title }} &nbsp; - </strong> &nbsp; {{ tip.text }} <button>⭐</button><button>&#x274C;</button><button>✏️</button>
+        <h3><button>⬆️</button>( {{ tip.upvotes }} ) </h3>
+        &nbsp; Tip from {{ tip.firstName }}
+        &nbsp; <strong>{{ tip.title }}
+        &nbsp; - </strong> &nbsp; {{ tip.text }}
+        <button>⭐</button>
+        <button v-if="user.id === tip.authorID" @click="handleRemove(tip.id)">&#x274C;</button>
+        <button v-if="user.id === tip.authorID">✏️</button>
       </li>
       <hr>
     </ul>
@@ -19,7 +25,7 @@
 </template>
 
 <script>
-import { getAdvice, addAdvice } from '../services/api';
+import { getAdvice, addAdvice, removeAdvice } from '../services/api';
 
 export default {
   data() {
@@ -39,6 +45,17 @@ export default {
           this.advice.push(saved);
           this.$router.push('/advice');
         });
+    },
+    handleRemove(id) {
+
+      if(confirm('Are you sure you want to delete?')) {
+        return removeAdvice(id)
+          .then(()=> {
+            const index = this.advice.findIndex(tip => tip.id === id);
+            if(index === -1) return;
+            this.advice.splice(index, 1);
+          });
+      }
     }
   },
   props: ['user'],

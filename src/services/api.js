@@ -65,7 +65,6 @@ export function removeAdvice(id) {
     .then(responseHandler);
 }
 
-
 //RESOURCES
 export function getResources() {
   return fetch(RESOURCES_URL, {
@@ -73,7 +72,6 @@ export function getResources() {
   })
     .then(responseHandler);
 }
-
 
 //WORKSPACES
 export function getWorkspaces() {
@@ -83,7 +81,6 @@ export function getWorkspaces() {
     .then(responseHandler);
 }
 
-
 //HUMOR
 export function getHumor() {
   return fetch(HUMOR_URL, {
@@ -91,8 +88,6 @@ export function getHumor() {
   })
     .then(responseHandler);
 }
-
-
 
 //SIGNUP SIGNIN
 export function signUp(credentials) {
