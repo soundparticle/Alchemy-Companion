@@ -1,8 +1,8 @@
 <template>
 
 <div>
-  <li id="tip-grid">
-    <div v-if="!updating">
+  <li>
+    <div id="tip-grid" v-if="!updating">
       <button
         v-if="user"
         :class="{ upvoted: votedPost }"
