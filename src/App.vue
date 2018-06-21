@@ -55,6 +55,7 @@ export default {
     handleLogout() {
       localStorage.removeItem('user');
       this.user = null;
+      this.$router.push('/');
     }
   }
 };
@@ -152,4 +153,9 @@ pre {
 .fade-enter, .fade-leave-active {
   opacity: 0
 }
+
+a {
+  cursor:pointer;
+}
 </style>
+

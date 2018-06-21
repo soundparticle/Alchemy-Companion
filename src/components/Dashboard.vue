@@ -3,7 +3,6 @@
     <h1>Welcome to your Dashboard, {{ userInfo.firstName }}. </h1>
 
     <button v-if="!editing" @click="editing = true">Edit Profile</button>
-        {{ userEdit }}
       <form v-if="editing" @submit.prevent="handleUpdate">
         <FormControl label="First Name">
           <input v-model="userEdit.firstName"/>
@@ -14,9 +13,9 @@
         <FormControl label="Email Address">
           <input v-model="userEdit.email">
         </FormControl>
-        <FormControl label="Password">
-          <input v-model="userEdit.password">
-        </FormControl>
+        <!-- <FormControl label="Password">
+          <input type="password" v-model="userEdit.password">
+        </FormControl> -->
         <FormControl label="GitHub Profile Link">
           <input v-model="userEdit.githubProfile">
         </FormControl>
@@ -34,6 +33,9 @@
         </FormControl>
 
       </form>
+
+
+      {{ userEdit }}
 
     <section id="external-links">
 
@@ -152,6 +154,9 @@ export default {
         });
     },
     handleUpdate() {
+      if(this.userEdit.password === null) {
+        this.userEdit.password === this.userInfo.password;
+      }
       return updateUser(this.userEdit)
         .then(saved => {
           this.userInfo = saved;
