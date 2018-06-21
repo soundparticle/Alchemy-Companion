@@ -6,7 +6,11 @@
         <button @click="adding = !adding">Click Here to Share!</button>
       </div>
       <pre v-if="error">{{ error }}</pre>
-      <ResourceForm v-if="adding" :onEdit="handleAdd"/>
+      <ResourceForm
+        v-if="adding"
+        :onEdit="handleAdd"
+        :categories="categories"
+        />
       <ul class="resources-list" v-if="resources">
         <Resource class="resource" v-for="resource in resources"
           :key="resource.id"
@@ -19,6 +23,7 @@
           :onUpVote="handleUpVote"
           :onNoVote="handleNoVote"
           :onUpdate="handleUpdate"
+          :categories="categories"
           />
       </ul>
     </div>
@@ -35,7 +40,8 @@ import {
   noVote,
   upVote,
   savePost,
-  getSavedResources
+  getSavedResources,
+  getResourceCategories
 } from '../services/api';
 import Resource from './Resource';
 import ResourceForm from './ResourceForm';
@@ -47,11 +53,16 @@ export default {
       votes: null,
       error: null,
       savedPosts: null,
-      adding: false
+      adding: false,
+      categories: null
     };
   },
   props: ['user'],
   created() {
+    getResourceCategories()
+      .then(categories => {
+        this.categories = categories;
+      });
     getResources()
       .then(resources => {
         this.resources = resources;
@@ -95,13 +106,41 @@ export default {
     },
     handleRemove(id) {
       if(confirm('Are you sure you want to delete?')) {
-        return removeResources(id)
+        return removeResource(id)
           .then(()=> {
-            const index = this.resources.findIndex(resource => resource.id === id);
-            if(index === -1) return;
-            this.resources.splice(index, 1);
+            this.resources = this.resources.filter(r => r.id !== id);
           });
       }
+    },
+    handleUpVote(id) {
+      const vote = {
+        postID: id,
+        userID: this.user.id,
+        tableID: 2
+      };
+      return upVote(vote)
+        .then(saved => {
+          this.votes.push(saved);
+          const index = this.resources.findIndex(r => r.id === saved.postID);
+          this.advice[index].upvotes++;
+        });
+    },
+    handleNoVote(id) {
+      const index = this.votes.findIndex(vote => vote.postID === id);
+      return noVote(this.votes[index].id)
+        .then(()=> {
+          this.votes.splice(index, 1);
+          const index2 = this.resources.findIndex(r => r.id === id);
+          this.advice[index2].upvotes--;
+        });
+    },
+    handleSave(id) {
+      const post = {
+        postID: id,
+        userID: this.user.id,
+        tableID: 2
+      };
+      return savePost(post);
     }
   },
   components: {
