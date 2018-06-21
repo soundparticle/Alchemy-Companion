@@ -1,12 +1,7 @@
 <template>
   <div>
     <h1>Workspace Resources Page</h1>
-    <button @click="adding = true"
-    <FormControl v-if="adding">
-      <input placeholder="Workspace">
-    </FormControl>
-
-
+    <WorkspaceFrom />
     <pre v-if="error">{{ error }}</pre>
     <ul v-if="workspaces">
       <Location v-for="location in workspaces"
@@ -33,7 +28,15 @@ export default {
     return {
       workspaces: null,
       adding: false,
-      error: null
+      error: null,
+      workspace: {
+        title: '',
+        address: '',
+        workspaceType: '',
+        url: '',
+        description: ''
+      },
+      testing: []
     };
   },
   props: ['user'],
@@ -59,6 +62,11 @@ export default {
             this.workspaces.splice(index, 1);
           });
       }
+    },
+
+    handleAdd(workspace) {
+      this.testing.push(workspace);
+      return this.testing;
     }
   },
   components: {

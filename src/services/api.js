@@ -98,6 +98,15 @@ export function removeWorkspaces(id) {
     .then(responseHandler);
 }
 
+export function addWorkspace(workspace) {
+  return fetch(WORKSPACES_URL, {
+    method: 'POST',
+    headers: getHeaders(true),
+    body: JSON.stringify(workspace)
+  })
+    .then(responseHandler);
+}
+
 
 //HUMOR
 export function getHumor() {
