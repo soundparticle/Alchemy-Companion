@@ -21,7 +21,6 @@
         </button>
       </FormControl>
     </form>
-    <!-- <pre>{{ error }}</pre> -->
   </section>
 </template>
 

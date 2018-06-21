@@ -135,7 +135,7 @@ pre {
   grid-row-end: span 1;
   align-items: center;
 }
-a {
+.header-links > a {
   color: white;
   text-decoration: none;
   font-weight: bolder;
