@@ -1,29 +1,37 @@
 <template>
-  <div>
-    <h2>About Team Denim</h2>
-    <container>
-    <div class="team">
-        <h3>Ryan Luras</h3>
-        <img src="">
-        <p>About Ryan coming soon!</p>
+<div>
+    <h2>Our Developers</h2>
+    <div id="team-flex">
+        <div class="card">
+            <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" style="width:100%">
+            <div class="container">
+                <h4><b>Arthur Jen</b></h4>
+                <p>About Arthur coming soon! Loremium s culpa qususcipit atque nobis facilis nesciunt illum, quod odit maxime. Harum assumenda similique praesentium dolorem perferendis optio soluta quod eum labore odio non eligendi.</p>
+            </div>
+        </div>
+        <div class="card">
+            <img class="testimg" src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" style="width:100%">
+            <div class="container">
+                <h4><b>Ryan Luras</b></h4>
+                <p>About Ryan coming soon! Loremioremaxime. Harum assumenda similique praesentium dolorem perferendis optio soluta quod eum labore odio non eligendi.</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" style="width:100%">
+            <div class="container">
+                <h4><b>Easton Gorishek</b></h4> 
+                <p>About Easton coming soon! entium dolorem perferendis optio soluta quod eum labore odio non eligendi.</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" style="width:100%">
+            <div class="container">
+                <h4><b>Antreo Pukay</b></h4>
+                <p>About Antreo coming soon! Lorem ipsum  quod eum laborerem ipsum  quod eum labrem ipsum  quod eum lab odio non eligendi.</p>
+            </div>
+        </div>
     </div>
-    <div class="team">
-        <h3>Arthur Jen</h3>
-        <img src="">
-        <p>About Arthur coming soon!.</p>
-    </div>
-    <div class="team">
-        <h3>Easton Gorishek</h3>
-        <img src="">
-        <p>About Easton coming soon!.</p>
-    </div>
-    <div class="team">
-        <h3>Antreo Pukay</h3>
-        <img src="">
-        <p>About Antreo coming soon!</p>
-    </div>
-</container>
-  </div>
+</div>
 </template>
 
 <script>
@@ -33,27 +41,29 @@ export default {
 </script>
 
 <style scoped>
-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-color: black;
-    border-radius: 40px;
-
+#team-flex {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    align-items: start;
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
 }
-.team {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 18pt;
+
+.card {
+    max-width: 300px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
     padding: 10px;
-    padding-top: 30px;
-    padding-bottom: 20px;
-    padding-left: 50px;
-    padding-right: 50px;
-    color: black;
-    margin: 20px;
-    box-shadow: 10px 10px 35px 2px;
-    border-radius: 35px;
-    background-color: steelblue;
 }
 
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+/* Add some padding inside the card container */
+img {
+  max-width: 300px;
+}
 </style>

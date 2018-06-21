@@ -2,7 +2,7 @@
   <div>
     <div id="resources">
       <div class="resources-header">
-        <h3>Coding Resources</h3>
+        <h3>Coding Resources to Make the Pain Go Away</h3>
         <button @click="adding = !adding">Click Here to Share!</button>
       </div>
       <ResourceForm
