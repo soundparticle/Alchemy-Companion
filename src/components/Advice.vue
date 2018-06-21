@@ -172,7 +172,6 @@ export default {
   -webkit-animation: AnimationName 30s ease infinite;
   -moz-animation: AnimationName 30s ease infinite;
   animation: AnimationName 30s ease infinite;
-  /* z-index: -5; */
   display: flex;
   align-items: center;
   justify-content: center;

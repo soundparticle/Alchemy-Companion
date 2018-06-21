@@ -10,6 +10,7 @@
         v-if="adding"
         :onEdit="handleAdd"
         :categories="categories"
+        :onCancel="handleCancel"
         />
       <ul class="resources-list" v-if="resources">
         <Resource class="resource" v-for="resource in resources"
@@ -89,8 +90,9 @@ export default {
           saved.firstName = this.user.firstName;
           saved.lastName = this.user.lastName;
           saved.upvotes = 0;
-          this.advice.push(saved);
-          this.$router.push('/advice');
+          this.resources.push(saved);
+          this.adding = false;
+          this.$router.push('/resources');
         });
     },
     handleUpdate(resource) {
@@ -101,7 +103,7 @@ export default {
           const index = this.resources.findIndex(r => r.id === saved.id);
           if(index === -1) return;
           saved.upvotes = this.resources[index].upvotes;
-          this.advice.splice(index, 1, saved);
+          this.resources.splice(index, 1, saved);
         });
     },
     handleRemove(id) {
@@ -122,7 +124,7 @@ export default {
         .then(saved => {
           this.votes.push(saved);
           const index = this.resources.findIndex(r => r.id === saved.postID);
-          this.advice[index].upvotes++;
+          this.resources[index].upvotes++;
         });
     },
     handleNoVote(id) {
@@ -131,7 +133,7 @@ export default {
         .then(()=> {
           this.votes.splice(index, 1);
           const index2 = this.resources.findIndex(r => r.id === id);
-          this.advice[index2].upvotes--;
+          this.resources[index2].upvotes--;
         });
     },
     handleSave(id) {
@@ -141,7 +143,10 @@ export default {
         tableID: 2
       };
       return savePost(post);
-    }
+    },
+    handleCancel() {
+      this.adding = false;
+    },
   },
   components: {
     Resource,

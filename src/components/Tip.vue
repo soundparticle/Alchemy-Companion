@@ -24,12 +24,12 @@
       :onCancel="handleCancel"
       :onEdit="handleUpdate"
       :tip="tip"
-      />
-      <Comments v-if="showComments"
-      :postID="tip.id"
-      :user="user"
-      :tableID=1
-      />
+    />
+    <Comments v-if="showComments"
+    :postID="tip.id"
+    :user="user"
+    :tableID=1
+    />
   </li>
 </div>
 
@@ -66,7 +66,6 @@ export default {
     savedPost() {
       if(this.savedPosts) {
         const savedPostIDs = this.savedPosts.map(s => s.postID);
-        //return savedPostIDs.includes(this.tip.id);
         return savedPostIDs.includes(this.tip.id) ? 'saved' : '⭐';
       }
     }
