@@ -111,7 +111,8 @@ export default {
       return upVote(vote)
         .then(saved => {
           this.votes.push(saved);
-          this.advice[id].upvote++;
+          const index = this.advice.findIndex(tip => tip.id === saved.postID);
+          this.advice[index].upvotes++;
         });
     },
     handleNoVote(id) {
@@ -119,7 +120,8 @@ export default {
       return noVote(this.votes[index].id)
         .then(()=> {
           this.votes.splice(index, 1);
-          this.advice[id].upvote--;
+          const index2 = this.advice.findIndex(tip => tip.id === id);
+          this.advice[index2].upvotes--;
         });
     },
     handleSave(id) {

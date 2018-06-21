@@ -138,13 +138,14 @@ export default {
   justify-content: center;
 }
 .upvoted {
-  grid-column-start: 1;
+  /* grid-column-start: 1;
   grid-column-end: 1;
   grid-row-start: 1;
   grid-row-end: 1;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center; */
+  background: green;
 }
 .tip-title {
   grid-column-start: 3;
