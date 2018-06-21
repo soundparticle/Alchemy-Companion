@@ -1,9 +1,12 @@
 <template>
   <div>
-    <h1>Coding Resources</h1>
-
-
+    <div id="resources">
+      <div class="resources-header">
+        <h3>Coding Resources</h3>
+        <button @click="adding = !adding">Click Here to Share!</button>
+      </div>
       <pre v-if="error">{{ error }}</pre>
+      <ResourceForm v-if="adding" :onEdit="handleAdd"/>
       <ul v-if="resources">
         <Resource v-for="resource in resources"
           :key="resource.id"
@@ -13,6 +16,7 @@
           />
           <hr>
       </ul>
+   </div>
   </div>
 </template>
 
