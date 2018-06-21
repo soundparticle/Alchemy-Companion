@@ -1,29 +1,27 @@
 <template>
   <div>
     <h1>Coding Resources</h1>
+
+
       <pre v-if="error">{{ error }}</pre>
       <ul v-if="resources">
-        <li v-for="resource in resources"
+        <Resource v-for="resource in resources"
           :key="resource.id"
+          :resource="resource"
+          :user="user"
           :onRemove="handleRemove"
-          >
+          />
           <hr>
-          <h3> ( {{ resource.upvotes }} ) </h3>
-          <button>💬</button>
-          <button>⭐</button>
-          <button v-if="user.id === resource.authorID" @click="onRemove(resource.id)">❌</button>
-          <button v-if="user.id === resource.authorID">✏️</button>
-          &nbsp; Link from {{ resource.first_name }}:
-          &nbsp; <strong> {{ resource.title }}&nbsp; - </strong>
-          &nbsp; <a :href="resource.url"> {{ resource.description }} </a>
-        </li>
-        <hr>
       </ul>
   </div>
 </template>
 
 <script>
-import { getResources, removeResource } from '../services/api';
+import {
+  getResources,
+  removeResource
+} from '../services/api';
+import Resource from './Resource';
 
 export default {
   data() {
@@ -32,7 +30,7 @@ export default {
       error: null
     };
   },
-  props: ['user', 'onRemove'],
+  props: ['user'],
   created() {
     getResources()
       .then(resources => {
@@ -55,9 +53,11 @@ export default {
             this.resource.splice(index, 1);
           });
       }
-    },
-
+    }
   },
+  components: {
+    Resource
+  }
 };
 </script>
 
