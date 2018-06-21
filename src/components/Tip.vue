@@ -47,7 +47,6 @@ import ModalTemplate from './ModalTemplate';
 export default {
   data() {
     return {
-      updating: false,
       showComments: false,
       isModalVisible: false
     };
