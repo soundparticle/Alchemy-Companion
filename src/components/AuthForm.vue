@@ -29,7 +29,6 @@
       <FormControl>
         <button type="submit"> {{ label }}</button>
       </FormControl>
-
     </form>
   </div>
 </template>

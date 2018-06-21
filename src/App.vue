@@ -53,6 +53,7 @@ export default {
     handleLogout() {
       localStorage.removeItem('user');
       this.user = null;
+      this.$router.push('/');
     }
   }
 };
@@ -152,9 +153,13 @@ pre {
   opacity: 0
 }
 
-
+a {
+  cursor:pointer;
+ }
+ 
 textarea {
   width: 100%;
   max-width: 100%;
 }
 </style>
+

@@ -18,37 +18,13 @@
     </div>
 
     <button v-if="!editing" @click="editing = true">Edit Profile</button>
-        {{ userEdit }}
-      <form v-if="editing" @submit.prevent="handleUpdate">
-        <FormControl label="First Name">
-          <input v-model="userEdit.firstName"/>
-        </FormControl>
-        <FormControl label="Last Name">
-          <input v-model="userEdit.lastName">
-        </FormControl>
-        <FormControl label="Email Address">
-          <input v-model="userEdit.email">
-        </FormControl>
-        <FormControl label="Password">
-          <input v-model="userEdit.password">
-        </FormControl>
-        <FormControl label="GitHub Profile Link">
-          <input v-model="userEdit.githubProfile">
-        </FormControl>
-        <FormControl label="Bootcamp Repo Link">
-          <input v-model="userEdit.classworkRepo">
-        </FormControl>
-        <FormControl label="LinkedIn Link">
-          <input v-model="userEdit.linkedin">
-        </FormControl>
-        <FormControl>
-          <button type="submit">Submit</button>
-        </FormControl>
-        <FormControl>
-          <button @click="handleCancel">Cancel</button>
-        </FormControl>
 
-      </form>
+      <UserForm
+      v-if="editing"
+      :onCancel="handleCancel"
+      :onEdit="handleUpdate"
+      :userInfo="userInfo"
+    />
 
     <section id="external-links">
 
@@ -102,7 +78,8 @@
 
 <script>
 
-import FormControl from './FormControl';
+import UserForm from './UserForm';
+
 import {
   getUser,
   getSavedAdvice,
@@ -119,7 +96,6 @@ export default {
     return {
       isModalVisible: false,
       userInfo: null,
-      userEdit: null,
       savedAdvice: null,
       savedResources: null,
       savedWorkspaces: null,
@@ -132,7 +108,6 @@ export default {
     getUser(this.user.id)
       .then(info => {
         this.userInfo = info;
-        this.userEdit = Object.assign({}, this.userInfo);
       }),
     getSavedAdvice(this.user.id)
       .then(advice => {
@@ -176,8 +151,8 @@ export default {
           else return;
         });
     },
-    handleUpdate() {
-      return updateUser(this.userEdit)
+    handleUpdate(userEdit) {
+      return updateUser(userEdit)
         .then(saved => {
           this.userInfo = saved;
           this.editing = false;
@@ -185,15 +160,13 @@ export default {
         });
     },
     handleCancel() {
-      this.userEdit = Object.assign({}, this.userInfo);
       this.editing = false;
     }
   },
   props: ['user'],
 
   components: {
-    FormControl,
-    ModalTemplate
+    UserForm
   }
 
 };
