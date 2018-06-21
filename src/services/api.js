@@ -202,3 +202,20 @@ export function addComment(comment) {
   })
     .then(responseHandler);
 }
+
+export function updateComment(comment) {
+  return fetch(`${COMMENTS_URL}/${comment.id}`, {
+    method: 'PUT',
+    headers: getHeaders(true),
+    body: JSON.stringify(comment)
+  })
+    .then(responseHandler);
+}
+
+export function removeComment(id) {
+  return fetch(`${COMMENTS_URL}/${id}`, {
+    method: 'DELETE',
+    headers: getHeaders()
+  })
+    .then(responseHandler);
+}
