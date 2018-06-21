@@ -43,9 +43,15 @@
           <p>{{ workspace.address }}</p>
           <a :href="workspace.url">Go to external link</a>
           <h4>{{ workspace.firstName }} {{ workspace.lastName }}</h4>
-          <button @click="handleDelete(workspace.id)" type="submit">Remove</button>     
+          <button @click="handleDelete(workspace.id)" type="submit">Remove</button>
         </li>
       </ul>
+
+      <modal>
+        <span slot="header">header!</span>
+        <span slot="body">body!</span>
+        <span slot="footer">footer!</span>
+      </modal>
 
     </section>
   </div>
