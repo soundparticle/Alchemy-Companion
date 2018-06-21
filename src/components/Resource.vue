@@ -42,7 +42,7 @@
 
 <script>
 import ResourceForm from './ResourceForm';
-import Comments from './Comments'
+import Comments from './Comments';
 export default {
   data() {
     return {
@@ -64,9 +64,10 @@ export default {
   ],
   computed: {
     votedPost() {
-      if(!this.votes) return;
-      const votedPostIDs = this.votes.map(v => v.postID && v.tableID === 2);
-      return votedPostIDs.includes(this.resource.id);
+      if(this.votes) {
+        const votedPostIDs = this.votes.map(v => v.postID);
+        return votedPostIDs.includes(this.resource.id);
+      }
     },
     category() {
       if(!this.categories) return;
@@ -109,7 +110,7 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 li {
   margin: 30px;
 }
