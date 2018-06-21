@@ -45,7 +45,7 @@ export default {
     // handleVote() {
     //   this.votedPost ? this.onNoVote(this.location.id) : this.onUpVote(this.location.id);
     // },
-    
+
     // handleCancel() {
     //   this.updating = false;
     // },

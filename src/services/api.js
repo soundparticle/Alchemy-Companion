@@ -84,6 +84,14 @@ export function getWorkspaces() {
   })
     .then(responseHandler);
 }
+export function removeWorkspaces(id) {
+  return fetch(`${WORKSPACES_URL}/${id}`, {
+    method: 'DELETE',
+    headers: getHeaders()
+  })
+    .then(responseHandler);
+}
+
 
 //HUMOR
 export function getHumor() {

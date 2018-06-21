@@ -19,7 +19,7 @@
 <script>
 import {
   getWorkspaces,
-  removeLocation,
+  removeWorkspaces,
 } from '../services/api';
 import Location from './Location';
 
@@ -46,11 +46,11 @@ export default {
     },
     handleRemove(id) {
       if(confirm('Are you sure you want to delete?')) {
-        return removeLocation(id)
+        return removeWorkspaces(id)
           .then(()=> {
-            const index = this.location.findIndex(location => location.id === id);
+            const index = this.workspaces.findIndex(location => location.id === id);
             if(index === -1) return;
-            this.location.splice(index, 1);
+            this.workspaces.splice(index, 1);
           });
       }
     }
