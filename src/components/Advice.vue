@@ -198,6 +198,11 @@ export default {
   grid-row-start: 5;
   grid-row-end: 5;
 }
+a {
+  color: white;
+  text-decoration: none;
+  font-weight: bolder;
+}
 
 ul {
   padding: 0;
