@@ -1,26 +1,40 @@
 <!-- template for the modal component -->
 <template>
-  <div class="modal-backdrop">
-    <div class="modal">
-      <header class="modal-header">
-        <slot name="header">
-          Here's the default tile!
 
-          <button
-            type="button"
-            class="btn-close"
-            @click="close"
-          >
-            x
-          </button>
-        </slot>
-      </header>
-      <section class="modal-body">
-        <slot name="body">
-          I'm the default body!      
-        </slot>
-      </section>
-      <footer class="modal-footer">
+
+  <transition name="modal-fade">
+    <div class="modal-backdrop">
+      <div class="modal"
+        role="dialog"
+        aria-labelledby="modalTitle"
+        aria-describedby="modalDescription"
+      >
+        <header
+          class="modal-header"
+          id="modalTitle"
+        >
+          <slot name="header">
+            This is the default tile!
+
+            <button
+              type="button"
+              class="btn-close"
+              @click="close"
+              aria-label="Close modal"
+            >
+              x
+            </button>
+          </slot>
+        </header>
+        <section
+          class="modal-body"
+          id="modalDescription"
+        >
+          <slot name="body">
+            I'm the default body!
+          </slot>
+        </section>
+        <footer class="modal-footer">
           <slot name="footer">
             I'm the default footer!
 
@@ -28,13 +42,15 @@
               type="button"
               class="btn-green"
               @click="close"
+              aria-label="Close modal"
             >
               Close me!
-          </button>
-        </slot>
-      </footer>
+            </button>
+          </slot>
+        </footer>
+      </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>

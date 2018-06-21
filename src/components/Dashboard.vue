@@ -1,6 +1,21 @@
 <template>
   <div v-if="userInfo">
     <h1>Welcome to your Dashboard, {{ userInfo.firstName }}. </h1>
+  
+    <div id="app">
+      <button
+        type="button"
+        class="btn"
+        @click="showModal"
+      >
+        Open Modal!
+      </button>
+
+    <ModalTemplate
+      v-show="isModalVisible"
+      @close="closeModal"
+    />
+    </div>
 
     <section id="external-links">
 
@@ -47,11 +62,6 @@
         </li>
       </ul>
 
-      <modal>
-        <span slot="header">header!</span>
-        <span slot="body">body!</span>
-        <span slot="footer">footer!</span>
-      </modal>
 
     </section>
   </div>
@@ -60,10 +70,16 @@
 <script>
 
 import { getUser, getSavedAdvice, getSavedResources, getSavedWorkspaces, deleteSaved } from '../services/api';
+import ModalTemplate from './ModalTemplate';
 
 export default {
+  name: 'app',
+  components: {
+    ModalTemplate
+  },
   data() {
     return {
+      isModalVisible: false,
       userInfo: null,
       savedAdvice: null,
       savedResources: null,
@@ -95,6 +111,12 @@ export default {
   },
 
   methods: {
+    showModal() {
+      this.isModalVisible = true;
+    },
+    closeModal() {
+      this.isModalVisible = false;
+    },
     handleDelete(id) {
       return deleteSaved(id)
         .then(() => {
