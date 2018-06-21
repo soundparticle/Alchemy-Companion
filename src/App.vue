@@ -2,11 +2,9 @@
 <div>
   <div id="app">
       <div class="logo">
-        <img class="alchemy" src="./assets/acl-logo.png">
+        <router-link exact to="/"><img class="alchemy" src="./assets/acl-logo.png"></router-link>
       </div>
       <div class="header-links">
-          <router-link exact to="/">Home</router-link>
-          &nbsp;
           <router-link to="/about">About</router-link>
           &nbsp;
           <router-link to="/resources">Resources</router-link>
@@ -115,6 +113,7 @@ pre {
 }
 .logo {
   display: flex;
+  align-self: center;
   justify-content: center;
   grid-column-start: 2;
   grid-column-end: span 3;
@@ -156,6 +155,11 @@ pre {
 
 a {
   cursor:pointer;
+ }
+ 
+textarea {
+  width: 100%;
+  max-width: 100%;
 }
 </style>
 

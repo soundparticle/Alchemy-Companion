@@ -5,23 +5,17 @@
       <button
         v-if="user"
         :class="{ upvoted: votedPost }"
-        @click="handleVote"
-        >
-        ⬆️
-      </button>
-      <h4 class="resource-votes">{{ resource.upvotes }}</h4>
-      <h4 class="resource-title">
-        <a :href="resource.url">{{ resource.title }}</a>
-      </h4>
-      <h4>{{ category }}</h4>
-      <p class="resource-description">{{ resource.description }}</p>
-      <h6>Submitted by {{ resource.firstName }} {{ resource.lastName }}</h6>
+        @click="handleVote"><font-awesome-icon class="icon-arrow" icon="arrow-circle-up" /></button>
+      <h4 class="resource-votes">( {{ resource.upvotes }} )</h4>
+      <h4 class="resource-title"><a :href="resource.url">{{ resource.title }}</a></h4>
+      <p class="resource-description"><strong>{{ category }} :</strong>&nbsp; {{ resource.description }}</p>
+      <h6 class="resource-submitted">Submitted by {{ resource.firstName }} {{ resource.lastName }}</h6>
 
       <div class="resource-buttons" v-if="user">
-        <button @click="showComments = !showComments">💬</button>
-        <button @click="handleSave" :disabled="savedPost === 'saved'">{{ savedPost }}</button>
-        <button v-if="user.id === resource.authorID" @click="onRemove(resource.id)">❌</button>
-        <button v-if="user.id === resource.authorID" @click="updating = true">✏️</button>
+        <button @click="showComments = !showComments"><font-awesome-icon class="icon" icon="comment-dots" /></button>
+        <button @click="handleSave" :disabled="savedPost === 'saved'"><font-awesome-icon class="icon" icon="star" /></button>
+        <button v-if="user.id === resource.authorID" @click="onRemove(resource.id)"><font-awesome-icon class="icon" icon="trash-alt" /></button>
+        <button v-if="user.id === resource.authorID" @click="updating = true"><font-awesome-icon class="icon" icon="edit" /></button>
       </div>
     </div>
     <ResourceForm
@@ -110,16 +104,75 @@ export default {
 
 </script>
 
+
 <style scoped>
-li {
-  margin: 30px;
+#resource-grid {
+  display: grid;
+  grid-template-columns: .5fr 1fr 1.5fr 5fr 1fr 1fr;
+  grid-template-rows: auto;
+  margin-top: 15px;
+  color: rgb(49, 49, 49);
+  background: rgb(208, 232, 240);
+  border-radius: 15px;
 }
-
-h3 {
-  margin: 0px;
+.resource-votes {
+  grid-column-start: 2;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-
 .upvoted {
-  background: green;
+  color: rgb(0, 207, 0);
+}
+.resource-title {
+  grid-column-start: 3;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 1;
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+.resource-description {
+  font-family: 'Slabo 27px', serif;
+  grid-column-start: 4;
+  grid-column-end: 4;
+  grid-row-start: 1;
+  grid-row-end: 1;
+  display: flex;
+  align-items: center;
+}
+.resource-submitted {
+  font-family: 'Slabo 27px', serif;
+  grid-column-start: 5;
+  grid-column-end: 5;
+  grid-row-start: 1;
+  grid-row-end: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.resource-buttons {
+  grid-column-start: 6;
+  grid-column-end: 6;
+  grid-row-start: 1;
+  grid-row-end: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-content: space-around;
+}
+button {
+    background-color: transparent;
+    border: transparent;
+}
+.icon-arrow {
+  font-size: 2em;
+}
+.icon {
+  font-size: 1.5em;
 }
 </style>

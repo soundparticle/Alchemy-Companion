@@ -1,6 +1,21 @@
 <template>
   <div v-if="userInfo">
     <h1>Welcome to your Dashboard, {{ userInfo.firstName }}. </h1>
+  
+    <div id="app">
+      <button
+        type="button"
+        class="btn"
+        @click="showModal"
+      >
+        Open Modal!
+      </button>
+
+    <ModalTemplate
+      v-show="isModalVisible"
+      @close="closeModal"
+    />
+    </div>
 
     <button v-if="!editing" @click="editing = true">Edit Profile</button>
 
@@ -52,16 +67,19 @@
           <p>{{ workspace.address }}</p>
           <a :href="workspace.url">Go to external link</a>
           <h4>{{ workspace.firstName }} {{ workspace.lastName }}</h4>
-          <button @click="handleDelete(workspace.id)" type="submit">Remove</button>     
+          <button @click="handleDelete(workspace.id)" type="submit">Remove</button>
         </li>
       </ul>
+
 
     </section>
   </div>
 </template>
 
 <script>
+
 import UserForm from './UserForm';
+
 import {
   getUser,
   getSavedAdvice,
@@ -70,11 +88,13 @@ import {
   deleteSaved,
   updateUser
 } from '../services/api';
+import ModalTemplate from './ModalTemplate';
 
 export default {
-
+  name: 'app',
   data() {
     return {
+      isModalVisible: false,
       userInfo: null,
       savedAdvice: null,
       savedResources: null,
@@ -107,6 +127,12 @@ export default {
   },
 
   methods: {
+    showModal() {
+      this.isModalVisible = true;
+    },
+    closeModal() {
+      this.isModalVisible = false;
+    },
     handleDelete(id) {
       return deleteSaved(id)
         .then(() => {
