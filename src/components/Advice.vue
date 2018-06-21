@@ -5,7 +5,6 @@
         <h3>Smart Advice From Smart People.</h3>
         <button @click="adding = !adding">Click Here to Share!</button>
       </div>
-      <pre v-if="error">{{ error }}</pre>
       <AdviceForm v-if="adding" :onEdit="handleAdd"/>
       <ul class="advice-list" v-if="advice">
         <Tip class="each-Tip" v-for="tip in advice"
