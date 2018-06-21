@@ -3,39 +3,13 @@
     <h1>Welcome to your Dashboard, {{ userInfo.firstName }}. </h1>
 
     <button v-if="!editing" @click="editing = true">Edit Profile</button>
-      <form v-if="editing" @submit.prevent="handleUpdate">
-        <FormControl label="First Name">
-          <input v-model="userEdit.firstName"/>
-        </FormControl>
-        <FormControl label="Last Name">
-          <input v-model="userEdit.lastName">
-        </FormControl>
-        <FormControl label="Email Address">
-          <input v-model="userEdit.email">
-        </FormControl>
-        <!-- <FormControl label="Password">
-          <input type="password" v-model="userEdit.password">
-        </FormControl> -->
-        <FormControl label="GitHub Profile Link">
-          <input v-model="userEdit.githubProfile">
-        </FormControl>
-        <FormControl label="Bootcamp Repo Link">
-          <input v-model="userEdit.classworkRepo">
-        </FormControl>
-        <FormControl label="LinkedIn Link">
-          <input v-model="userEdit.linkedin">
-        </FormControl>
-        <FormControl>
-          <button type="submit">Submit</button>
-        </FormControl>
-        <FormControl>
-          <button @click="handleCancel">Cancel</button>
-        </FormControl>
 
-      </form>
-
-
-      {{ userEdit }}
+      <UserForm
+      v-if="editing"
+      :onCancel="handleCancel"
+      :onEdit="handleUpdate"
+      :userInfo="userInfo"
+    />
 
     <section id="external-links">
 
@@ -87,7 +61,7 @@
 </template>
 
 <script>
-import FormControl from './FormControl';
+import UserForm from './UserForm';
 import {
   getUser,
   getSavedAdvice,
@@ -102,7 +76,6 @@ export default {
   data() {
     return {
       userInfo: null,
-      userEdit: null,
       savedAdvice: null,
       savedResources: null,
       savedWorkspaces: null,
@@ -115,7 +88,6 @@ export default {
     getUser(this.user.id)
       .then(info => {
         this.userInfo = info;
-        this.userEdit = Object.assign({}, this.userInfo);
       }),
     getSavedAdvice(this.user.id)
       .then(advice => {
@@ -153,11 +125,8 @@ export default {
           else return;
         });
     },
-    handleUpdate() {
-      if(this.userEdit.password === null) {
-        this.userEdit.password === this.userInfo.password;
-      }
-      return updateUser(this.userEdit)
+    handleUpdate(userEdit) {
+      return updateUser(userEdit)
         .then(saved => {
           this.userInfo = saved;
           this.editing = false;
@@ -165,14 +134,13 @@ export default {
         });
     },
     handleCancel() {
-      this.userEdit = Object.assign({}, this.userInfo);
       this.editing = false;
     }
   },
   props: ['user'],
 
   components: {
-    FormControl
+    UserForm
   }
 
 };
