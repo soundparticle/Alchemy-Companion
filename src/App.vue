@@ -61,6 +61,9 @@ export default {
 </script>
 
 <style>
+
+@import url('https://fonts.googleapis.com/css?family=Nunito|Quicksand|Slabo+27px');
+
 pre {
   color: red;
 }
@@ -81,11 +84,12 @@ pre {
     100%{background-position:0% 50%}
 }
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  display: grid;
+  max-width: 1000px;
+  margin: auto;
+  font-family: 'Quicksand', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-  display: grid;
   grid-template-columns: 20px 40px 40px 60px auto 40px 40px 20px;
   grid-template-rows: 5px 20px 40px 20px auto 40px 20px;
 }
@@ -121,6 +125,7 @@ pre {
   height: auto;
 }
 .header-links {
+  font-size: 1.2em;
   color: white;
   display: flex;
   justify-content: space-evenly;
