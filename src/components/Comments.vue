@@ -20,7 +20,7 @@
 <script>
 import Comment from './Comment';
 import CommentForm from './CommentForm';
-import { getComments, addComment, removeComment, updateComment } from '../services/api';
+import { getAdviceComments, getResourcesComments, getWorkspacesComments, addComment, removeComment, updateComment } from '../services/api';
 export default {
   data() {
     return {
@@ -29,10 +29,23 @@ export default {
     };
   },
   created() {
-    getComments(this.postID)
-      .then(comments => {
-        this.comments = comments;
-      });
+    if(this.tableID === 1) {
+      getAdviceComments(this.postID)
+        .then(comments => {
+          this.comments = comments;
+        });
+    } else if(this.tableID === 2) {
+      getResourcesComments(this.postID)
+        .then(comments => {
+          this.comments = comments;
+        });
+    } else if(this.tableID === 3) {
+      getWorkspacesComments(this.postID)
+        .then(comments => {
+          this.comments = comments;
+        });
+    }
+    else return;
   },
 
   methods: {
