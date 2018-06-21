@@ -4,7 +4,7 @@
       <!-- <button
         :class="{ upvoted: votedPost }"
         @click="handleVote">⬆️</button> -->
-      <h3>( {{ resource.upvotes }} ) {{ resource.title }}</h3>
+      <!-- <h3>( {{ resource.upvotes }} ) {{ resource.title }}</h3> -->
       <p>{{ resource.text }}</p>
       <h6>Submitted by {{ resource.firstName }} {{ resource.lastName }}</h6>
       <p><strong> {{ resource.title }} </strong>&nbsp; <a :href="resource.url"> {{ resource.description }} </a></p>
