@@ -1,19 +1,29 @@
 <template>
+<div>
   <li>
-    <div v-if="!updating">
-      <!-- <button
+    <div id="resource-grid" v-if="!updating">
+      <button
+        v-if="user"
         :class="{ upvoted: votedPost }"
-        @click="handleVote">⬆️</button> -->
-      <!-- <h3>( {{ resource.upvotes }} ) {{ resource.title }}</h3> -->
-      <p>{{ resource.text }}</p>
+        @click="handleVote"
+        >
+        ⬆️
+      </button>
+      <h4 class="resource-votes">{{ resource.upvotes }}</h4>
+      <h4 class="resource-title">
+        <a :href="resource.url">{{ resource.title }}</a>
+      </h4>
+      <h4>{{ category }}</h4>
+      <p class="resource-description">{{ resource.description }}</p>
+      <p>Web Link: <a :href="resource.url">HERE</a></p>
       <h6>Submitted by {{ resource.firstName }} {{ resource.lastName }}</h6>
-      <p><strong> {{ resource.title }} </strong>&nbsp; <a :href="resource.url"> {{ resource.description }} </a></p>
-      <p></p>
-      <p>Web Link: {{ resource.url }}</p>
-      <button>💬</button>
-      <button>⭐</button>
-      <button v-if="user.id === resource.authorID" @click="onRemove(resource.id)">❌</button>
-      <button v-if="user.id === resource.authorID" @click="updating = true">✏️</button>
+
+      <div class="resource-buttons" v-if="user">
+        <button @click="showComments = !showComments">💬</button>
+        <button @click="handleSave" :disabled="savedPost === 'saved'">{{ savedPost }}</button>
+        <button v-if="user.id === resource.authorID" @click="onRemove(resource.id)">❌</button>
+        <button v-if="user.id === resource.authorID" @click="updating = true">✏️</button>
+      </div>
     </div>
     <ResourceForm
       v-if="updating"
@@ -22,42 +32,68 @@
       :resource="resource"
       />
   </li>
+</div>
 </template>
 
 <script>
-// import resourceForm from './resourceForm';
+import ResourceForm from './ResourceForm';
 export default {
   data() {
     return {
       updating: false
     };
   },
-  props: ['resource', 'user', 'onRemove'],
-  // computed: {
-  //   votedPost() {
-  //     if(this.votes) {
-  //       const votedPostIDs = this.votes.map(v => v.postID);
-  //       return votedPostIDs.includes(this.resource.id);
-  //     }
-  //   }
-  // },
+  props: [
+    'resource',
+    'categories',
+    'user',
+    'onRemove',
+    'votes',
+    'onUpVote',
+    'onNoVote',
+    'onUpdate',
+    'savedPosts',
+    'onSave'
+  ],
+  computed: {
+    votedPost() {
+      if(!this.votes) return;
+      const votedPostIDs = this.votes.map(v => v.postID && v.tableID === 2);
+      return votedPostIDs.includes(this.resource.id);
+    },
+    category() {
+      if(!this.categories) return;
+      const category = this.categories.find(c => c.id === this.resource.categoryID);
+      return category ? category.category : 'Unknown';
+    },
+    savedPost() {
+      if(!this.savedPosts) return;
+      const savedPostIDs = this.savedPosts.map(s => s.postID);
+      return savedPostIDs.includes(this.resouce.id) ? 'saved' : '⭐';
+    }
+  },
   methods: {
-    // handleVote() {
-    //   this.votedPost ? this.onNoVote(this.resource.id) : this.onUpVote(this.resource.id);
-    // },
-
-    // handleCancel() {
-    //   this.updating = false;
-    // },
-    // handleUpdate(toUpdate) {
-    //   return this.onUpdate(toUpdate)
-    //     .then(() => {
-    //       this.updating = false;
-    //     });
-    // }
+    handleVote() {
+      this.votedPost ? this.onNoVote(this.resource.id) : this.onUpVote(this.resource.id);
+    },
+    handleCancel() {
+      this.updating = false;
+    },
+    handleUpdate(toUpdate) {
+      return this.onUpdate(toUpdate)
+        .then(() => {
+          this.updating = false;
+        });
+    },
+    handleSave() {
+      return this.onSave(this.resource.id)
+        .then(saved => {
+          this.savedPosts.push(saved);
+        });
+    }
   },
   components: {
-    // ResourceForm
+    ResourceForm
   }
 };
 

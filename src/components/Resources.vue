@@ -1,37 +1,68 @@
 <template>
   <div>
-    <h1>Coding Resources</h1>
-
-
+    <div id="resources">
+      <div class="resources-header">
+        <h3>Coding Resources</h3>
+        <button @click="adding = !adding">Click Here to Share!</button>
+      </div>
       <pre v-if="error">{{ error }}</pre>
-      <ul v-if="resources">
-        <Resource v-for="resource in resources"
+      <ResourceForm
+        v-if="adding"
+        :onEdit="handleAdd"
+        :categories="categories"
+        />
+      <ul class="resources-list" v-if="resources">
+        <Resource class="resource" v-for="resource in resources"
           :key="resource.id"
           :resource="resource"
           :user="user"
           :onRemove="handleRemove"
+          :votes="votes"
+          :savedPosts="savedPosts"
+          :onSave="handleSave"
+          :onUpVote="handleUpVote"
+          :onNoVote="handleNoVote"
+          :onUpdate="handleUpdate"
+          :categories="categories"
           />
-          <hr>
       </ul>
+    </div>
   </div>
 </template>
 
 <script>
 import {
   getResources,
-  removeResources
+  addResource,
+  updateResource,
+  removeResource,
+  getVotes,
+  noVote,
+  upVote,
+  savePost,
+  getSavedResources,
+  getResourceCategories
 } from '../services/api';
 import Resource from './Resource';
+import ResourceForm from './ResourceForm';
 
 export default {
   data() {
     return {
       resources: null,
-      error: null
+      votes: null,
+      error: null,
+      savedPosts: null,
+      adding: false,
+      categories: null
     };
   },
   props: ['user'],
   created() {
+    getResourceCategories()
+      .then(categories => {
+        this.categories = categories;
+      });
     getResources()
       .then(resources => {
         this.resources = resources;
@@ -39,24 +70,82 @@ export default {
       .catch(err => {
         this.error = err;
       });
+    if(this.user) {
+      getVotes(this.user.id)
+        .then(votes => {
+          this.votes = votes;
+        });
+      getSavedResources(this.user.id)
+        .then(saved => {
+          this.savedPosts = saved;
+        });
+    }
   },
   methods: {
-    handleVote() {
-      this.votedPost ? this.onNoVote(this.resource.id) : this.onUpVote(this.resource.id);
+    handleAdd(resource) {
+      resource.authorID = this.user.id;
+      return addResource(resource)
+        .then(saved => {
+          saved.firstName = this.user.firstName;
+          saved.lastName = this.user.lastName;
+          saved.upvotes = 0;
+          this.advice.push(saved);
+          this.$router.push('/advice');
+        });
+    },
+    handleUpdate(resource) {
+      return updateResource(resource)
+        .then(saved => {
+          saved.firstName = this.user.firstName;
+          saved.lastName = this.user.lastName;
+          const index = this.resources.findIndex(r => r.id === saved.id);
+          if(index === -1) return;
+          saved.upvotes = this.resources[index].upvotes;
+          this.advice.splice(index, 1, saved);
+        });
     },
     handleRemove(id) {
       if(confirm('Are you sure you want to delete?')) {
-        return removeResources(id)
+        return removeResource(id)
           .then(()=> {
-            const index = this.resources.findIndex(resource => resource.id === id);
-            if(index === -1) return;
-            this.resources.splice(index, 1);
+            this.resources = this.resources.filter(r => r.id !== id);
           });
       }
+    },
+    handleUpVote(id) {
+      const vote = {
+        postID: id,
+        userID: this.user.id,
+        tableID: 2
+      };
+      return upVote(vote)
+        .then(saved => {
+          this.votes.push(saved);
+          const index = this.resources.findIndex(r => r.id === saved.postID);
+          this.advice[index].upvotes++;
+        });
+    },
+    handleNoVote(id) {
+      const index = this.votes.findIndex(vote => vote.postID === id);
+      return noVote(this.votes[index].id)
+        .then(()=> {
+          this.votes.splice(index, 1);
+          const index2 = this.resources.findIndex(r => r.id === id);
+          this.advice[index2].upvotes--;
+        });
+    },
+    handleSave(id) {
+      const post = {
+        postID: id,
+        userID: this.user.id,
+        tableID: 2
+      };
+      return savePost(post);
     }
   },
   components: {
-    Resource
+    Resource,
+    ResourceForm
   }
 };
 </script>
