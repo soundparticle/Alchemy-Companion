@@ -93,7 +93,7 @@ export default {
           saved.lastName = this.user.lastName;
           saved.upvotes = 0;
           this.advice.push(saved);
-          this.isModalVisible = false;
+          this.closeModal();
           this.$router.push('/advice');
         });
     },
@@ -153,7 +153,7 @@ export default {
     },
     closeModal() {
       this.isModalVisible = false;
-    },
+    }
   },
   components: {
     Tip,
