@@ -37,7 +37,7 @@ import {
   addResource,
   updateResource,
   removeResource,
-  getVotes,
+  getResourcesVotes,
   noVote,
   upVote,
   savePost,
@@ -72,7 +72,7 @@ export default {
         this.error = err;
       });
     if(this.user) {
-      getVotes(this.user.id)
+      getResourcesVotes(this.user.id)
         .then(votes => {
           this.votes = votes;
         });

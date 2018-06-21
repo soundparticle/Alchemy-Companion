@@ -35,7 +35,7 @@ import {
   addWorkspace,
   updateWorkspace,
   removeWorkspace,
-  getVotes,
+  getWorkspacesVotes,
   noVote,
   upVote,
   savePost,
@@ -65,7 +65,7 @@ export default {
       });
 
     if(this.user) {
-      getVotes(this.user.id)
+      getWorkspacesVotes(this.user.id)
         .then(votes => {
           this.votes = votes;
         });
