@@ -151,4 +151,10 @@ pre {
 .fade-enter, .fade-leave-active {
   opacity: 0
 }
+
+
+textarea {
+  width: 100%;
+  max-width: 100%;
+}
 </style>
