@@ -1,6 +1,10 @@
 <template>
   <div>
     <h1>Workspace Resources Page</h1>
+    <button @click="adding = true"
+    <FormControl v-if="adding">
+      <input placeholder="Workspace">
+    </FormControl>
 
 
     <pre v-if="error">{{ error }}</pre>
@@ -22,11 +26,13 @@ import {
   removeWorkspaces,
 } from '../services/api';
 import Location from './Location';
+import FormControl from './FormControl';
 
 export default {
   data() {
     return {
       workspaces: null,
+      adding: false,
       error: null
     };
   },
@@ -56,7 +62,8 @@ export default {
     }
   },
   components: {
-    Location
+    Location,
+    FormControl
   }
 
 };
