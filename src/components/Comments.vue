@@ -1,13 +1,15 @@
 <template>
   <div>
-    <button type="submit" @click="adding=true">Add Comment</button>
+    <button v-if="!adding" type="submit" @click="adding=true">Add Comment</button>
     <Comment
       v-for="comment in comments"
       :key="comment.id"
       :comment="comment"
     />
 
-    <CommentForm v-if="adding"/>
+    <CommentForm v-if="adding"
+      :onCancel="handleCancel"
+    />
   </div>
 </template>
 
@@ -31,8 +33,15 @@ export default {
 
   methods: {
     handleAdd(comment) {
-      console.log(comment);
-    }
+      // add properties
+      return addComment(comment)
+        .then(saved => {
+          this.comments.push(saved);
+        });
+    },
+    handleCancel() {
+      this.adding = false;
+    },
   },
   components: {
     Comment,
