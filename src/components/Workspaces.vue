@@ -1,42 +1,57 @@
 <template>
   <div>
-    <h1>Workspace Resources Page</h1>
-    <WorkspaceFrom />
-    <pre v-if="error">{{ error }}</pre>
-    <ul v-if="workspaces">
-      <Location v-for="location in workspaces"
-        :key="location.id"
-        :location="location"
-        :user="user"
-        :onRemove="handleRemove"
+     <div id="workspaces">
+      <div class="workspaces-header">
+        <h3>Workspaces</h3>
+        <button @click="adding = !adding">Add Workspace</button>
+      </div>
+      <pre v-if="error">{{ error }}</pre>
+      <WorkspaceForm
+        v-if="adding"
+        :onEdit="handleAdd"
+        :onCancel="handleCancel"
         />
-        <hr>
-    </ul>
+      <ul class="workspaces-list" v-if="workspaces">
+        <Workspace class="workspace" v-for="workspace in workspaces"
+          :key="workspace.id"
+          :workspace="workspace"
+          :user="user"
+          :onRemove="handleRemove"
+          :votes="votes"
+          :savedPosts="savedPosts"
+          :onSave="handleSave"
+          :onUpVote="handleUpVote"
+          :onNoVote="handleNoVote"
+          :onUpdate="handleUpdate"
+          />
+      </ul>
+    </div>
   </div>
 </template>
 
 <script>
 import {
   getWorkspaces,
-  removeWorkspaces,
+  addWorkspace,
+  updateWorkspace,
+  removeWorkspace,
+  getVotes,
+  noVote,
+  upVote,
+  savePost,
+  getSavedWorkspaces
 } from '../services/api';
-import Location from './Location';
-import FormControl from './FormControl';
+import Workspace from './Workspace';
+import WorkspaceForm from './WorkspaceForm';
 
 export default {
   data() {
     return {
       workspaces: null,
-      adding: false,
+      votes: null,
       error: null,
-      workspace: {
-        title: '',
-        address: '',
-        workspaceType: '',
-        url: '',
-        description: ''
-      },
-      testing: []
+      savedPosts: null,
+      adding: false,
     };
   },
   props: ['user'],
@@ -48,30 +63,87 @@ export default {
       .catch(err => {
         this.error = err;
       });
+
+    if(this.user) {
+      getVotes(this.user.id)
+        .then(votes => {
+          this.votes = votes;
+        });
+      getSavedWorkspaces(this.user.id)
+        .then(saved => {
+          this.savedPosts = saved;
+        });
+    }
   },
   methods: {
-    handleVote() {
-      this.votedPost ? this.onNoVote(this.location.id) : this.onUpVote(this.location.id);
+    handleAdd(workspace) {
+      workspace.authorID = this.user.id;
+      return addWorkspace(workspace)
+        .then(saved => {
+          saved.firstName = this.user.firstName;
+          saved.lastName = this.user.lastName;
+          saved.upvotes = 0;
+          this.workspaces.push(saved);
+          this.adding = false;
+          this.$router.push('/workspaces');
+        });
+    },
+    handleUpdate(workspace) {
+      return updateWorkspace(workspace)
+        .then(saved => {
+          saved.firstName = this.user.firstName;
+          saved.lastName = this.user.lastName;
+          const index = this.workspaces.findIndex(r => r.id === saved.id);
+          if(index === -1) return;
+          saved.upvotes = this.workspaces[index].upvotes;
+          this.workspaces.splice(index, 1, saved);
+        });
     },
     handleRemove(id) {
       if(confirm('Are you sure you want to delete?')) {
-        return removeWorkspaces(id)
+        return removeWorkspace(id)
           .then(()=> {
-            const index = this.workspaces.findIndex(location => location.id === id);
-            if(index === -1) return;
-            this.workspaces.splice(index, 1);
+            this.workspaces = this.workspaces.filter(r => r.id !== id);
           });
       }
     },
-
-    handleAdd(workspace) {
-      this.testing.push(workspace);
-      return this.testing;
-    }
+    handleUpVote(id) {
+      const vote = {
+        postID: id,
+        userID: this.user.id,
+        tableID: 2
+      };
+      return upVote(vote)
+        .then(saved => {
+          this.votes.push(saved);
+          const index = this.workspaces.findIndex(r => r.id === saved.postID);
+          this.workspaces[index].upvotes++;
+        });
+    },
+    handleNoVote(id) {
+      const index = this.votes.findIndex(vote => vote.postID === id);
+      return noVote(this.votes[index].id)
+        .then(()=> {
+          this.votes.splice(index, 1);
+          const index2 = this.workspaces.findIndex(r => r.id === id);
+          this.workspaces[index2].upvotes--;
+        });
+    },
+    handleSave(id) {
+      const post = {
+        postID: id,
+        userID: this.user.id,
+        tableID: 2
+      };
+      return savePost(post);
+    },
+    handleCancel() {
+      this.adding = false;
+    },
   },
   components: {
-    Location,
-    FormControl
+    Workspace,
+    WorkspaceForm
   }
 
 };
