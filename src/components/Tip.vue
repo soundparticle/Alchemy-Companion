@@ -18,7 +18,6 @@
         <button v-if="user.id === tip.authorID" @click="onRemove(tip.id)">❌</button>
         <button v-if="user.id === tip.authorID" @click="updating = true">✏️</button>
       </div>
-
     </div>
     <AdviceForm
       v-if="updating"
@@ -26,6 +25,8 @@
       :onEdit="handleUpdate"
       :tip="tip"
       />
+      <Comments v-if="!updating"
+      :postID="tip.id"/>
   </li>
 </div>
 
@@ -33,6 +34,7 @@
 
 <script>
 import AdviceForm from './AdviceForm';
+import Comments from './Comments';
 export default {
   data() {
     return {
@@ -86,7 +88,8 @@ export default {
     }
   },
   components: {
-    AdviceForm
+    AdviceForm,
+    Comments
   }
 };
 
