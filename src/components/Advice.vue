@@ -3,9 +3,19 @@
     <div id="advice">
       <div class="advice-header">
         <h3>Smart Advice From Smart People.</h3>
-        <button @click="adding = !adding">Click Here to Share!</button>
+        <button @click="showModal">Click Here to Share!</button>
       </div>
-      <AdviceForm v-if="adding" :onEdit="handleAdd"/>
+
+
+      <ModalTemplate
+        v-show="isModalVisible"
+        @close="closeModal"
+      >
+        <h2 slot="header">Submit Advice</h2>
+        <AdviceForm slot="body" :onEdit="handleAdd"/>
+        <!-- <p slot="footer">Thanks for your contribution!</p> -->
+      </ModalTemplate>
+
       <ul class="advice-list" v-if="advice">
         <Tip class="each-Tip" v-for="tip in advice"
           :key="tip.id"
@@ -38,11 +48,13 @@ import {
 } from '../services/api';
 import Tip from './Tip';
 import AdviceForm from './AdviceForm';
+import ModalTemplate from './ModalTemplate';
 
 
 export default {
   data() {
     return {
+      isModalVisible: false,
       advice: null,
       votes: null,
       error: null,
@@ -79,6 +91,7 @@ export default {
           saved.lastName = this.user.lastName;
           saved.upvotes = 0;
           this.advice.push(saved);
+          this.isModalVisible = false;
           this.$router.push('/advice');
         });
     },
@@ -132,11 +145,18 @@ export default {
         tableID: 1
       };
       return savePost(post);
-    }
+    },
+    showModal() {
+      this.isModalVisible = true;
+    },
+    closeModal() {
+      this.isModalVisible = false;
+    },
   },
   components: {
     Tip,
-    AdviceForm
+    AdviceForm,
+    ModalTemplate
   }
 };
 </script>

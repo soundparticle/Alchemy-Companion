@@ -14,38 +14,28 @@
           id="modalTitle"
         >
           <slot name="header">
-            This is the default tile!
 
+          </slot>
             <button
               type="button"
               class="btn-close"
               @click="close"
               aria-label="Close modal"
             >
-              x
+              X
             </button>
-          </slot>
         </header>
         <section
           class="modal-body"
           id="modalDescription"
         >
           <slot name="body">
-            I'm the default body!
           </slot>
         </section>
         <footer class="modal-footer">
           <slot name="footer">
-            I'm the default footer!
 
-            <button
-              type="button"
-              class="btn-green"
-              @click="close"
-              aria-label="Close modal"
-            >
-              Close me!
-            </button>
+            
           </slot>
         </footer>
       </div>
@@ -89,13 +79,13 @@ export default {
 
   .modal-header,
   .modal-footer {
-    padding: 15px;
+    padding: 0px 15px;
     display: flex;
   }
 
   .modal-header {
     border-bottom: 1px solid #eeeeee;
-    color: #4AAE9B;
+    color: #198eda;
     justify-content: space-between;
   }
 
@@ -112,17 +102,17 @@ export default {
   .btn-close {
     border: none;
     font-size: 20px;
-    padding: 20px;
+    padding: 10px;
     cursor: pointer;
     font-weight: bold;
-    color: #4AAE9B;
+    color: #198eda;
     background: transparent;
   }
 
   .btn-green {
     color: white;
-    background: #4AAE9B;
-    border: 1px solid #4AAE9B;
+    background: #198eda;
+    border: 1px solid #198eda;
     border-radius: 2px;
   }
 
