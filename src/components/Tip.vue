@@ -1,5 +1,4 @@
 <template>
-
 <div>
   <li>
     <div id="tip-grid" v-if="!updating">
@@ -111,21 +110,6 @@ export default {
   color: rgb(49, 49, 49);
   background: rgb(208, 232, 240);
   border-radius: 15px;
-}
-@-webkit-keyframes AnimationName {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
-}
-@-moz-keyframes AnimationName {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
-}
-@keyframes AnimationName {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
 }
 
 .tip-votes {

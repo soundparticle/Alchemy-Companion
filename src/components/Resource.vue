@@ -15,7 +15,7 @@
       </h4>
       <h4>{{ category }}</h4>
       <p class="resource-description">{{ resource.description }}</p>
-      <h6>Submitted by {{ resource.firstName }} {{ resource.lastName }}</h6>
+      <h6 class="resource-submitted">Submitted by {{ resource.firstName }} {{ resource.lastName }}</h6>
 
       <div class="resource-buttons" v-if="user">
         <button @click="showComments = !showComments">💬</button>
@@ -42,7 +42,7 @@
 
 <script>
 import ResourceForm from './ResourceForm';
-import Comments from './Comments'
+import Comments from './Comments';
 export default {
   data() {
     return {
@@ -110,15 +110,73 @@ export default {
 </script>
 
 <style>
-li {
-  margin: 30px;
+#resource-grid {
+  display: grid;
+  grid-template-columns: .5fr 1fr 1.5fr 5fr 1fr 1fr;
+  grid-template-rows: auto;
+  margin-top: 15px;
+  color: rgb(49, 49, 49);
+  background: rgb(208, 232, 240);
+  border-radius: 15px;
 }
-
-h3 {
-  margin: 0px;
+.resource-votes {
+  grid-column-start: 2;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-
 .upvoted {
-  background: green;
+  color: rgb(0, 207, 0);
+}
+.resource-title {
+  grid-column-start: 3;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 1;
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+.resource-description {
+  font-family: 'Slabo 27px', serif;
+  grid-column-start: 4;
+  grid-column-end: 4;
+  grid-row-start: 1;
+  grid-row-end: 1;
+  display: flex;
+  align-items: center;
+}
+.resource-submitted {
+  font-family: 'Slabo 27px', serif;
+  grid-column-start: 5;
+  grid-column-end: 5;
+  grid-row-start: 1;
+  grid-row-end: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.resource-buttons {
+  grid-column-start: 6;
+  grid-column-end: 6;
+  grid-row-start: 1;
+  grid-row-end: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-content: space-around;
+}
+button {
+    background-color: transparent;
+    border: transparent;
+}
+.icon-arrow {
+  font-size: 2em;
+}
+.icon {
+  font-size: 1.5em;
 }
 </style>
