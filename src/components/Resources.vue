@@ -19,7 +19,7 @@
 <script>
 import {
   getResources,
-  removeResource
+  removeResources
 } from '../services/api';
 import Resource from './Resource';
 
@@ -46,11 +46,11 @@ export default {
     },
     handleRemove(id) {
       if(confirm('Are you sure you want to delete?')) {
-        return removeResource(id)
+        return removeResources(id)
           .then(()=> {
-            const index = this.resource.findIndex(resource => resource.id === id);
+            const index = this.resources.findIndex(resource => resource.id === id);
             if(index === -1) return;
-            this.resource.splice(index, 1);
+            this.resources.splice(index, 1);
           });
       }
     }

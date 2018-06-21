@@ -75,7 +75,13 @@ export function getResources() {
   })
     .then(responseHandler);
 }
-
+export function removeResources(id) {
+  return fetch(`${RESOURCES_URL}/${id}`, {
+    method: 'DELETE',
+    headers: getHeaders()
+  })
+    .then(responseHandler);
+}
 //WORKSPACES
 export function getWorkspaces() {
   return fetch(WORKSPACES_URL, {
