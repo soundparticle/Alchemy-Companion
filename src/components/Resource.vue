@@ -45,7 +45,7 @@ export default {
     // handleVote() {
     //   this.votedPost ? this.onNoVote(this.resource.id) : this.onUpVote(this.resource.id);
     // },
-    
+
     // handleCancel() {
     //   this.updating = false;
     // },
