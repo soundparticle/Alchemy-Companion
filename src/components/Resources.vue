@@ -7,31 +7,47 @@
       </div>
       <pre v-if="error">{{ error }}</pre>
       <ResourceForm v-if="adding" :onEdit="handleAdd"/>
-      <ul v-if="resources">
-        <Resource v-for="resource in resources"
+      <ul class="resources-list" v-if="resources">
+        <Resource class="resource" v-for="resource in resources"
           :key="resource.id"
           :resource="resource"
           :user="user"
           :onRemove="handleRemove"
+          :votes="votes"
+          :savedPosts="savedPosts"
+          :onSave="handleSave"
+          :onUpVote="handleUpVote"
+          :onNoVote="handleNoVote"
+          :onUpdate="handleUpdate"
           />
-          <hr>
       </ul>
-   </div>
+    </div>
   </div>
 </template>
 
 <script>
 import {
   getResources,
-  removeResource
+  addResource,
+  updateResource,
+  removeResource,
+  getVotes,
+  noVote,
+  upVote,
+  savePost,
+  getSavedResources
 } from '../services/api';
 import Resource from './Resource';
+import ResourceForm from './ResourceForm';
 
 export default {
   data() {
     return {
       resources: null,
-      error: null
+      votes: null,
+      error: null,
+      savedPosts: null,
+      adding: false
     };
   },
   props: ['user'],
@@ -43,10 +59,39 @@ export default {
       .catch(err => {
         this.error = err;
       });
+    if(this.user) {
+      getVotes(this.user.id)
+        .then(votes => {
+          this.votes = votes;
+        });
+      getSavedResources(this.user.id)
+        .then(saved => {
+          this.savedPosts = saved;
+        });
+    }
   },
   methods: {
-    handleVote() {
-      this.votedPost ? this.onNoVote(this.resource.id) : this.onUpVote(this.resource.id);
+    handleAdd(resource) {
+      resource.authorID = this.user.id;
+      return addResource(resource)
+        .then(saved => {
+          saved.firstName = this.user.firstName;
+          saved.lastName = this.user.lastName;
+          saved.upvotes = 0;
+          this.advice.push(saved);
+          this.$router.push('/advice');
+        });
+    },
+    handleUpdate(resource) {
+      return updateResource(resource)
+        .then(saved => {
+          saved.firstName = this.user.firstName;
+          saved.lastName = this.user.lastName;
+          const index = this.resources.findIndex(r => r.id === saved.id);
+          if(index === -1) return;
+          saved.upvotes = this.resources[index].upvotes;
+          this.advice.splice(index, 1, saved);
+        });
     },
     handleRemove(id) {
       if(confirm('Are you sure you want to delete?')) {
@@ -60,7 +105,8 @@ export default {
     }
   },
   components: {
-    Resource
+    Resource,
+    ResourceForm
   }
 };
 </script>
