@@ -237,8 +237,20 @@ export function noVote(id) {
 
 
 // COMMENTS
-export function getComments(id) {
+export function getAdviceComments(id) {
   return fetch(`${COMMENTS_URL}/advice/${id}`, {
+    headers: getHeaders(true)
+  })
+    .then(responseHandler);
+}
+export function getResourcesComments(id) {
+  return fetch(`${COMMENTS_URL}/resources/${id}`, {
+    headers: getHeaders(true)
+  })
+    .then(responseHandler);
+}
+export function getWorkspacesComments(id) {
+  return fetch(`${COMMENTS_URL}/workspaces/${id}`, {
     headers: getHeaders(true)
   })
     .then(responseHandler);

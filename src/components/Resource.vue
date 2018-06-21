@@ -15,7 +15,6 @@
       </h4>
       <h4>{{ category }}</h4>
       <p class="resource-description">{{ resource.description }}</p>
-      <p>Web Link: <a :href="resource.url">HERE</a></p>
       <h6>Submitted by {{ resource.firstName }} {{ resource.lastName }}</h6>
 
       <div class="resource-buttons" v-if="user">
@@ -30,17 +29,25 @@
       :onCancel="handleCancel"
       :onEdit="handleUpdate"
       :resource="resource"
-      />
+      :categories="categories"
+    />
+    <Comments v-if="showComments"
+    :postID="resource.id"
+    :user="user"
+    :tableID=2
+    />
   </li>
 </div>
 </template>
 
 <script>
 import ResourceForm from './ResourceForm';
+import Comments from './Comments'
 export default {
   data() {
     return {
-      updating: false
+      updating: false,
+      showComments: false
     };
   },
   props: [
@@ -67,9 +74,10 @@ export default {
       return category ? category.category : 'Unknown';
     },
     savedPost() {
-      if(!this.savedPosts) return;
-      const savedPostIDs = this.savedPosts.map(s => s.postID);
-      return savedPostIDs.includes(this.resouce.id) ? 'saved' : '⭐';
+      if(this.savedPosts) {
+        const savedPostIDs = this.savedPosts.map(s => s.postID);
+        return savedPostIDs.includes(this.resource.id) ? 'saved' : '⭐';
+      }
     }
   },
   methods: {
@@ -93,7 +101,8 @@ export default {
     }
   },
   components: {
-    ResourceForm
+    ResourceForm,
+    Comments
   }
 };
 
@@ -110,6 +119,6 @@ h3 {
 }
 
 .upvoted {
-  border: 5px solid red;
+  background: green;
 }
 </style>

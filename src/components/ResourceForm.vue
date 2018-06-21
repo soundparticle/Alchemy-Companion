@@ -13,7 +13,7 @@
             v-for="category in categories"
             :key="category.id"
             :value="category.id">
-            {{category.category}}
+            {{ category.category }}
           </option>
         </select>
       </FormControl>
