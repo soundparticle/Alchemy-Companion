@@ -1,32 +1,30 @@
 <template>
     <div>
 
-      <form v-if="adding" @submit.prevent="handleAdd">
+      <form @submit.prevent="handleSubmit">
         <FormControl>
-          <input placeholder="Name" v-model="workspace.title" required>
+          <input placeholder="Name" v-model="edit.title" required>
         </FormControl>
         <FormControl>
-          <input placeholder="Address" v-model="workspace.address" required>
+          <input placeholder="Address" v-model="edit.address" required>
         </FormControl>
         <FormControl>
-          <select v-model="workspace.workspaceType">
-            <option disabled>Select Workspace Type</option>
+          <select v-model="edit.workspaceType">
+            <option value="" disabled>Select Workspace Type</option>
             <option value="Bar">Bar</option>
             <option value="Cafe">Cafe</option>
             <option value="Other">Other</option>
           </select>
         </FormControl>
         <FormControl>
-          <input placeholder="Website URL" v-model="workspace.url">
+          <input placeholder="Website URL" v-model="edit.url">
         </FormControl>
         <FormControl>
-          <textarea rows="8" cols="60" placeholder="Add Description" v-model="workspace.description" required></textarea>
+          <textarea rows="8" cols="60" placeholder="Add Description" v-model="edit.description" required></textarea>
         </FormControl>
         <FormControl>
           <button>Submit</button>
-        </FormControl>
-        <FormControl>
-          <button @click="adding = false">Cancel</button>
+          <button @click.prevent="onCancel">Cancel</button>
         </FormControl>
 
       </form>
@@ -38,7 +36,7 @@ import FormControl from './FormControl';
 export default {
   data() {
     return {
-      edit: this.tip ? Object.assign({}, this.tip) : {
+      edit: this.workspace ? Object.assign({}, this.workspace) : {
         title: '',
         address: '',
         workspaceType: '',

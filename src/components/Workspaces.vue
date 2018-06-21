@@ -51,7 +51,7 @@ export default {
       votes: null,
       error: null,
       savedPosts: null,
-      adding: false,
+      adding: false
     };
   },
   props: ['user'],
@@ -111,7 +111,7 @@ export default {
       const vote = {
         postID: id,
         userID: this.user.id,
-        tableID: 2
+        tableID: 3
       };
       return upVote(vote)
         .then(saved => {
@@ -133,7 +133,7 @@ export default {
       const post = {
         postID: id,
         userID: this.user.id,
-        tableID: 2
+        tableID: 3
       };
       return savePost(post);
     },

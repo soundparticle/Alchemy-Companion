@@ -25,12 +25,11 @@
         <button v-if="user.id === workspace.authorID" @click="updating = true">✏️</button>
       </div>
     </div>
-    <workspaceForm
+    <WorkspaceForm
       v-if="updating"
       :onCancel="handleCancel"
       :onEdit="handleUpdate"
       :workspace="workspace"
-      :categories="categories"
     />
     <Comments v-if="showComments"
     :postID="workspace.id"
@@ -65,7 +64,7 @@ export default {
   computed: {
     votedPost() {
       if(!this.votes) return;
-      const votedPostIDs = this.votes.map(v => v.postID && v.tableID === 2);
+      const votedPostIDs = this.votes.map(v => v.postID);
       return votedPostIDs.includes(this.workspace.id);
     },
     savedPost() {
