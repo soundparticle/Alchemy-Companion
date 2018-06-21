@@ -14,9 +14,7 @@
 
       <FormControl>
         <button type="submit">Submit</button>
-        <button
-          v-if="onCancel"
-          @click.prevent="onCancel">
+        <button @click.prevent="handleClose">
           Cancel
         </button>
       </FormControl>
@@ -25,14 +23,19 @@
 </template>
 
 <script>
+
+const initAdvice = () => {
+  return {
+    title: '',
+    text: ''
+  };
+};
+
 import FormControl from './FormControl';
 export default {
   data() {
     return {
-      edit: this.tip ? Object.assign({}, this.tip) : {
-        title: '',
-        text: ''
-      }
+      edit: this.tip ? Object.assign({}, this.tip) : initAdvice()
     };
   },
   components: {
@@ -40,7 +43,12 @@ export default {
   },
   methods: {
     handleSubmit() {
-      this.onEdit(this.edit);
+      this.onEdit(this.edit)
+        .then(this.edit = initAdvice());
+    },
+    handleClose() {
+      this.edit = initAdvice();
+      this.onCancel();
     }
   },
   props: ['onEdit', 'onCancel', 'tip']

@@ -3,8 +3,8 @@
     <h2>App Info Page</h2>
         <div id="app-info">
             <div class="app-info">
-            <h3>About: Alchemy +Ultra</h3>
-            <p>Description coming soon!</p>
+            <h3>About the Alchemy Companion App</h3>
+            <p>The Alchemy Code Lab Student Companion App is designed to assist students by aggregating information about local spots to code, crucial resources, and advice from alumni and fellow students. Users </p>
             </div>
         </div>
   </div>
