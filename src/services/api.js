@@ -117,7 +117,7 @@ export function getWorkspaces() {
   })
     .then(responseHandler);
 }
-export function removeWorkspaces(id) {
+export function removeWorkspace(id) {
   return fetch(`${WORKSPACES_URL}/${id}`, {
     method: 'DELETE',
     headers: getHeaders()
@@ -125,6 +125,23 @@ export function removeWorkspaces(id) {
     .then(responseHandler);
 }
 
+export function addWorkspace(workspace) {
+  return fetch(WORKSPACES_URL, {
+    method: 'POST',
+    headers: getHeaders(true),
+    body: JSON.stringify(workspace)
+  })
+    .then(responseHandler);
+}
+
+export function updateWorkspace(workspace) {
+  return fetch(`${WORKSPACES_URL}/${workspace.id}`, {
+    method: 'PUT',
+    headers: getHeaders(true),
+    body: JSON.stringify(workspace)
+  })
+    .then(responseHandler);
+}
 
 //HUMOR
 export function getHumor() {
