@@ -7,6 +7,7 @@ const AUTH_URL = `${URL}/auth`;
 const USER_URL = `${URL}/users`;
 const SAVED_URL = `${URL}/saved`;
 const VOTES_URL = `${URL}/votes`;
+const COMMENTS_URL = `${URL}/comments`;
 
 function responseHandler(response) {
   if(response.ok) return response.json();
@@ -183,3 +184,12 @@ export function noVote(id) {
     .then(responseHandler);
 }
 
+
+
+// COMMENTS
+export function getComments(id) {
+  return fetch(`${COMMENTS_URL}/advice/${id}`, {
+    headers: getHeaders(true)
+  })
+    .then(responseHandler);
+}
