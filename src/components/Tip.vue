@@ -6,17 +6,17 @@
       <button
         v-if="user"
         :class="{ upvoted: votedPost }"
-        @click="handleVote">⬆️</button>
+        @click="handleVote"><font-awesome-icon class="icon-arrow" icon="arrow-circle-up" /></button>
       <h4 class="tip-votes">( {{ tip.upvotes }} )</h4>
       <h4 class="tip-title">{{ tip.title }}</h4>
       <p class="tip-text">{{ tip.text }}</p>
       <h6 class="tip-submitted">Submitted by {{ tip.firstName }} {{ tip.lastName }}</h6>
 
       <div class="tip-buttons" v-if="user">
-        <button @click="showComments = !showComments">💬</button>
-        <button @click="handleSave" :disabled="savedPost === 'saved'">{{ savedPost }}</button>
-        <button v-if="user.id === tip.authorID" @click="onRemove(tip.id)">❌</button>
-        <button v-if="user.id === tip.authorID" @click="updating = true">✏️</button>
+        <button @click="showComments = !showComments"><font-awesome-icon class="icon" icon="comment-dots" /></button>
+        <button @click="handleSave" :disabled="savedPost"><font-awesome-icon class="icon" icon="star" /></button>
+        <button v-if="user.id === tip.authorID" @click="onRemove(tip.id)"><font-awesome-icon class="icon" icon="trash-alt" /></button>
+        <button v-if="user.id === tip.authorID" @click="updating = true"><font-awesome-icon class="icon" icon="edit" /></button>
       </div>
     </div>
     <AdviceForm
@@ -24,12 +24,12 @@
       :onCancel="handleCancel"
       :onEdit="handleUpdate"
       :tip="tip"
-      />
-      <Comments v-if="showComments"
-      :postID="tip.id"
-      :user="user"
-      :tableID=1
-      />
+    />
+    <Comments v-if="showComments"
+    :postID="tip.id"
+    :user="user"
+    :tableID=1
+    />
   </li>
 </div>
 
@@ -38,6 +38,7 @@
 <script>
 import AdviceForm from './AdviceForm';
 import Comments from './Comments';
+
 export default {
   data() {
     return {
@@ -66,8 +67,7 @@ export default {
     savedPost() {
       if(this.savedPosts) {
         const savedPostIDs = this.savedPosts.map(s => s.postID);
-        //return savedPostIDs.includes(this.tip.id);
-        return savedPostIDs.includes(this.tip.id) ? 'saved' : '⭐';
+        return savedPostIDs.includes(this.tip.id);
       }
     }
   },
@@ -110,7 +110,7 @@ export default {
   margin-top: 15px;
   color: rgb(49, 49, 49);
   background: rgb(208, 232, 240);
-  border-radius: 15px 15px 15px 15px;
+  border-radius: 15px;
 }
 @-webkit-keyframes AnimationName {
     0%{background-position:0% 50%}
@@ -138,14 +138,7 @@ export default {
   justify-content: center;
 }
 .upvoted {
-  /* grid-column-start: 1;
-  grid-column-end: 1;
-  grid-row-start: 1;
-  grid-row-end: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center; */
-  background: green;
+  color: rgb(0, 207, 0);
 }
 .tip-title {
   grid-column-start: 3;
@@ -188,5 +181,11 @@ export default {
 button {
     background-color: transparent;
     border: transparent;
+}
+.icon-arrow {
+  font-size: 2em;
+}
+.icon {
+  font-size: 1.5em;
 }
 </style>

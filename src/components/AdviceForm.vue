@@ -13,7 +13,7 @@
       </FormControl>
 
       <FormControl>
-        <button type="submit" @click="handleSubmit">Submit</button>
+        <button type="submit">Submit</button>
         <button
           v-if="onCancel"
           @click.prevent="onCancel">
@@ -21,7 +21,6 @@
         </button>
       </FormControl>
     </form>
-    <!-- <pre>{{ error }}</pre> -->
   </section>
 </template>
 

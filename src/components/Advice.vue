@@ -3,10 +3,10 @@
     <div id="advice">
       <div class="advice-header">
         <h3>Smart Advice From Smart People.</h3>
-        <router-link to="/advice/add"> Click Here to Share! </router-link>
+        <button @click="adding = !adding">Click Here to Share!</button>
       </div>
-      <router-view class="advice-router" :onAdd="handleAdd"></router-view>
       <pre v-if="error">{{ error }}</pre>
+      <AdviceForm v-if="adding" :onEdit="handleAdd"/>
       <ul class="advice-list" v-if="advice">
         <Tip class="each-Tip" v-for="tip in advice"
           :key="tip.id"
@@ -31,13 +31,14 @@ import {
   addAdvice,
   updateAdvice,
   removeAdvice,
-  getVotes,
+  getAdviceVotes,
   noVote,
   upVote,
   savePost,
   getSavedAdvice
 } from '../services/api';
 import Tip from './Tip';
+import AdviceForm from './AdviceForm';
 
 
 export default {
@@ -46,7 +47,8 @@ export default {
       advice: null,
       votes: null,
       error: null,
-      savedPosts: null
+      savedPosts: null,
+      adding: false
     };
   },
   props: ['user'],
@@ -59,7 +61,7 @@ export default {
         this.error = err;
       });
     if(this.user) {
-      getVotes(this.user.id)
+      getAdviceVotes(this.user.id)
         .then(votes => {
           this.votes = votes;
         });
@@ -134,7 +136,8 @@ export default {
     }
   },
   components: {
-    Tip
+    Tip,
+    AdviceForm
   }
 };
 </script>
@@ -169,7 +172,6 @@ export default {
   -webkit-animation: AnimationName 30s ease infinite;
   -moz-animation: AnimationName 30s ease infinite;
   animation: AnimationName 30s ease infinite;
-  z-index: -5;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -195,6 +197,11 @@ export default {
   grid-column-end: span 5;
   grid-row-start: 5;
   grid-row-end: 5;
+}
+a {
+  color: white;
+  text-decoration: none;
+  font-weight: bolder;
 }
 
 ul {

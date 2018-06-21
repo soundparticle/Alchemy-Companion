@@ -76,13 +76,40 @@ export function getResources() {
   })
     .then(responseHandler);
 }
-export function removeResources(id) {
+
+export function getResourceCategories() {
+  return fetch(`${RESOURCES_URL}/categories`, {
+    headers: getHeaders(true)
+  })
+    .then(responseHandler);
+}
+
+export function addResource(resource) {
+  return fetch(RESOURCES_URL, {
+    method: 'POST',
+    headers: getHeaders(true),
+    body: JSON.stringify(resource)
+  })
+    .then(responseHandler);
+}
+
+export function updateResource(resource) {
+  return fetch(`${RESOURCES_URL}/${resource.id}`, {
+    method: 'PUT',
+    headers: getHeaders(true),
+    body: JSON.stringify(resource)
+  })
+    .then(responseHandler);
+}
+
+export function removeResource(id) {
   return fetch(`${RESOURCES_URL}/${id}`, {
     method: 'DELETE',
     headers: getHeaders()
   })
     .then(responseHandler);
 }
+
 //WORKSPACES
 export function getWorkspaces() {
   return fetch(WORKSPACES_URL, {
@@ -90,7 +117,7 @@ export function getWorkspaces() {
   })
     .then(responseHandler);
 }
-export function removeWorkspaces(id) {
+export function removeWorkspace(id) {
   return fetch(`${WORKSPACES_URL}/${id}`, {
     method: 'DELETE',
     headers: getHeaders()
@@ -98,6 +125,23 @@ export function removeWorkspaces(id) {
     .then(responseHandler);
 }
 
+export function addWorkspace(workspace) {
+  return fetch(WORKSPACES_URL, {
+    method: 'POST',
+    headers: getHeaders(true),
+    body: JSON.stringify(workspace)
+  })
+    .then(responseHandler);
+}
+
+export function updateWorkspace(workspace) {
+  return fetch(`${WORKSPACES_URL}/${workspace.id}`, {
+    method: 'PUT',
+    headers: getHeaders(true),
+    body: JSON.stringify(workspace)
+  })
+    .then(responseHandler);
+}
 
 //HUMOR
 export function getHumor() {
@@ -128,6 +172,15 @@ export function signIn(credentials) {
 
 
 // DASHBOARD-SAVED
+export function updateUser(user) {
+  return fetch(`${USER_URL}/${user.id}`, {
+    method: 'PUT',
+    headers: getHeaders(true),
+    body: JSON.stringify(user)
+  })
+    .then(responseHandler);
+}
+
 export function getUser(id) {
   return fetch(`${USER_URL}/${id}`, {
     headers: getHeaders(true),
@@ -174,8 +227,20 @@ export function savePost(post) {
 }
 
 // VOTES
-export function getVotes(userID) {
-  return fetch(`${VOTES_URL}/${userID}`, {
+export function getAdviceVotes(userID) {
+  return fetch(`${VOTES_URL}/advice/${userID}`, {
+    headers: getHeaders(true)
+  })
+    .then(responseHandler);
+}
+export function getResourcesVotes(userID) {
+  return fetch(`${VOTES_URL}/resources/${userID}`, {
+    headers: getHeaders(true)
+  })
+    .then(responseHandler);
+}
+export function getWorkspacesVotes(userID) {
+  return fetch(`${VOTES_URL}/workspaces/${userID}`, {
     headers: getHeaders(true)
   })
     .then(responseHandler);
@@ -201,8 +266,20 @@ export function noVote(id) {
 
 
 // COMMENTS
-export function getComments(id) {
+export function getAdviceComments(id) {
   return fetch(`${COMMENTS_URL}/advice/${id}`, {
+    headers: getHeaders(true)
+  })
+    .then(responseHandler);
+}
+export function getResourcesComments(id) {
+  return fetch(`${COMMENTS_URL}/resources/${id}`, {
+    headers: getHeaders(true)
+  })
+    .then(responseHandler);
+}
+export function getWorkspacesComments(id) {
+  return fetch(`${COMMENTS_URL}/workspaces/${id}`, {
     headers: getHeaders(true)
   })
     .then(responseHandler);
