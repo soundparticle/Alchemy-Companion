@@ -114,6 +114,15 @@ export function signIn(credentials) {
 
 
 // DASHBOARD-SAVED
+export function updateUser(user) {
+  return fetch(`${USER_URL}/${user.id}`, {
+    method: 'PUT',
+    headers: getHeaders(true),
+    body: JSON.stringify(user)
+  })
+    .then(responseHandler);
+}
+
 export function getUser(id) {
   return fetch(`${USER_URL}/${id}`, {
     headers: getHeaders(true),
