@@ -12,11 +12,20 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.config.productionTip = false;
 Vue.use(VueRouter);
 
+Vue.component('modal', {
+  template: '#modal-template'
+}),
+
+
 new Vue({
+  data: {
+    showModal: false
+  },
   router,
   render: h => h(App),
   el: '#app',
   components: { App },
   template: '<App/>'
 }).$mount('#app');
+
 
