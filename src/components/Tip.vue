@@ -13,7 +13,7 @@
       <h6 class="tip-submitted">Submitted by {{ tip.firstName }} {{ tip.lastName }}</h6>
 
       <div class="tip-buttons" v-if="user">
-        <button @click="adding = true">💬</button>
+        <button @click="showComments = !showComments">💬</button>
         <button @click="handleSave" :disabled="savedPost === 'saved'">{{ savedPost }}</button>
         <button v-if="user.id === tip.authorID" @click="onRemove(tip.id)">❌</button>
         <button v-if="user.id === tip.authorID" @click="updating = true">✏️</button>
@@ -25,8 +25,7 @@
       :onEdit="handleUpdate"
       :tip="tip"
       />
-      <Comments v-if="!updating"
-      :adding="adding"
+      <Comments v-if="showComments"
       :postID="tip.id"/>
   </li>
 </div>
@@ -40,7 +39,7 @@ export default {
   data() {
     return {
       updating: false,
-      adding: false
+      showComments: false
     };
   },
   props: [

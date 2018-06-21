@@ -1,13 +1,13 @@
 <template>
   <div>
-    <button type="submit">Add Comment</button>
+    <button type="submit" @click="adding=true">Add Comment</button>
     <Comment
       v-for="comment in comments"
       :key="comment.id"
       :comment="comment"
     />
 
-    <CommentForm />
+    <CommentForm v-if="adding"/>
   </div>
 </template>
 
@@ -19,6 +19,7 @@ export default {
   data() {
     return {
       comments: null,
+      adding: false
     };
   },
   created() {
