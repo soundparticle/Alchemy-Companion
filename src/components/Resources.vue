@@ -8,7 +8,7 @@
           :onRemove="handleRemove"
           >
           <hr>
-          <h3> ( {{ item.upvotes }} ) </h3>
+          <h3> ( {{ resource.upvotes }} ) </h3>
           <button>💬</button>
           <button>⭐</button>
           <button v-if="user.id === resource.authorID" @click="onRemove(resource.id)">❌</button>
@@ -29,7 +29,6 @@ export default {
   data() {
     return {
       resources: null,
-      resource: null,
       error: null
     };
   },
