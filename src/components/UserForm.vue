@@ -22,28 +22,19 @@
         </FormControl>
         <FormControl>
           <button type="submit">Submit</button>
-        </FormControl>
-        <FormControl>
           <button @click.prevent="onCancel">Cancel</button>
         </FormControl>
       </form>
-    {{ userInfo }}
     </div>
 </template>
 
 <script>
+
 import FormControl from './FormControl';
 export default {
   data() {
     return {
-      edit: this.userInfo ? Object.assign({}, this.userInfo) : {
-        firstName: '',
-        lastName: '',
-        email: '',
-        githubProfile: '',
-        classworkRepo: '',
-        linkedin: ''
-      }
+      edit: Object.assign({}, this.userInfo)
     };
   },
   components: {
@@ -51,7 +42,14 @@ export default {
   },
   methods: {
     handleSubmit() {
-      this.onEdit(this.edit);
+      return this.onEdit(this.edit)
+        .then(() => {
+          this.edit = Object.assign({}, this.userInfo);
+        });
+    },
+    handleClose() {
+      this.edit = Object.assign({}, this.userInfo);
+      this.onCancel();
     }
   },
   props: ['onEdit', 'onCancel', 'userInfo']
