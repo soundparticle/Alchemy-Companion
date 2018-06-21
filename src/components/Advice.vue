@@ -30,7 +30,7 @@ import {
   addAdvice,
   updateAdvice,
   removeAdvice,
-  getVotes,
+  getAdviceVotes,
   noVote,
   upVote,
   savePost,
@@ -60,7 +60,7 @@ export default {
         this.error = err;
       });
     if(this.user) {
-      getVotes(this.user.id)
+      getAdviceVotes(this.user.id)
         .then(votes => {
           this.votes = votes;
         });

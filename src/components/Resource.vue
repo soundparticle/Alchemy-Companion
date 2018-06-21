@@ -5,23 +5,17 @@
       <button
         v-if="user"
         :class="{ upvoted: votedPost }"
-        @click="handleVote"
-        >
-        ⬆️
-      </button>
-      <h4 class="resource-votes">{{ resource.upvotes }}</h4>
-      <h4 class="resource-title">
-        <a :href="resource.url">{{ resource.title }}</a>
-      </h4>
-      <h4>{{ category }}</h4>
-      <p class="resource-description">{{ resource.description }}</p>
+        @click="handleVote"><font-awesome-icon class="icon-arrow" icon="arrow-circle-up" /></button>
+      <h4 class="resource-votes">( {{ resource.upvotes }} )</h4>
+      <h4 class="resource-title"><a :href="resource.url">{{ resource.title }}</a></h4>
+      <p class="resource-description"><strong>{{ category }} :</strong>&nbsp; {{ resource.description }}</p>
       <h6 class="resource-submitted">Submitted by {{ resource.firstName }} {{ resource.lastName }}</h6>
 
       <div class="resource-buttons" v-if="user">
-        <button @click="showComments = !showComments">💬</button>
-        <button @click="handleSave" :disabled="savedPost === 'saved'">{{ savedPost }}</button>
-        <button v-if="user.id === resource.authorID" @click="onRemove(resource.id)">❌</button>
-        <button v-if="user.id === resource.authorID" @click="updating = true">✏️</button>
+        <button @click="showComments = !showComments"><font-awesome-icon class="icon" icon="comment-dots" /></button>
+        <button @click="handleSave" :disabled="savedPost === 'saved'"><font-awesome-icon class="icon" icon="star" /></button>
+        <button v-if="user.id === resource.authorID" @click="onRemove(resource.id)"><font-awesome-icon class="icon" icon="trash-alt" /></button>
+        <button v-if="user.id === resource.authorID" @click="updating = true"><font-awesome-icon class="icon" icon="edit" /></button>
       </div>
     </div>
     <ResourceForm
@@ -64,9 +58,10 @@ export default {
   ],
   computed: {
     votedPost() {
-      if(!this.votes) return;
-      const votedPostIDs = this.votes.map(v => v.postID && v.tableID === 2);
-      return votedPostIDs.includes(this.resource.id);
+      if(this.votes) {
+        const votedPostIDs = this.votes.map(v => v.postID);
+        return votedPostIDs.includes(this.resource.id);
+      }
     },
     category() {
       if(!this.categories) return;
@@ -109,7 +104,8 @@ export default {
 
 </script>
 
-<style>
+
+<style scoped>
 #resource-grid {
   display: grid;
   grid-template-columns: .5fr 1fr 1.5fr 5fr 1fr 1fr;

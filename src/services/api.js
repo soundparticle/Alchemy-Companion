@@ -227,8 +227,20 @@ export function savePost(post) {
 }
 
 // VOTES
-export function getVotes(userID) {
-  return fetch(`${VOTES_URL}/${userID}`, {
+export function getAdviceVotes(userID) {
+  return fetch(`${VOTES_URL}/advice/${userID}`, {
+    headers: getHeaders(true)
+  })
+    .then(responseHandler);
+}
+export function getResourcesVotes(userID) {
+  return fetch(`${VOTES_URL}/resources/${userID}`, {
+    headers: getHeaders(true)
+  })
+    .then(responseHandler);
+}
+export function getWorkspacesVotes(userID) {
+  return fetch(`${VOTES_URL}/workspaces/${userID}`, {
     headers: getHeaders(true)
   })
     .then(responseHandler);

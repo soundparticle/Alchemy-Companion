@@ -1,6 +1,21 @@
 <template>
   <div v-if="userInfo">
     <h1>Welcome to your Dashboard, {{ userInfo.firstName }}. </h1>
+  
+    <div id="app">
+      <button
+        type="button"
+        class="btn"
+        @click="showModal"
+      >
+        Open Modal!
+      </button>
+
+    <ModalTemplate
+      v-show="isModalVisible"
+      @close="closeModal"
+    />
+    </div>
 
     <button v-if="!editing" @click="editing = true">Edit Profile</button>
         {{ userEdit }}
@@ -76,15 +91,17 @@
           <p>{{ workspace.address }}</p>
           <a :href="workspace.url">Go to external link</a>
           <h4>{{ workspace.firstName }} {{ workspace.lastName }}</h4>
-          <button @click="handleDelete(workspace.id)" type="submit">Remove</button>     
+          <button @click="handleDelete(workspace.id)" type="submit">Remove</button>
         </li>
       </ul>
+
 
     </section>
   </div>
 </template>
 
 <script>
+
 import FormControl from './FormControl';
 import {
   getUser,
@@ -94,11 +111,13 @@ import {
   deleteSaved,
   updateUser
 } from '../services/api';
+import ModalTemplate from './ModalTemplate';
 
 export default {
-
+  name: 'app',
   data() {
     return {
+      isModalVisible: false,
       userInfo: null,
       userEdit: null,
       savedAdvice: null,
@@ -133,6 +152,12 @@ export default {
   },
 
   methods: {
+    showModal() {
+      this.isModalVisible = true;
+    },
+    closeModal() {
+      this.isModalVisible = false;
+    },
     handleDelete(id) {
       return deleteSaved(id)
         .then(() => {
@@ -167,7 +192,8 @@ export default {
   props: ['user'],
 
   components: {
-    FormControl
+    FormControl,
+    ModalTemplate
   }
 
 };

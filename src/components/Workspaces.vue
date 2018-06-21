@@ -2,7 +2,7 @@
   <div>
      <div id="workspaces">
       <div class="workspaces-header">
-        <h3>Workspaces</h3>
+        <h3>Great Places to Work with Wifi and Ammeneties</h3>
         <button @click="adding = !adding">Add Workspace</button>
       </div>
       <pre v-if="error">{{ error }}</pre>
@@ -35,7 +35,7 @@ import {
   addWorkspace,
   updateWorkspace,
   removeWorkspace,
-  getVotes,
+  getWorkspacesVotes,
   noVote,
   upVote,
   savePost,
@@ -65,7 +65,7 @@ export default {
       });
 
     if(this.user) {
-      getVotes(this.user.id)
+      getWorkspacesVotes(this.user.id)
         .then(votes => {
           this.votes = votes;
         });
@@ -150,13 +150,72 @@ export default {
 </script>
 
 <style scoped>
-ul {
-  list-style: none;
+#workspaces {
+  display: grid;
+  grid-template-columns: 10px 50px auto 50px 20px;
+  grid-template-rows: 5px 40px 5px auto auto 40px 20px;
 }
-pre {
-  color: red;
+
+@-webkit-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@-moz-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+
+.workspaces-header {
+  border-radius: 0px 0px 15px 15px;
+  background: linear-gradient(270deg, #2c3e50, #2980b9);
+  background-size: 400% 400%;
+  -webkit-animation: AnimationName 30s ease infinite;
+  -moz-animation: AnimationName 30s ease infinite;
+  animation: AnimationName 30s ease infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-content: space-evenly;
+  grid-column-start: 1;
+  grid-column-end: span 5;
+  grid-row-start: 2;
+  grid-row-end: 2;
+}
+.workspaces-router {
+  grid-column-start: 1;
+  grid-column-end: span 5;
+  grid-row-start: 4;
+  grid-row-end: 4;
+}
+.workspaces-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+  grid-column-start: 1;
+  grid-column-end: span 5;
+  grid-row-start: 5;
+  grid-row-end: 5;
+}
+a {
+  color: white;
+  text-decoration: none;
+  font-weight: bolder;
+}
+ul {
+  padding: 0;
+  list-style-type: none;
 }
 h3 {
+  color: white;
   display: inline;
 }
 </style>
