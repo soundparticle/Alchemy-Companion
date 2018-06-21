@@ -196,13 +196,9 @@ export default {
 }
 
 ul {
-  list-style: none;
-  border-radius: 15px 15px 15px 15px;
-  background: linear-gradient(270deg, #80b5eb, #2980b9);
-  background-size: 400% 400%;
-  -webkit-animation: AnimationName 30s ease infinite;
-  -moz-animation: AnimationName 30s ease infinite;
-  animation: AnimationName 30s ease infinite;
+  padding: 0;
+  list-style-type: none;
+
 }
 pre {
   color: red;

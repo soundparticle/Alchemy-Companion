@@ -101,12 +101,8 @@ export default {
   grid-template-columns: .5fr 1fr 1.5fr 5fr 1fr 1fr;
   grid-template-rows: auto;
   margin-top: 15px;
-  background: linear-gradient(270deg, #33cccc, steelblue);
-  background-size: 400% 400%;
-  -webkit-animation: AnimationName 30s ease infinite;
-  -moz-animation: AnimationName 30s ease infinite;
-  animation: AnimationName 30s ease infinite;
-  color: white;
+  color: rgb(49, 49, 49);
+  background: rgb(208, 232, 240);
   border-radius: 15px 15px 15px 15px;
 }
 @-webkit-keyframes AnimationName {
@@ -153,6 +149,7 @@ export default {
   margin-right: 10px;
 }
 .tip-text {
+  font-family: 'Slabo 27px', serif;
   grid-column-start: 4;
   grid-column-end: 4;
   grid-row-start: 1;
@@ -161,6 +158,7 @@ export default {
   align-items: center;
 }
 .tip-submitted {
+  font-family: 'Slabo 27px', serif;
   grid-column-start: 5;
   grid-column-end: 5;
   grid-row-start: 1;
