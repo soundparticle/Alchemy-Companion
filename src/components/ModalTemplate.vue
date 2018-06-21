@@ -15,7 +15,6 @@
         >
           <slot name="header">
 
-          </slot>
             <button
               type="button"
               class="btn-close"
@@ -24,6 +23,7 @@
             >
               X
             </button>
+          </slot>
         </header>
         <section
           class="modal-body"
@@ -50,6 +50,7 @@ export default {
   methods: {
     close() {
       this.$emit('close');
+      this.$emit('wipe');
     },
   },
 };

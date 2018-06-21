@@ -12,8 +12,10 @@
         @close="closeModal"
       >
         <h2 slot="header">Submit Advice</h2>
-        <AdviceForm slot="body" :onEdit="handleAdd"/>
-        <!-- <p slot="footer">Thanks for your contribution!</p> -->
+        <AdviceForm slot="body"
+          :onEdit="handleAdd"
+          :onCancel="closeModal"
+        />
       </ModalTemplate>
 
       <ul class="advice-list" v-if="advice">
