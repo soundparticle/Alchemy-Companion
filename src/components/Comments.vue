@@ -1,20 +1,24 @@
 <template>
   <div>
+    <button type="submit">Add Comment</button>
     <Comment
       v-for="comment in comments"
       :key="comment.id"
       :comment="comment"
     />
+
+    <CommentForm />
   </div>
 </template>
 
 <script>
 import Comment from './Comment';
-import { getComments } from '../services/api';
+import CommentForm from './CommentForm';
+import { getComments, addComment } from '../services/api';
 export default {
   data() {
     return {
-      comments: null
+      comments: null,
     };
   },
   created() {
@@ -23,8 +27,15 @@ export default {
         this.comments = comments;
       });
   },
+
+  methods: {
+    handleAdd(comment) {
+      console.log(comment);
+    }
+  },
   components: {
-    Comment
+    Comment,
+    CommentForm
   },
   props: ['postID']
 };

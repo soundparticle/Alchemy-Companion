@@ -193,3 +193,12 @@ export function getComments(id) {
   })
     .then(responseHandler);
 }
+
+export function addComment(comment) {
+  return fetch(COMMENTS_URL, {
+    method: 'POST',
+    headers: getHeaders(true),
+    body: JSON.stringify(comment)
+  })
+    .then(responseHandler);
+}
