@@ -26,7 +26,10 @@
       :tip="tip"
       />
       <Comments v-if="showComments"
-      :postID="tip.id"/>
+      :postID="tip.id"
+      :user="user"
+      :tableID=1
+      />
   </li>
 </div>
 
@@ -97,7 +100,7 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 
 
 #tip-grid {
