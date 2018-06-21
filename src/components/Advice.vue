@@ -169,7 +169,6 @@ export default {
   -webkit-animation: AnimationName 30s ease infinite;
   -moz-animation: AnimationName 30s ease infinite;
   animation: AnimationName 30s ease infinite;
-  z-index: -5;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -195,6 +194,11 @@ export default {
   grid-column-end: span 5;
   grid-row-start: 5;
   grid-row-end: 5;
+}
+a {
+  color: white;
+  text-decoration: none;
+  font-weight: bolder;
 }
 
 ul {

@@ -2,7 +2,6 @@
   <section>
     <AdviceForm
       :on-edit="onAdd"/>
-      <h1>advice here</h1>
   </section>
 </template>
 
@@ -16,6 +15,6 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 
 </style>
