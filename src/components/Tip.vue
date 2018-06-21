@@ -24,12 +24,12 @@
       :onCancel="handleCancel"
       :onEdit="handleUpdate"
       :tip="tip"
-      />
-      <Comments v-if="showComments"
-      :postID="tip.id"
-      :user="user"
-      :tableID=1
-      />
+    />
+    <Comments v-if="showComments"
+    :postID="tip.id"
+    :user="user"
+    :tableID=1
+    />
   </li>
 </div>
 
@@ -66,7 +66,6 @@ export default {
     savedPost() {
       if(this.savedPosts) {
         const savedPostIDs = this.savedPosts.map(s => s.postID);
-        //return savedPostIDs.includes(this.tip.id);
         return savedPostIDs.includes(this.tip.id) ? 'saved' : '⭐';
       }
     }
@@ -110,7 +109,7 @@ export default {
   margin-top: 15px;
   color: rgb(49, 49, 49);
   background: rgb(208, 232, 240);
-  border-radius: 15px 15px 15px 15px;
+  border-radius: 15px;
 }
 @-webkit-keyframes AnimationName {
     0%{background-position:0% 50%}
