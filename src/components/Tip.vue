@@ -1,7 +1,7 @@
 <template>
 <div>
   <li>
-    <div id="tip-grid" v-if="!updating">
+    <div id="tip-grid">
       <button
         v-if="user"
         :class="{ upvoted: votedPost }"
@@ -79,9 +79,6 @@ export default {
   methods: {
     handleVote() {
       this.votedPost ? this.onNoVote(this.tip.id) : this.onUpVote(this.tip.id);
-    },
-    handleCancel() {
-      this.updating = false;
     },
     handleUpdate(toUpdate) {
       return this.onUpdate(toUpdate)
