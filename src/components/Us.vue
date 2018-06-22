@@ -3,7 +3,7 @@
     <h2>Our Developers</h2>
     <div id="team-flex">
         <div class="card">
-            <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" style="width:100%">
+            <img src="../assets/arthur-jen.jpg" alt="Avatar" style="width:100%">
             <div class="container">
                 <h4><b>Arthur Jen</b></h4>
                 <p>Arthur is a 30 year old human who enjoys bouldering, biking, board games, and video games. His favorite foods include ramen with extra noodles, fried chicken sandwiches, authentic Chinese food, sushi, eggs benedict, and beer. Arthur is currently working on his About paragraph.</p>
@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="card">
-            <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" style="width:100%">
+            <img src="../assets/easton.jpg" alt="Avatar" style="width:100%">
             <div class="container">
                 <h4><b>Easton Gorishek</b></h4>
                 <p>Easton is a 27 year old who enjoys travelling abroad experiencing new cultures. Besides being a fulltime student at Alchemy Code Lab he enjoys running, and occasionally playing gambling games with friends. He looks forward to taking his skills learned from ACL on to develop exciting and interesting applications</p>
