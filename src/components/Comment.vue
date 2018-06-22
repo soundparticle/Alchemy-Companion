@@ -5,8 +5,8 @@
     <p>- {{ comment.firstName }} {{ comment.lastName }}</p>
 
     <div class="comment-buttons" v-if="user">
-      <button v-if="user.id === comment.authorID" @click="onRemove(comment.id)">❌</button>
-      <button v-if="user.id === comment.authorID" @click="updating = true">✏️</button>
+      <button v-if="user.id === comment.authorID" @click="onRemove(comment.id)"><font-awesome-icon class="icon" icon="trash-alt" /></button>
+      <button v-if="user.id === comment.authorID" @click="updating = true"><font-awesome-icon class="icon" icon="edit" /></button>
     </div>
   </div>
   <CommentForm
@@ -43,6 +43,12 @@ export default {
 };
 </script>
 
-<style>
-
+<style scoped>
+button {
+background-color: transparent;
+border: transparent;
+}
+.icon {
+  font-size: 1.5em;
+}
 </style>

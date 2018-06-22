@@ -29,6 +29,7 @@
           :onUpVote="handleUpVote"
           :onNoVote="handleNoVote"
           :onUpdate="handleUpdate"
+          :comments="comments"
         />
       </ul>
     </div>
@@ -45,7 +46,8 @@ import {
   noVote,
   upVote,
   savePost,
-  getSavedAdvice
+  getSavedAdvice,
+  getCommentCount
 } from '../services/api';
 import Tip from './Tip';
 import AdviceForm from './AdviceForm';
@@ -60,7 +62,8 @@ export default {
       votes: null,
       error: null,
       savedPosts: null,
-      adding: false
+      adding: false,
+      comments: null
     };
   },
   props: ['user'],
@@ -80,6 +83,11 @@ export default {
       getSavedAdvice(this.user.id)
         .then(saved => {
           this.savedPosts = saved;
+        });
+
+      getCommentCount(1)
+        .then(comments => {
+          this.comments = comments;
         });
     }
   },

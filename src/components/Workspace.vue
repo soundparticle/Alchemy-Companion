@@ -13,6 +13,7 @@
 
       <div class="workspace-buttons" v-if="user">
         <button @click="showComments = !showComments"><font-awesome-icon class="icon" icon="comment-dots" /></button>
+        <h4> {{ commentCount }} </h4>
         <button @click="handleSave" :disabled="savedPost === 'saved'"><font-awesome-icon class="icon" icon="star" /></button>
         <button v-if="user.id === workspace.authorID" @click="onRemove(workspace.id)"><font-awesome-icon class="icon" icon="trash-alt" /></button>
         <button v-if="user.id === workspace.authorID" @click="showModal"><font-awesome-icon class="icon" icon="edit" /></button>
@@ -34,13 +35,14 @@
     <Comments v-if="showComments"
     :postID="workspace.id"
     :user="user"
-    :tableID=2
+    :tableID=3
     />
   </li>
 </div>
 </template>
 
 <script>
+
 import WorkspaceForm from './WorkspaceForm';
 import Comments from './Comments';
 import ModalTemplate from './ModalTemplate';
@@ -60,8 +62,10 @@ export default {
     'onNoVote',
     'onUpdate',
     'savedPosts',
-    'onSave'
+    'onSave',
+    'comments'
   ],
+
   computed: {
     votedPost() {
       if(!this.votes) return;
@@ -72,6 +76,15 @@ export default {
       if(this.savedPosts) {
         const savedPostIDs = this.savedPosts.map(s => s.postID);
         return savedPostIDs.includes(this.workspace.id) ? 'saved' : '⭐';
+      }
+    },
+    commentCount() {
+      if(this.comments) {
+        const commentsPostIDs = this.comments.map(c => c.postID);
+        if(commentsPostIDs.includes(this.workspace.id)) {
+          return this.comments.filter(c => c.postID === this.workspace.id)[0].commentCount;
+        }
+        else return 0;
       }
     }
   },
@@ -96,7 +109,7 @@ export default {
         .then(saved => {
           this.savedPosts.push(saved);
         });
-    }
+    },
   },
   components: {
     WorkspaceForm,

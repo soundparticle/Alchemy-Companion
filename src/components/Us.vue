@@ -19,15 +19,15 @@
         <div class="card">
             <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" style="width:100%">
             <div class="container">
-                <h4><b>Easton Gorishek</b></h4> 
+                <h4><b>Easton Gorishek</b></h4>
                 <p>About Easton coming soon! entium dolorem perferendis optio soluta quod eum labore odio non eligendi.</p>
             </div>
         </div>
         <div class="card">
-            <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" style="width:100%">
+            <img src="https://media.licdn.com/dms/image/C5103AQHwexqLVJWX4g/profile-displayphoto-shrink_200_200/0?e=1534982400&v=beta&t=q7HeXEDgsitEWlGdab_RwVWFjtqQaXKlBXquwf6teyE" alt="Avatar" style="width:100%">
             <div class="container">
                 <h4><b>Antreo Pukay</b></h4>
-                <p>About Antreo coming soon! Lorem ipsum  quod eum laborerem ipsum  quod eum labrem ipsum  quod eum lab odio non eligendi.</p>
+                <p>Antreo is a full-stack web developer based in Portland, OR. He was a student at The Alchemy Code Lab in 2018. The front-end side of development excites him the most. He's also an experienced recording engineer who continues that on the side so he has a creative bent and gets especially excited when he's involved with web development projects with companies or organizations that are involved in the arts. He loves working together with others to create things that move people or impact their lives in a positive way!</p>
             </div>
         </div>
     </div>
