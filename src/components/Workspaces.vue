@@ -1,5 +1,6 @@
 <template>
   <div>
+      {{ comments }}
      <div id="workspaces">
       <div class="workspaces-header">
         <h3>Great Places to Work with Wifi and Ammeneties</h3>
@@ -31,6 +32,7 @@
           :onUpVote="handleUpVote"
           :onNoVote="handleNoVote"
           :onUpdate="handleUpdate"
+          :comments="comments"
           />
       </ul>
     </div>
@@ -47,7 +49,8 @@ import {
   noVote,
   upVote,
   savePost,
-  getSavedWorkspaces
+  getSavedWorkspaces,
+  getCommentCount
 } from '../services/api';
 import Workspace from './Workspace';
 import WorkspaceForm from './WorkspaceForm';
@@ -60,7 +63,8 @@ export default {
       votes: null,
       error: null,
       savedPosts: null,
-      isModalVisible: false
+      isModalVisible: false,
+      comments: null
     };
   },
   props: ['user'],
@@ -71,6 +75,11 @@ export default {
       })
       .catch(err => {
         this.error = err;
+      });
+
+    getCommentCount(3)
+      .then(comments => {
+        this.comments = comments;
       });
 
     if(this.user) {

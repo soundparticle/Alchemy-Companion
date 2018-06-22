@@ -44,6 +44,7 @@
             :onNoVote="handleNoVote"
             :onUpdate="handleUpdate"
             :categories="categories"
+            :comments="comments"
             />
         </ul>
       </section>
@@ -63,7 +64,8 @@ import {
   upVote,
   savePost,
   getSavedResources,
-  getResourceCategories
+  getResourceCategories,
+  getCommentCount
 } from '../services/api';
 import Resource from './Resource';
 import ResourceForm from './ResourceForm';
@@ -79,6 +81,7 @@ export default {
       savedPosts: null,
       adding: false,
       categories: null,
+      comments: null,
       filter: null
     };
   },
@@ -103,6 +106,10 @@ export default {
       getSavedResources(this.user.id)
         .then(saved => {
           this.savedPosts = saved;
+        });
+      getCommentCount(2)
+        .then(comments => {
+          this.comments = comments;
         });
     }
   },
@@ -183,9 +190,6 @@ export default {
     closeModal() {
       this.isModalVisible = false;
     },
-    // handleCancel() {
-    //   this.adding = false;
-    // },
   },
   components: {
     Resource,

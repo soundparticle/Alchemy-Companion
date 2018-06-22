@@ -23,6 +23,7 @@
       </div>
       <div class="always-buttons">
         <button @click="showComments = !showComments"><font-awesome-icon class="icon" icon="comment-dots" /></button>
+        <h4> {{ commentCount }} </h4>
         <button @click="handleSave" v-if="user" :disabled="savedPost === 'saved'"><font-awesome-icon class="icon" icon="star" /></button>
       </div>
     </div>
@@ -68,7 +69,8 @@ export default {
     'onNoVote',
     'onUpdate',
     'savedPosts',
-    'onSave'
+    'onSave',
+    'comments'
   ],
   computed: {
     votedPost() {
@@ -86,6 +88,15 @@ export default {
       if(this.savedPosts) {
         const savedPostIDs = this.savedPosts.map(s => s.postID);
         return savedPostIDs.includes(this.resource.id) ? 'saved' : '⭐';
+      }
+    },
+    commentCount() {
+      if(this.comments) {
+        const commentsPostIDs = this.comments.map(c => c.postID);
+        if(commentsPostIDs.includes(this.resource.id)) {
+          return this.comments.filter(c => c.postID === this.resource.id)[0].commentCount;
+        }
+        else return 0;
       }
     }
   },

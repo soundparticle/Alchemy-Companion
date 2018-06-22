@@ -284,6 +284,12 @@ export function getWorkspacesComments(id) {
   })
     .then(responseHandler);
 }
+export function getCommentCount(tableID) {
+  return fetch(`${COMMENTS_URL}/${tableID}`, {
+    headers: getHeaders(true)
+  })
+    .then(responseHandler);
+}
 
 export function addComment(comment) {
   return fetch(COMMENTS_URL, {
