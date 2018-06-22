@@ -139,6 +139,14 @@ pre {
   color: white;
   text-decoration: none;
   font-weight: bolder;
+  padding: 10px 0px;
+}
+.header-links > a:hover {
+  border-bottom: 1px solid white;
+}
+
+a.router-link-active {
+  border-bottom: 1px solid white;
 }
 .fade-enter-active, .fade-leave-active {
   transition-property: opacity;
@@ -155,8 +163,10 @@ pre {
 
 a {
   cursor:pointer;
- }
- 
+}
+
+
+
 textarea {
   width: 100%;
   max-width: 100%;
