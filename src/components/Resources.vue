@@ -3,14 +3,20 @@
     <div id="resources">
       <div class="resources-header">
         <h3>Coding Resources to Make the Pain Go Away</h3>
-        <button @click="adding = !adding">Click Here to Share!</button>
+        <button @click="showModal">Click Here to Share!</button>
       </div>
-      <ResourceForm
-        v-if="adding"
+
+      <ModalTemplate
+        v-show="isModalVisible"
+        @close="closeModal"
+      >
+      <h2 slot="header">Submit Resource</h2>
+      <ResourceForm slot="body"
         :onEdit="handleAdd"
         :categories="categories"
-        :onCancel="handleCancel"
+        :onCancel="closeModal"
         />
+      </ModalTemplate>
       <ul class="resources-list" v-if="resources">
         <Resource class="resource" v-for="resource in resources"
           :key="resource.id"
@@ -46,10 +52,12 @@ import {
 } from '../services/api';
 import Resource from './Resource';
 import ResourceForm from './ResourceForm';
+import ModalTemplate from './ModalTemplate';
 
 export default {
   data() {
     return {
+      isModalVisible: false,
       resources: null,
       votes: null,
       error: null,
@@ -91,6 +99,7 @@ export default {
           saved.lastName = this.user.lastName;
           saved.upvotes = 0;
           this.resources.push(saved);
+          this.isModalVisible = false;
           this.adding = false;
           this.$router.push('/resources');
         });
@@ -144,13 +153,20 @@ export default {
       };
       return savePost(post);
     },
-    handleCancel() {
-      this.adding = false;
+    showModal() {
+      this.isModalVisible = true;
     },
+    closeModal() {
+      this.isModalVisible = false;
+    },
+    // handleCancel() {
+    //   this.adding = false;
+    // },
   },
   components: {
     Resource,
-    ResourceForm
+    ResourceForm,
+    ModalTemplate
   }
 };
 </script>

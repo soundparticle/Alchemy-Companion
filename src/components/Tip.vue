@@ -1,7 +1,7 @@
 <template>
 <div>
   <li>
-    <div id="tip-grid" v-if="!updating">
+    <div id="tip-grid">
       <button
         v-if="user"
         :class="{ upvoted: votedPost }"
@@ -15,15 +15,20 @@
         <button @click="showComments = !showComments"><font-awesome-icon class="icon" icon="comment-dots" /></button>
         <button @click="handleSave" :disabled="savedPost"><font-awesome-icon class="icon" icon="star" /></button>
         <button v-if="user.id === tip.authorID" @click="onRemove(tip.id)"><font-awesome-icon class="icon" icon="trash-alt" /></button>
-        <button v-if="user.id === tip.authorID" @click="updating = true"><font-awesome-icon class="icon" icon="edit" /></button>
+        <button v-if="user.id === tip.authorID" @click="showModal"><font-awesome-icon class="icon" icon="edit" /></button>
       </div>
     </div>
-    <AdviceForm
-      v-if="updating"
-      :onCancel="handleCancel"
-      :onEdit="handleUpdate"
-      :tip="tip"
-    />
+    <ModalTemplate
+      v-show="isModalVisible"
+      @close="closeModal"
+    >
+      <h2 slot="header">Edit Advice</h2>
+      <AdviceForm slot="body"
+        :onEdit="handleUpdate"
+        :onCancel="closeModal"
+        :tip="tip"
+      />
+    </ModalTemplate>
     <Comments v-if="showComments"
     :postID="tip.id"
     :user="user"
@@ -37,12 +42,13 @@
 <script>
 import AdviceForm from './AdviceForm';
 import Comments from './Comments';
+import ModalTemplate from './ModalTemplate';
 
 export default {
   data() {
     return {
-      updating: false,
-      showComments: false
+      showComments: false,
+      isModalVisible: false
     };
   },
   props: [
@@ -74,13 +80,10 @@ export default {
     handleVote() {
       this.votedPost ? this.onNoVote(this.tip.id) : this.onUpVote(this.tip.id);
     },
-    handleCancel() {
-      this.updating = false;
-    },
     handleUpdate(toUpdate) {
       return this.onUpdate(toUpdate)
         .then(() => {
-          this.updating = false;
+          this.closeModal();
         });
     },
     handleSave() {
@@ -88,11 +91,18 @@ export default {
         .then(saved => {
           this.savedPosts.push(saved);
         });
+    },
+    showModal() {
+      this.isModalVisible = true;
+    },
+    closeModal() {
+      this.isModalVisible = false;
     }
   },
   components: {
     AdviceForm,
-    Comments
+    Comments,
+    ModalTemplate
   }
 };
 

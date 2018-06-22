@@ -43,11 +43,13 @@ export default {
   },
   methods: {
     handleSubmit() {
-      this.onEdit(this.edit)
-        .then(this.edit = initAdvice());
+      return this.onEdit(this.edit)
+        .then(() => {
+          this.edit = this.tip ? Object.assign({}, this.tip) : initAdvice();
+        });
     },
     handleClose() {
-      this.edit = initAdvice();
+      this.edit = this.tip ? Object.assign({}, this.tip) : initAdvice();
       this.onCancel();
     }
   },

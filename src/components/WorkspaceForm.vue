@@ -24,7 +24,7 @@
         </FormControl>
         <FormControl>
           <button>Submit</button>
-          <button @click.prevent="onCancel">Cancel</button>
+          <button @click.prevent="handleCancel">Cancel</button>
         </FormControl>
 
       </form>
@@ -51,6 +51,11 @@ export default {
   methods: {
     handleSubmit() {
       this.onEdit(this.edit);
+      this.edit = Object.assign({}, this.workspace);
+    },
+    handleCancel() {
+      this.edit = Object.assign({}, this.workspace);
+      this.onCancel();
     }
   },
   props: ['onEdit', 'onCancel', 'workspace']

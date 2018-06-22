@@ -32,7 +32,7 @@
         <button type="submit">Submit</button>
         <button
           v-if="onCancel"
-          @click.prevent="onCancel">
+          @click.prevent="handleClose">
           Cancel
         </button>
       </FormControl>
@@ -42,16 +42,19 @@
 </template>
 
 <script>
+const initResource = () => {
+  return {
+    title: '',
+    categoryID: '',
+    description: '',
+    url: '',
+  };
+};
 import FormControl from './FormControl';
 export default {
   data() {
     return {
-      edit: this.resource ? Object.assign({}, this.resource) : {
-        title: '',
-        categoryID: '',
-        description: '',
-        url: '',
-      }
+      edit: this.resource ? Object.assign({}, this.resource) : initResource()
     };
   },
   components: {
@@ -59,7 +62,14 @@ export default {
   },
   methods: {
     handleSubmit() {
-      this.onEdit(this.edit);
+      return this.onEdit(this.edit)
+        .then(() => {
+          this.edit = this.resource ? Object.assign({}, this.resource) : initResource();
+        });
+    },
+    handleClose() {
+      this.edit = this.resource ? Object.assign({}, this.resource) : initResource();
+      this.onCancel();
     }
   },
   props: ['onEdit', 'onCancel', 'resource', 'categories']
