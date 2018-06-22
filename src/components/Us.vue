@@ -10,10 +10,10 @@
             </div>
         </div>
         <div class="card">
-            <img class="testimg" src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" style="width:100%">
+            <img src="../assets/ryanluras.png" alt="Avatar" style="width:100%">
             <div class="container">
                 <h4><b>Ryan Luras</b></h4>
-                <p>About Ryan coming soon! Loremioremaxime. Harum assumenda similique praesentium dolorem perferendis optio soluta quod eum labore odio non eligendi.</p>
+                <p>Art and Design has been at the center of Ryan's interests since childhood. Likewise, building and creating plays an important role in what makes him tick.  Excited to grow and learn as much as possible, he looks forward to combining these skills in new and interesting ways.</p>
             </div>
         </div>
         <div class="card">
@@ -42,28 +42,16 @@ export default {
 
 <style scoped>
 #team-flex {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    align-items: start;
-    grid-column-gap: 20px;
-    grid-row-gap: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .card {
-    max-width: 300px;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
+    max-width: 200px;
+    background: rgb(208, 232, 240);
     padding: 10px;
-}
-
-/* On mouse-over, add a deeper shadow */
-.card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
-
-/* Add some padding inside the card container */
-img {
-  max-width: 300px;
+    border-radius: 10px;
+    margin: 5px;
 }
 </style>
