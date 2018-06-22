@@ -16,7 +16,6 @@
       <WorkspaceForm slot="body"
         :onCancel="closeModal"
         :onEdit="handleAdd"
-        :workspaces="workspaces"
       />
     </ModalTemplate>
 

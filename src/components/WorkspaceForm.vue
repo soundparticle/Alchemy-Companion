@@ -50,8 +50,10 @@ export default {
   },
   methods: {
     handleSubmit() {
-      this.onEdit(this.edit);
-      this.edit = Object.assign({}, this.workspace);
+      return this.onEdit(this.edit)
+        .then(() => {
+          this.edit = Object.assign({}, this.workspace);
+        });
     },
     handleCancel() {
       this.edit = Object.assign({}, this.workspace);

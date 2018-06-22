@@ -1,7 +1,7 @@
 <template>
 <div>
   <li>
-    <div id="workspace-grid" v-if="!updating">
+    <div id="workspace-grid">
       <button
         v-if="user"
         :class="{ upvoted: votedPost }"
@@ -15,15 +15,22 @@
         <button @click="showComments = !showComments"><font-awesome-icon class="icon" icon="comment-dots" /></button>
         <button @click="handleSave" :disabled="savedPost === 'saved'"><font-awesome-icon class="icon" icon="star" /></button>
         <button v-if="user.id === workspace.authorID" @click="onRemove(workspace.id)"><font-awesome-icon class="icon" icon="trash-alt" /></button>
-        <button v-if="user.id === workspace.authorID" @click="updating = true"><font-awesome-icon class="icon" icon="edit" /></button>
+        <button v-if="user.id === workspace.authorID" @click="showModal"><font-awesome-icon class="icon" icon="edit" /></button>
       </div>
     </div>
-    <WorkspaceForm
-      v-if="updating"
-      :onCancel="handleCancel"
-      :onEdit="handleUpdate"
-      :workspace="workspace"
-    />
+
+    <ModalTemplate
+      v-show="isModalVisible"
+      @close="closeModal"
+    >
+      <h2 slot="header">Edit Post</h2>
+      <WorkspaceForm slot="body"
+        :onCancel="closeModal"
+        :onEdit="handleUpdate"
+        :workspace="workspace"
+      />
+    </ModalTemplate>
+
     <Comments v-if="showComments"
     :postID="workspace.id"
     :user="user"
@@ -36,11 +43,12 @@
 <script>
 import WorkspaceForm from './WorkspaceForm';
 import Comments from './Comments';
+import ModalTemplate from './ModalTemplate';
 export default {
   data() {
     return {
-      updating: false,
-      showComments: false
+      showComments: false,
+      isModalVisible: false,
     };
   },
   props: [
@@ -68,16 +76,19 @@ export default {
     }
   },
   methods: {
+    showModal() {
+      this.isModalVisible = true;
+    },
+    closeModal() {
+      this.isModalVisible = false;
+    },
     handleVote() {
       this.votedPost ? this.onNoVote(this.workspace.id) : this.onUpVote(this.workspace.id);
-    },
-    handleCancel() {
-      this.updating = false;
     },
     handleUpdate(toUpdate) {
       return this.onUpdate(toUpdate)
         .then(() => {
-          this.updating = false;
+          this.closeModal();
         });
     },
     handleSave() {
@@ -89,7 +100,8 @@ export default {
   },
   components: {
     WorkspaceForm,
-    Comments
+    Comments,
+    ModalTemplate
   }
 };
 
