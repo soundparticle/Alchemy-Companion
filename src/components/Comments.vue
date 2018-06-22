@@ -50,7 +50,6 @@ export default {
 
   methods: {
     handleAdd(comment) {
-      console.log(comment);
       comment.postID = this.postID;
       comment.tableID = this.tableID;
       comment.authorID = this.user.id;
