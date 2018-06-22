@@ -2,21 +2,33 @@
 <div>
   <li>
     <div id="workspace-grid">
-      <button
-        v-if="user"
-        :class="{ upvoted: votedPost }"
-        @click="handleVote"><font-awesome-icon class="icon-arrow" icon="arrow-circle-up" /></button>
-      <h4 class="workspace-votes">{{ workspace.upvotes }}</h4>
-      <h4 class="workspace-title"><a :href="workspace.url" target="_blank">{{ workspace.title }}</a></h4>
-      <p class="workspace-description">{{ workspace.description }} <br> ({{ workspace.workspaceType }} located at: {{ workspace.address }})</p>
-      <h6 class="workspace-submitted">Submitted by {{ workspace.firstName }} {{ workspace.lastName }}</h6>
+      <div class="votes">
+        <button
+          v-if="user"
+          :class="{ upvoted: votedPost }"
+          @click="handleVote"><font-awesome-icon class="icon-arrow" icon="arrow-circle-up" /></button>
+          <p class="vote-number">{{ workspace.upvotes }}</p>
+      </div>
+      <div class="workspace-title">
+        <h3><a :href="workspace.url" target="_blank">{{ workspace.title }}</a></h3>
+        <h4>{{ workspace.workspaceType }}</h4>
+      </div>
+      <div class="workspace-description">
+        <p>{{ workspace.description }}</p>
+        <p>{{ workspace.address }}</p>
+        <h6 class="workspace-submitted">Submitted by {{ workspace.firstName }} {{ workspace.lastName }}</h6>
+      </div>
 
-      <div class="workspace-buttons" v-if="user">
-        <button @click="showComments = !showComments"><font-awesome-icon class="icon" icon="comment-dots" /></button>
-        <h4> {{ commentCount }} </h4>
-        <button @click="handleSave" :disabled="savedPost === 'saved'"><font-awesome-icon class="icon" icon="star" /></button>
+      <div class="user-controls" v-if="user">
         <button v-if="user.id === workspace.authorID" @click="onRemove(workspace.id)"><font-awesome-icon class="icon" icon="trash-alt" /></button>
         <button v-if="user.id === workspace.authorID" @click="showModal"><font-awesome-icon class="icon" icon="edit" /></button>
+      </div>
+      <div class="always-buttons">
+        <div>
+          <button @click="showComments = !showComments"><font-awesome-icon class="icon" icon="comment-dots" /></button>
+          <h4>{{ commentCount }}</h4>
+        </div>
+        <button @click="handleSave" :class="{ hide: !user }" :disabled="savedPost === 'saved'"><font-awesome-icon class="icon" icon="star" /></button>
       </div>
     </div>
 
@@ -124,63 +136,35 @@ export default {
 <style scoped>
 #workspace-grid {
   display: grid;
-  grid-template-columns: .5fr 1fr 1.5fr 5fr 1fr 1fr;
-  grid-template-rows: auto;
+  grid-template: 40px auto / 2fr 20fr 1.5fr;
+  grid-template-areas:
+    "vote title user-controls"
+    "vote content controls";
   margin-top: 15px;
   color: rgb(49, 49, 49);
   background: rgb(208, 232, 240);
   border-radius: 15px;
 }
-.workspace-votes {
-  grid-column-start: 2;
-  grid-column-end: 2;
-  grid-row-start: 1;
-  grid-row-end: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+
 .upvoted {
   color: rgb(0, 207, 0);
 }
 .workspace-title {
-  grid-column-start: 3;
-  grid-column-end: 3;
-  grid-row-start: 1;
-  grid-row-end: 1;
+  grid-area: title;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   margin-right: 10px;
 }
 .workspace-description {
   font-family: 'Slabo 27px', serif;
-  grid-column-start: 4;
-  grid-column-end: 4;
-  grid-row-start: 1;
-  grid-row-end: 1;
-  display: flex;
-  align-items: center;
+  grid-area: content;
+  margin-right: 10px;
 }
 .workspace-submitted {
   font-family: 'Slabo 27px', serif;
-  grid-column-start: 5;
-  grid-column-end: 5;
-  grid-row-start: 1;
-  grid-row-end: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
-.workspace-buttons {
-  grid-column-start: 6;
-  grid-column-end: 6;
-  grid-row-start: 1;
-  grid-row-end: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  justify-content: space-around;
-}
+
 button {
     background-color: transparent;
     border: transparent;
@@ -190,5 +174,12 @@ button {
 }
 .icon {
   font-size: 1.5em;
+}
+h6 {
+  margin: 10px 0px;
+}
+
+h4 {
+  margin: 0px;
 }
 </style>

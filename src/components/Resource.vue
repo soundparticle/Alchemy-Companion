@@ -2,7 +2,7 @@
 <div>
   <li>
     <div id="resource-grid">
-      <div class="resource-votes">
+      <div class="votes">
         <button
           v-if="user"
           :class="{ upvoted: votedPost }"
@@ -22,9 +22,11 @@
         <button v-if="user.id === resource.authorID" @click="showModal"><font-awesome-icon class="icon" icon="edit" /></button>
       </div>
       <div class="always-buttons">
-        <button @click="showComments = !showComments"><font-awesome-icon class="icon" icon="comment-dots" /></button>
-        <h4> {{ commentCount }} </h4>
-        <button @click="handleSave" v-if="user" :disabled="savedPost === 'saved'"><font-awesome-icon class="icon" icon="star" /></button>
+        <div>
+          <button @click="showComments = !showComments"><font-awesome-icon class="icon" icon="comment-dots" /></button>
+          <h4>{{ commentCount }}</h4>
+        </div>
+        <button @click="handleSave" :class="{ hide: !user }" :disabled="savedPost === 'saved'"><font-awesome-icon class="icon" icon="star" /></button>
       </div>
     </div>
     <ModalTemplate
@@ -136,26 +138,17 @@ export default {
 
 <style scoped>
 #resource-grid {
-  background: red;
   display: grid;
   grid-template: 40px auto / 2fr 20fr 1.5fr;
   grid-template-areas:
     "vote title user-controls"
     "vote content controls";
-  /* grid-template-columns: .5fr 1fr 1.5fr 5fr 1fr 1fr;
-  grid-template-rows: auto; */
   margin-top: 15px;
   color: rgb(49, 49, 49);
   background: rgb(208, 232, 240);
   border-radius: 15px;
 }
-.resource-votes {
-  grid-area: vote;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
+
 .upvoted {
   color: rgb(0, 207, 0);
 }
@@ -173,24 +166,9 @@ export default {
 }
 .resource-submitted {
   font-family: 'Slabo 27px', serif;
-  
 }
 
-.always-buttons {
-  grid-area: controls;
-  display: flex;
-  padding-right: 10px;
-  align-items: flex-start;
-  justify-content: flex-end;
-}
 
-.user-controls {
-  grid-area: user-controls;
-  padding-right: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
 
 button {
     background-color: transparent;
@@ -204,5 +182,8 @@ button {
 }
 h6 {
   margin: 10px 0px;
+}
+h4 {
+  margin: 0px;
 }
 </style>

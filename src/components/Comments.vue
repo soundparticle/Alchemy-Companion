@@ -9,7 +9,7 @@
       :onEdit="handleUpdate"
     />
 
-    <button v-if="!adding" type="submit" @click="adding=true">Add Comment</button>
+    <button v-if="!adding && user" type="submit" @click="adding=true">Add Comment</button>
     <CommentForm v-if="adding"
       :onEdit="handleAdd"
       :onCancel="handleCancel"
