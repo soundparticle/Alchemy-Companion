@@ -1,30 +1,23 @@
 <template>
   <div v-if="userInfo">
     <h1>Welcome to your Dashboard, {{ userInfo.firstName }}. </h1>
-  
+
     <div id="app">
-      <button
-        type="button"
-        class="btn"
-        @click="showModal"
-      >
-        Open Modal!
-      </button>
 
     <ModalTemplate
       v-show="isModalVisible"
       @close="closeModal"
-    />
+    >
+      <h2 slot="header">Update Profile</h2>
+      <UserForm slot="body"
+        :onCancel="closeModal"
+        :onEdit="handleUpdate"
+        :userInfo="userInfo"
+      />
+    </ModalTemplate>
     </div>
 
-    <button v-if="!editing" @click="editing = true">Edit Profile</button>
-
-      <UserForm
-      v-if="editing"
-      :onCancel="handleCancel"
-      :onEdit="handleUpdate"
-      :userInfo="userInfo"
-    />
+    <button @click="showModal">Edit Profile</button>
 
     <section id="external-links">
 
@@ -71,7 +64,6 @@
         </li>
       </ul>
 
-
     </section>
   </div>
 </template>
@@ -79,6 +71,8 @@
 <script>
 
 import UserForm from './UserForm';
+import ModalTemplate from './ModalTemplate';
+
 
 import {
   getUser,
@@ -88,7 +82,6 @@ import {
   deleteSaved,
   updateUser
 } from '../services/api';
-import ModalTemplate from './ModalTemplate';
 
 export default {
   name: 'app',
@@ -99,7 +92,6 @@ export default {
       savedAdvice: null,
       savedResources: null,
       savedWorkspaces: null,
-      editing: false,
       error: null
     };
   },
@@ -155,18 +147,16 @@ export default {
       return updateUser(userEdit)
         .then(saved => {
           this.userInfo = saved;
-          this.editing = false;
+          this.closeModal();
 
         });
     },
-    handleCancel() {
-      this.editing = false;
-    }
   },
   props: ['user'],
 
   components: {
-    UserForm
+    UserForm,
+    ModalTemplate
   }
 
 };
@@ -196,8 +186,5 @@ ul {
 img {
   width: 150px;
 }
-
-
-
 
 </style>
