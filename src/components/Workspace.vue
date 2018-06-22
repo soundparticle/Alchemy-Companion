@@ -7,7 +7,7 @@
         :class="{ upvoted: votedPost }"
         @click="handleVote"><font-awesome-icon class="icon-arrow" icon="arrow-circle-up" /></button>
       <h4 class="workspace-votes">{{ workspace.upvotes }}</h4>
-      <h4 class="workspace-title"><a :href="workspace.url">{{ workspace.title }}</a></h4>
+      <h4 class="workspace-title"><a :href="workspace.url" target="_blank">{{ workspace.title }}</a></h4>
       <p class="workspace-description">{{ workspace.description }} <br> ({{ workspace.workspaceType }} located at: {{ workspace.address }})</p>
       <h6 class="workspace-submitted">Submitted by {{ workspace.firstName }} {{ workspace.lastName }}</h6>
 

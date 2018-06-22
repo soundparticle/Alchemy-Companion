@@ -7,7 +7,7 @@
         :class="{ upvoted: votedPost }"
         @click="handleVote"><font-awesome-icon class="icon-arrow" icon="arrow-circle-up" /></button>
       <h4 class="resource-votes">( {{ resource.upvotes }} )</h4>
-      <h4 class="resource-title"><a :href="resource.url">{{ resource.title }}</a></h4>
+      <h4 class="resource-title"><a :href="resource.url" target="_blank">{{ resource.title }}</a></h4>
       <p class="resource-description"><strong>{{ category }} :</strong>&nbsp; {{ resource.description }}</p>
       <h6 class="resource-submitted">Submitted by {{ resource.firstName }} {{ resource.lastName }}</h6>
 

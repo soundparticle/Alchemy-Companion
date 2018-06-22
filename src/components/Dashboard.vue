@@ -21,9 +21,9 @@
       </div>
 
       <section id="external-links">
-        <a :href="userInfo.githubProfile"><button class="btn"><img class="button-img" src="../assets/githubLogo.png">Your GitHub</button></a>
-        <a :href="userInfo.classworkRepo"><button class="btn"><img class="button-img" src="../assets/acl-logo.png">Class GitHub</button></a>
-        <a :href="userInfo.linkedin"><button class="btn"><img class="button-img" src="../assets/linkedin.png">LinkedIn</button></a>
+        <a :href="userInfo.githubProfile" target="_blank"><button class="btn"><img class="button-img" src="../assets/githubLogo.png">Your GitHub</button></a>
+        <a :href="userInfo.classworkRepo" target="_blank"><button class="btn"><img class="button-img" src="../assets/acl-logo.png">Class GitHub</button></a>
+        <a :href="userInfo.linkedin" target="_blank"><button class="btn"><img class="button-img" src="../assets/linkedin.png">LinkedIn</button></a>
       </section>
       <br>
 
