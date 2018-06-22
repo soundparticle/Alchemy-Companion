@@ -3,7 +3,7 @@
     <div id="advice">
       <div class="advice-header">
         <h3>Smart Advice From Smart People.</h3>
-        <button @click="showModal">Click Here to Share!</button>
+        <button v-if="user" @click="showModal">Click Here to Share!</button>
       </div>
 
 

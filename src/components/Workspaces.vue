@@ -3,7 +3,7 @@
      <div id="workspaces">
       <div class="workspaces-header">
         <h3>Great Places to Work with Wifi and Ammeneties</h3>
-        <button @click="showModal">Add Workspace</button>
+        <button v-if="user" @click="showModal">Add Workspace</button>
     
       </div>
       <pre v-if="error">{{ error }}</pre>

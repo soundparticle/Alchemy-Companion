@@ -3,7 +3,7 @@
     <div id="resources">
       <div class="resources-header">
         <h3>Coding Resources to Make the Pain Go Away</h3>
-        <button @click="showModal">Click Here to Share!</button>
+        <button v-if="user" @click="showModal">Click Here to Share!</button>
       </div>
 
       <ModalTemplate
