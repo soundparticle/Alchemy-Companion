@@ -28,7 +28,7 @@
     <Comments v-if="showComments"
     :postID="resource.id"
     :user="user"
-    :tableID=2
+    :tableID=3
     />
   </li>
 </div>
