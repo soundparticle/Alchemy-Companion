@@ -17,23 +17,37 @@
         :onCancel="closeModal"
         />
       </ModalTemplate>
-      <ul class="resources-list" v-if="resources">
-        <Resource class="resource" v-for="resource in resources"
-          :key="resource.id"
-          :resource="resource"
-          :user="user"
-          :onRemove="handleRemove"
-          :votes="votes"
-          :savedPosts="savedPosts"
-          :onSave="handleSave"
-          :onUpVote="handleUpVote"
-          :onNoVote="handleNoVote"
-          :onUpdate="handleUpdate"
-          :categories="categories"
-          :comments="comments"
-          />
-      </ul>
-      {{ comments }}
+      <section class="resources-list">
+        <div class="filter">
+          Filter: 
+          <select v-model="filter" class="category-select">
+            <option disabled value="" selected>Filter by category</option>
+            <option value="">None</option>
+            <option
+              v-for="category in categories"
+              :key="category.id"
+              :value="category.id">
+              {{ category.category }}
+            </option>
+          </select>
+        </div>
+        <ul v-if="resources">
+          <Resource class="resource" v-for="resource in filteredResources"
+            :key="resource.id"
+            :resource="resource"
+            :user="user"
+            :onRemove="handleRemove"
+            :votes="votes"
+            :savedPosts="savedPosts"
+            :onSave="handleSave"
+            :onUpVote="handleUpVote"
+            :onNoVote="handleNoVote"
+            :onUpdate="handleUpdate"
+            :categories="categories"
+            :comments="comments"
+            />
+        </ul>
+      </section>
     </div>
   </div>
 </template>
@@ -67,7 +81,8 @@ export default {
       savedPosts: null,
       adding: false,
       categories: null,
-      comments: null
+      comments: null,
+      filter: null
     };
   },
   props: ['user'],
@@ -96,6 +111,14 @@ export default {
         .then(comments => {
           this.comments = comments;
         });
+    }
+  },
+  computed: {
+    filteredResources() {
+      if(this.resources && this.filter) {
+        return this.resources.filter(r => r.categoryID === this.filter);
+      }
+      else return this.resources;
     }
   },
   methods: {
@@ -249,5 +272,10 @@ pre {
 h3 {
   color: white;
   display: inline;
+}
+
+.filter {
+  margin-top: 20px;
+  align-self: flex-start;
 }
 </style>

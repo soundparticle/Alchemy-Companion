@@ -82,6 +82,7 @@ pre {
     50%{background-position:100% 50%}
     100%{background-position:0% 50%}
 }
+
 #app {
   display: grid;
   max-width: 1000px;
