@@ -1,34 +1,47 @@
 <template>
 <div>
   <li>
-    <div id="resource-grid" v-if="!updating">
-      <button
-        v-if="user"
-        :class="{ upvoted: votedPost }"
-        @click="handleVote"><font-awesome-icon class="icon-arrow" icon="arrow-circle-up" /></button>
-      <h4 class="resource-votes">( {{ resource.upvotes }} )</h4>
-      <h4 class="resource-title"><a :href="resource.url" target="_blank">{{ resource.title }}</a></h4>
-      <p class="resource-description"><strong>{{ category }} :</strong>&nbsp; {{ resource.description }}</p>
-      <h6 class="resource-submitted">Submitted by {{ resource.firstName }} {{ resource.lastName }}</h6>
-
-      <div class="resource-buttons" v-if="user">
-        <button @click="showComments = !showComments"><font-awesome-icon class="icon" icon="comment-dots" /></button>
-        <button @click="handleSave" :disabled="savedPost === 'saved'"><font-awesome-icon class="icon" icon="star" /></button>
+    <div id="resource-grid">
+      <div class="resource-votes">
+        <button
+          v-if="user"
+          :class="{ upvoted: votedPost }"
+          @click="handleVote"><font-awesome-icon class="icon-arrow" icon="arrow-circle-up" /></button>
+        <p class="vote-number">{{ resource.upvotes }}</p>
+      </div>
+      <div class="resource-title">
+        <h3><a :href="resource.url" target="_blank">{{ resource.title }}</a></h3>
+        <h4>{{ category }}</h4>
+      </div>
+      <div class="resource-description">
+        <p>{{ resource.description }}</p>
+        <h6 class="resource-submitted">Submitted by {{ resource.firstName }} {{ resource.lastName }}</h6>
+      </div>
+      <div class="user-controls" v-if="user">
         <button v-if="user.id === resource.authorID" @click="onRemove(resource.id)"><font-awesome-icon class="icon" icon="trash-alt" /></button>
-        <button v-if="user.id === resource.authorID" @click="updating = true"><font-awesome-icon class="icon" icon="edit" /></button>
+        <button v-if="user.id === resource.authorID" @click="showModal"><font-awesome-icon class="icon" icon="edit" /></button>
+      </div>
+      <div class="always-buttons">
+        <button @click="showComments = !showComments"><font-awesome-icon class="icon" icon="comment-dots" /></button>
+        <button @click="handleSave" v-if="user" :disabled="savedPost === 'saved'"><font-awesome-icon class="icon" icon="star" /></button>
       </div>
     </div>
-    <ResourceForm
-      v-if="updating"
-      :onCancel="handleCancel"
-      :onEdit="handleUpdate"
-      :resource="resource"
-      :categories="categories"
-    />
+    <ModalTemplate
+      v-show="isModalVisible"
+      @close="closeModal"
+    >
+      <h2 slot="header">Edit Post</h2>
+      <ResourceForm slot="body"
+        :onCancel="closeModal"
+        :onEdit="handleUpdate"
+        :resource="resource"
+        :categories="categories"
+      />
+    </ModalTemplate>
     <Comments v-if="showComments"
-    :postID="resource.id"
-    :user="user"
-    :tableID=3
+      :postID="resource.id"
+      :user="user"
+      :tableID=2
     />
   </li>
 </div>
@@ -37,11 +50,12 @@
 <script>
 import ResourceForm from './ResourceForm';
 import Comments from './Comments';
+import ModalTemplate from './ModalTemplate';
 export default {
   data() {
     return {
-      updating: false,
-      showComments: false
+      showComments: false,
+      isModalVisible: false
     };
   },
   props: [
@@ -79,13 +93,10 @@ export default {
     handleVote() {
       this.votedPost ? this.onNoVote(this.resource.id) : this.onUpVote(this.resource.id);
     },
-    handleCancel() {
-      this.updating = false;
-    },
     handleUpdate(toUpdate) {
       return this.onUpdate(toUpdate)
         .then(() => {
-          this.updating = false;
+          this.closeModal();
         });
     },
     handleSave() {
@@ -93,11 +104,18 @@ export default {
         .then(saved => {
           this.savedPosts.push(saved);
         });
-    }
+    },
+    showModal() {
+      this.isModalVisible = true;
+    },
+    closeModal() {
+      this.isModalVisible = false;
+    },
   },
   components: {
     ResourceForm,
-    Comments
+    Comments,
+    ModalTemplate
   }
 };
 
@@ -107,64 +125,62 @@ export default {
 
 <style scoped>
 #resource-grid {
+  background: red;
   display: grid;
-  grid-template-columns: .5fr 1fr 1.5fr 5fr 1fr 1fr;
-  grid-template-rows: auto;
+  grid-template: 40px auto / 2fr 20fr 1.5fr;
+  grid-template-areas:
+    "vote title user-controls"
+    "vote content controls";
+  /* grid-template-columns: .5fr 1fr 1.5fr 5fr 1fr 1fr;
+  grid-template-rows: auto; */
   margin-top: 15px;
   color: rgb(49, 49, 49);
   background: rgb(208, 232, 240);
   border-radius: 15px;
 }
 .resource-votes {
-  grid-column-start: 2;
-  grid-column-end: 2;
-  grid-row-start: 1;
-  grid-row-end: 1;
+  grid-area: vote;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 }
 .upvoted {
   color: rgb(0, 207, 0);
 }
 .resource-title {
-  grid-column-start: 3;
-  grid-column-end: 3;
-  grid-row-start: 1;
-  grid-row-end: 1;
+  grid-area: title;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   margin-right: 10px;
 }
 .resource-description {
   font-family: 'Slabo 27px', serif;
-  grid-column-start: 4;
-  grid-column-end: 4;
-  grid-row-start: 1;
-  grid-row-end: 1;
-  display: flex;
-  align-items: center;
+  grid-area: content;
+  margin-right: 10px;
 }
 .resource-submitted {
   font-family: 'Slabo 27px', serif;
-  grid-column-start: 5;
-  grid-column-end: 5;
-  grid-row-start: 1;
-  grid-row-end: 1;
+  
+}
+
+.always-buttons {
+  grid-area: controls;
+  display: flex;
+  padding-right: 10px;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
+.user-controls {
+  grid-area: user-controls;
+  padding-right: 10px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
 }
-.resource-buttons {
-  grid-column-start: 6;
-  grid-column-end: 6;
-  grid-row-start: 1;
-  grid-row-end: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  justify-content: space-around;
-}
+
 button {
     background-color: transparent;
     border: transparent;
@@ -174,5 +190,8 @@ button {
 }
 .icon {
   font-size: 1.5em;
+}
+h6 {
+  margin: 10px 0px;
 }
 </style>
