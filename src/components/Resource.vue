@@ -1,6 +1,7 @@
 <template>
 <div>
   <li>
+    {{ comments }}
     <div id="resource-grid" v-if="!updating">
       <button
         v-if="user"
@@ -13,6 +14,7 @@
 
       <div class="resource-buttons" v-if="user">
         <button @click="showComments = !showComments"><font-awesome-icon class="icon" icon="comment-dots" /></button>
+        <h4> {{ commentCount }} </h4>
         <button @click="handleSave" :disabled="savedPost === 'saved'"><font-awesome-icon class="icon" icon="star" /></button>
         <button v-if="user.id === resource.authorID" @click="onRemove(resource.id)"><font-awesome-icon class="icon" icon="trash-alt" /></button>
         <button v-if="user.id === resource.authorID" @click="updating = true"><font-awesome-icon class="icon" icon="edit" /></button>
@@ -54,7 +56,8 @@ export default {
     'onNoVote',
     'onUpdate',
     'savedPosts',
-    'onSave'
+    'onSave',
+    'comments'
   ],
   computed: {
     votedPost() {
@@ -72,6 +75,15 @@ export default {
       if(this.savedPosts) {
         const savedPostIDs = this.savedPosts.map(s => s.postID);
         return savedPostIDs.includes(this.resource.id) ? 'saved' : '⭐';
+      }
+    },
+    commentCount() {
+      if(this.comments) {
+        const commentsPostIDs = this.comments.map(c => c.postID);
+        if(commentsPostIDs.includes(this.resource.id)) {
+          return this.comments.filter(c => c.postID === this.resource.id)[0].commentCount;
+        }
+        else return 0;
       }
     }
   },
