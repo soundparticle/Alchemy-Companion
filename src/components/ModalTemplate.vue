@@ -35,7 +35,7 @@
         <footer class="modal-footer">
           <slot name="footer">
 
-            
+
           </slot>
         </footer>
       </div>

@@ -45,7 +45,7 @@ export default {
     handleSubmit() {
       return this.onEdit(this.edit)
         .then(() => {
-          this.edit = this.tip ? Object.assign({}, this.tip) : initAdvice()
+          this.edit = this.tip ? Object.assign({}, this.tip) : initAdvice();
         });
     },
     handleClose() {
