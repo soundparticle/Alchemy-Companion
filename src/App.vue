@@ -163,9 +163,11 @@ a.router-link-active {
 
 a {
   cursor:pointer;
+
 }
-
-
+button {
+  cursor: pointer;
+}
 
 textarea {
   width: 100%;
