@@ -1,70 +1,74 @@
 <template>
-  <div v-if="userInfo">
-    <h1>Welcome to your Dashboard, {{ userInfo.firstName }}. </h1>
+  <div>
+    <div id="dashbord" v-if="userInfo">
+      <div class="dash-header">
+        <h3>Welcome to your Dashboard, {{ userInfo.firstName }}. </h3>
+        <button  @click="showModal">Edit Profile</button>
+      </div>
 
-    <div id="app">
+      <div>
+        <ModalTemplate
+          v-show="isModalVisible"
+          @close="closeModal"
+        >
+        <h2 slot="header">Update Profile</h2>
+        <UserForm slot="body"
+          :onCancel="closeModal"
+          :onEdit="handleUpdate"
+          :userInfo="userInfo"
+        />
+      </ModalTemplate>
+      </div>
 
-    <ModalTemplate
-      v-show="isModalVisible"
-      @close="closeModal"
-    >
-      <h2 slot="header">Update Profile</h2>
-      <UserForm slot="body"
-        :onCancel="closeModal"
-        :onEdit="handleUpdate"
-        :userInfo="userInfo"
-      />
-    </ModalTemplate>
+      <section id="external-links">
+        <a :href="userInfo.githubProfile"><button class="btn"><img class="button-img" src="../assets/githubLogo.png">Your GitHub</button></a>
+        <a :href="userInfo.classworkRepo"><button class="btn"><img class="button-img" src="../assets/acl-logo.png">Class GitHub</button></a>
+        <a :href="userInfo.linkedin"><button class="btn"><img class="button-img" src="../assets/linkedin.png">LinkedIn</button></a>
+      </section>
+      <br>
+
+      <section id="saved-posts">
+        <div id="saved-items">
+          <ul v-if="savedAdvice">
+            <h2>Advice</h2>
+            <li v-for="advice in savedAdvice" :key="advice.id">
+              <p class="post-title">{{ advice.title }}</p>
+              <div class="post-item">
+              <p>{{ advice.text }}</p>
+              <p class="submitted">Submitted by {{ advice.firstName }} {{ advice.lastName }} &nbsp; <button @click="handleDelete(advice.id)" type="submit">Remove</button></p>
+            </div>
+            </li>
+          </ul>
+        </div>
+        <div id="saved-items">
+          <ul v-if="savedResources">
+            <h2>Resources</h2>
+            <li v-for="resource in savedResources" :key="resource.id">
+              <p class="post-title">{{ resource.title }}</p>
+              <div class="post-item">
+                <p>{{ resource.description }}</p>
+                <a :href="resource.url">Go to external link</a>
+                <p class="submitted">Submitted by {{ resource.firstName }} {{ resource.lastName }} &nbsp; <button @click="handleDelete(resource.id)" type="submit">Remove</button></p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div id="saved-items">
+          <ul v-if="savedWorkspaces">
+            <h2>Workspaces</h2>
+            <li v-for="workspace in savedWorkspaces" :key="workspace.id">
+              <p class="post-title">{{ workspace.title }}</p>
+              <div class="post-item">
+              <p>{{ workspace.description }}</p>
+              <p>A {{ workspace.workspaceType }} at {{ workspace.address }}</p>
+              <a :href="workspace.url">Go to external link</a>
+              <p class="submitted">Submitted by {{ workspace.firstName }} {{ workspace.lastName }} &nbsp; <button @click="handleDelete(workspace.id)" type="submit">Remove</button></p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
     </div>
-
-    <button @click="showModal">Edit Profile</button>
-
-    <section id="external-links">
-
-      <a :href="userInfo.githubProfile"><img src="../assets/githubLogo.png"></a><br>
-
-      <a :href="userInfo.classworkRepo"><img src="../assets/acl-logo.png"></a><br>
-
-      <a :href="userInfo.linkedin"><img src="../assets/linkedin.png"></a><br>
-
-    </section>
-
-    <section id="saved-posts">
-      <ul v-if="savedAdvice">
-        <h2>Advice</h2>
-        <li v-for="advice in savedAdvice" :key="advice.id">
-          <h3>{{ advice.title }}</h3>
-          <p>{{ advice.text }}</p>
-          <h4>{{ advice.firstName }} {{ advice.lastName }}</h4>
-          <button @click="handleDelete(advice.id)" type="submit">Remove</button>
-        </li>
-      </ul>
-
-      <ul v-if="savedResources">
-        <h2>Resources</h2>
-        <li v-for="resource in savedResources" :key="resource.id">
-          <h3>{{ resource.title }}</h3>
-          <p>{{ resource.description }}</p>
-          <a :href="resource.url">Go to external link</a>
-          <h4>{{ resource.firstName }} {{ resource.lastName }}</h4>
-          <button @click="handleDelete(resource.id)" type="submit">Remove</button>
-        </li>
-      </ul>
-
-      <ul v-if="savedWorkspaces">
-        <h2>Workspaces</h2>
-        <li v-for="workspace in savedWorkspaces" :key="workspace.id">
-          <h3>{{ workspace.title }}</h3>
-          <p>{{ workspace.workspaceType }}</p>
-          <p>{{ workspace.description }}</p>
-          <p>{{ workspace.address }}</p>
-          <a :href="workspace.url">Go to external link</a>
-          <h4>{{ workspace.firstName }} {{ workspace.lastName }}</h4>
-          <button @click="handleDelete(workspace.id)" type="submit">Remove</button>
-        </li>
-      </ul>
-
-    </section>
   </div>
 </template>
 
@@ -165,26 +169,86 @@ export default {
 
 <style scoped>
 
+.dash-header {
+  border-radius: 0px 0px 15px 15px;
+  background: linear-gradient(270deg, #2c3e50, #2980b9);
+  background-size: 400% 400%;
+  -webkit-animation: AnimationName 30s ease infinite;
+  -moz-animation: AnimationName 30s ease infinite;
+  animation: AnimationName 30s ease infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-content: space-evenly;
+  margin-top: 5px;
+  margin-bottom: 50px;
+  color: white;
+}
+.post-title {
+  font-size: 1.5em;
+  background: #2c3e50;
+  color: white;
+  text-align: center;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  margin-bottom: 5px;
+}
+.post-item {
+  display: flex;
+  flex-direction: column;
+  background: rgb(208, 232, 240);
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  margin-bottom: 5px;
+  text-align: center;
+}
+h3 {
+  line-height: 0%;
+}
+.submitted {
+  font-size: .5em;
+}
 ul {
   list-style-type: none;
 }
-
+.button-img {
+  width: 25px;
+  margin-right: 10px;
+}
 #external-links {
   display: flex;
   justify-content: space-evenly;
-  margin-top: 50px;
-  padding: 30px;
-  border-style: solid;
-  border-radius: 10px;
 }
 
 #saved-posts {
-  display: flex;
-  justify-content: space-evenly;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  margin-right: 40px;
 }
 
 img {
   width: 150px;
 }
-
+.btn {
+  display: flex;
+  -webkit-border-radius: 10;
+  -moz-border-radius: 10;
+  border-radius: 10px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 20px;
+  background: #3498db;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+  cursor: pointer;
+}
+a {
+  cursor:pointer;
+  text-decoration: none;
+}
+.btn:hover {
+  background: #3cb0fd;
+  text-decoration: none;
+}
 </style>

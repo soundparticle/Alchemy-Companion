@@ -156,7 +156,9 @@ pre {
 a {
   cursor:pointer;
  }
- 
+button {
+  cursor: pointer;
+}
 textarea {
   width: 100%;
   max-width: 100%;
