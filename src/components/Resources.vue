@@ -98,6 +98,10 @@ export default {
       .catch(err => {
         this.error = err;
       });
+    getCommentCount(2)
+      .then(comments => {
+        this.comments = comments;
+      });
     if(this.user) {
       getResourcesVotes(this.user.id)
         .then(votes => {
@@ -106,10 +110,6 @@ export default {
       getSavedResources(this.user.id)
         .then(saved => {
           this.savedPosts = saved;
-        });
-      getCommentCount(2)
-        .then(comments => {
-          this.comments = comments;
         });
     }
   },

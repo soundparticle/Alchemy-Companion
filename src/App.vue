@@ -189,6 +189,7 @@ textarea {
   padding-right: 10px;
   align-items: flex-start;
   justify-content: flex-end;
+  text-align: center;
 }
 
 .user-controls {

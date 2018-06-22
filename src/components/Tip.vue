@@ -21,8 +21,10 @@
         <button v-if="user.id === tip.authorID" @click="showModal"><font-awesome-icon class="icon" icon="edit" /></button>
       </div>
       <div class="always-buttons">
-        <button @click="showComments = !showComments"><font-awesome-icon class="icon" icon="comment-dots" /></button>
-        <h4> {{ commentCount }} </h4>
+        <div>
+          <button @click="showComments = !showComments"><font-awesome-icon class="icon" icon="comment-dots" /></button>
+          <h4>{{ commentCount }}</h4>
+        </div>
         <button @click="handleSave" :class="{ hide: !user }" :disabled="savedPost === 'saved'"><font-awesome-icon class="icon" icon="star" /></button>
       </div>
     </div>
@@ -38,9 +40,9 @@
       />
     </ModalTemplate>
     <Comments v-if="showComments"
-    :postID="tip.id"
-    :user="user"
-    :tableID=1
+      :postID="tip.id"
+      :user="user"
+      :tableID=1
     />
   </li>
 </div>
@@ -172,5 +174,11 @@ button {
 }
 .icon {
   font-size: 1.5em;
+}
+h6 {
+  margin: 10px 0px;
+}
+h4 {
+  margin: 0px;
 }
 </style>

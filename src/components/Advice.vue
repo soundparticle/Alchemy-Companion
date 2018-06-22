@@ -5,7 +5,6 @@
         <h3>Smart Advice From Smart People.</h3>
         <button v-if="user" @click="showModal">Click Here to Share!</button>
       </div>
-
       <ModalTemplate
         v-show="isModalVisible"
         @close="closeModal"
@@ -75,6 +74,10 @@ export default {
       .catch(err => {
         this.error = err;
       });
+    getCommentCount(1)
+      .then(comments => {
+        this.comments = comments;
+      });
     if(this.user) {
       getAdviceVotes(this.user.id)
         .then(votes => {
@@ -83,11 +86,6 @@ export default {
       getSavedAdvice(this.user.id)
         .then(saved => {
           this.savedPosts = saved;
-        });
-
-      getCommentCount(1)
-        .then(comments => {
-          this.comments = comments;
         });
     }
   },

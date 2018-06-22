@@ -22,8 +22,10 @@
         <button v-if="user.id === resource.authorID" @click="showModal"><font-awesome-icon class="icon" icon="edit" /></button>
       </div>
       <div class="always-buttons">
-        <button @click="showComments = !showComments"><font-awesome-icon class="icon" icon="comment-dots" /></button>
-        <h4> {{ commentCount }} </h4>
+        <div>
+          <button @click="showComments = !showComments"><font-awesome-icon class="icon" icon="comment-dots" /></button>
+          <h4>{{ commentCount }}</h4>
+        </div>
         <button @click="handleSave" :class="{ hide: !user }" :disabled="savedPost === 'saved'"><font-awesome-icon class="icon" icon="star" /></button>
       </div>
     </div>
@@ -180,5 +182,8 @@ button {
 }
 h6 {
   margin: 10px 0px;
+}
+h4 {
+  margin: 0px;
 }
 </style>

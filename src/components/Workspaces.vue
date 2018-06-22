@@ -1,7 +1,6 @@
 <template>
   <div>
-      {{ comments }}
-     <div id="workspaces">
+    <div id="workspaces">
       <div class="workspaces-header">
         <h3>Great Places to Work with Wifi and Ammeneties</h3>
         <button v-if="user" @click="showModal">Add Workspace</button>
