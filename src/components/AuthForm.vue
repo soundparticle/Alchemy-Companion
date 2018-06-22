@@ -90,7 +90,7 @@ export default {
       action(this.credentials)
         .then(user => {
           this.onUser(user);
-          this.$router.push('/');
+          this.$router.push('/dashboard');
         })
         .catch(err => this.error = err);
     }
