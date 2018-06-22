@@ -2,21 +2,29 @@
 <div>
   <li>
     <div id="tip-grid">
-      <button
-        v-if="user"
-        :class="{ upvoted: votedPost }"
-        @click="handleVote"><font-awesome-icon class="icon-arrow" icon="arrow-circle-up" /></button>
-      <h4 class="tip-votes">( {{ tip.upvotes }} )</h4>
-      <h4 class="tip-title">{{ tip.title }}</h4>
-      <p class="tip-text">{{ tip.text }}</p>
-      <h6 class="tip-submitted">Submitted by {{ tip.firstName }} {{ tip.lastName }}</h6>
-
-      <div class="tip-buttons" v-if="user">
-        <button @click="showComments = !showComments"><font-awesome-icon class="icon" icon="comment-dots" /></button>
-        <button @click="handleSave" :disabled="savedPost"><font-awesome-icon class="icon" icon="star" /></button>
+      <div class="votes">
+        <button
+          v-if="user"
+          :class="{ upvoted: votedPost }"
+          @click="handleVote"><font-awesome-icon class="icon-arrow" icon="arrow-circle-up" /></button>
+        <p class="vote-number">{{ tip.upvotes }}</p>
+      </div>
+      <div class="tip-title">
+        <h3>{{ tip.title }}</h3>
+      </div>
+      <div class="tip-text">
+        <p>{{ tip.text }}</p>
+        <h6 class="tip-submitted">Submitted by {{ tip.firstName }} {{ tip.lastName }}</h6>
+      </div>
+      <div class="user-controls" v-if="user">
         <button v-if="user.id === tip.authorID" @click="onRemove(tip.id)"><font-awesome-icon class="icon" icon="trash-alt" /></button>
         <button v-if="user.id === tip.authorID" @click="showModal"><font-awesome-icon class="icon" icon="edit" /></button>
       </div>
+      <div class="always-buttons">
+        <button @click="showComments = !showComments"><font-awesome-icon class="icon" icon="comment-dots" /></button>
+        <button @click="handleSave" :class="{ hide: !user }" :disabled="savedPost === 'saved'"><font-awesome-icon class="icon" icon="star" /></button>
+      </div>
+      
     </div>
     <ModalTemplate
       v-show="isModalVisible"
@@ -114,64 +122,37 @@ export default {
 
 #tip-grid {
   display: grid;
-  grid-template-columns: .5fr 1fr 1.5fr 5fr 1fr 1fr;
-  grid-template-rows: auto;
+  grid-template: 40px auto / 2fr 20fr 1.5fr;
+  grid-template-areas:
+    "vote title user-controls"
+    "vote content controls";
   margin-top: 15px;
   color: rgb(49, 49, 49);
   background: rgb(208, 232, 240);
   border-radius: 15px;
 }
 
-.tip-votes {
-  grid-column-start: 2;
-  grid-column-end: 2;
-  grid-row-start: 1;
-  grid-row-end: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+
 .upvoted {
   color: rgb(0, 207, 0);
 }
 .tip-title {
-  grid-column-start: 3;
-  grid-column-end: 3;
-  grid-row-start: 1;
-  grid-row-end: 1;
+  grid-area: title;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   margin-right: 10px;
+
 }
 .tip-text {
   font-family: 'Slabo 27px', serif;
-  grid-column-start: 4;
-  grid-column-end: 4;
-  grid-row-start: 1;
-  grid-row-end: 1;
-  display: flex;
-  align-items: center;
+  grid-area: content;
+  margin-right: 10px;
 }
 .tip-submitted {
   font-family: 'Slabo 27px', serif;
-  grid-column-start: 5;
-  grid-column-end: 5;
-  grid-row-start: 1;
-  grid-row-end: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
-.tip-buttons {
-  grid-column-start: 6;
-  grid-column-end: 6;
-  grid-row-start: 1;
-  grid-row-end: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  justify-content: space-around;
-}
+
 button {
     background-color: transparent;
     border: transparent;

@@ -174,5 +174,37 @@ textarea {
   width: 100%;
   max-width: 100%;
 }
+
+.votes {
+  grid-area: vote;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.always-buttons {
+  grid-area: controls;
+  display: flex;
+  padding-right: 10px;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
+.user-controls {
+  grid-area: user-controls;
+  padding-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.vote-number {
+  font-size: 1.2em;
+}
+
+.hide {
+  visibility: hidden;
+}
 </style>
 
