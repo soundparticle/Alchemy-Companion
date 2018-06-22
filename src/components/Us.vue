@@ -6,7 +6,7 @@
             <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" style="width:100%">
             <div class="container">
                 <h4><b>Arthur Jen</b></h4>
-                <p>About Arthur coming soon! Loremium s culpa qususcipit atque nobis facilis nesciunt illum, quod odit maxime. Harum assumenda similique praesentium dolorem perferendis optio soluta quod eum labore odio non eligendi.</p>
+                <p>Arthur is a 30 year old human who enjoys bouldering, biking, board games, and video games. His favorite foods include ramen with extra noodles, fried chicken sandwiches, authentic Chinese food, sushi, eggs benedict, and beer. Arthur is currently working on his About paragraph.</p>
             </div>
         </div>
         <div class="card">
