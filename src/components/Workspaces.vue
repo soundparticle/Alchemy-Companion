@@ -3,14 +3,23 @@
      <div id="workspaces">
       <div class="workspaces-header">
         <h3>Great Places to Work with Wifi and Ammeneties</h3>
-        <button @click="adding = !adding">Add Workspace</button>
+        <button @click="showModal">Add Workspace</button>
+    
       </div>
       <pre v-if="error">{{ error }}</pre>
-      <WorkspaceForm
-        v-if="adding"
+
+    <ModalTemplate
+      v-show="isModalVisible"
+      @close="closeModal"
+    >
+      <h2 slot="header">Add Workspace</h2>
+      <WorkspaceForm slot="body"
+        :onCancel="closeModal"
         :onEdit="handleAdd"
-        :onCancel="handleCancel"
-        />
+        :workspaces="workspaces"
+      />
+    </ModalTemplate>
+
       <ul class="workspaces-list" v-if="workspaces">
         <Workspace class="workspace" v-for="workspace in workspaces"
           :key="workspace.id"
@@ -43,6 +52,7 @@ import {
 } from '../services/api';
 import Workspace from './Workspace';
 import WorkspaceForm from './WorkspaceForm';
+import ModalTemplate from './ModalTemplate';
 
 export default {
   data() {
@@ -51,7 +61,7 @@ export default {
       votes: null,
       error: null,
       savedPosts: null,
-      adding: false
+      isModalVisible: false
     };
   },
   props: ['user'],
@@ -76,6 +86,12 @@ export default {
     }
   },
   methods: {
+    showModal() {
+      this.isModalVisible = true;
+    },
+    closeModal() {
+      this.isModalVisible = false;
+    },
     handleAdd(workspace) {
       workspace.authorID = this.user.id;
       return addWorkspace(workspace)
@@ -84,7 +100,7 @@ export default {
           saved.lastName = this.user.lastName;
           saved.upvotes = 0;
           this.workspaces.push(saved);
-          this.adding = false;
+          this.closeModal();
           this.$router.push('/workspaces');
         });
     },
@@ -136,14 +152,12 @@ export default {
         tableID: 3
       };
       return savePost(post);
-    },
-    handleCancel() {
-      this.adding = false;
-    },
+    }
   },
   components: {
     Workspace,
-    WorkspaceForm
+    WorkspaceForm,
+    ModalTemplate
   }
 
 };

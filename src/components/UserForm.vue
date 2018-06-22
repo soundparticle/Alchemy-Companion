@@ -22,7 +22,7 @@
         </FormControl>
         <FormControl>
           <button type="submit">Submit</button>
-          <button @click.prevent="onCancel">Cancel</button>
+          <button @click.prevent="handleClose">Cancel</button>
         </FormControl>
       </form>
     </div>
