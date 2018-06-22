@@ -2,6 +2,7 @@
   <div class="auth-form">
     <h2>{{ label }}</h2>
     <h3>
+      <pre> {{ error }} </pre>
       <a href="" @click.prevent="type = isSignUp ? 'signIn' : 'signUp'">
         {{
           isSignUp
@@ -91,5 +92,7 @@ export default {
 </script>
 
 <style>
-
+pre {
+  color: red;
+}
 </style>

@@ -6,7 +6,6 @@
         <button @click="showModal">Click Here to Share!</button>
       </div>
 
-
       <ModalTemplate
         v-show="isModalVisible"
         @close="closeModal"
