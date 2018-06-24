@@ -16,7 +16,6 @@ Vue.component('modal', {
   template: '#modal-template'
 }),
 
-
 new Vue({
   data: {
     showModal: false

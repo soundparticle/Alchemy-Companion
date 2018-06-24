@@ -1,6 +1,6 @@
 <template>
-<div>
-  <div id="app">
+  <div>
+    <div id="app">
       <div class="logo">
         <router-link exact to="/"><img class="alchemy" src="./assets/acl-logo.png"></router-link>
       </div>
@@ -20,9 +20,9 @@
       </div>
       <div class="top-bar-background">
       </div>
-    <transition name="fade">
-    <router-view class="router" :on-user="handleUser" :user="user"></router-view>
-    </transition>
+      <transition name="fade">
+        <router-view class="router" :on-user="handleUser" :user="user"></router-view>
+      </transition>
     </div>
   </div>
 </template>
@@ -72,11 +72,13 @@ pre {
     50%{background-position:100% 50%}
     100%{background-position:0% 50%}
 }
+
 @-moz-keyframes AnimationName {
     0%{background-position:0% 50%}
     50%{background-position:100% 50%}
     100%{background-position:0% 50%}
 }
+
 @keyframes AnimationName {
     0%{background-position:0% 50%}
     50%{background-position:100% 50%}
@@ -93,6 +95,7 @@ pre {
   grid-template-columns: 20px 40px 40px 60px auto 40px 40px 20px;
   grid-template-rows: 5px 20px 40px 20px auto 40px 20px;
 }
+
 .top-bar-background {
   border-radius: 15px 15px 0px 0px;
   background: linear-gradient(270deg, #198eda, #3ce5e5);
@@ -106,12 +109,14 @@ pre {
   grid-row-start: 2;
   grid-row-end: 5;
 }
+
 .router {
   grid-column-start: 2;
   grid-column-end: span 6;
   grid-row-start: 5;
   grid-row-end: 5;
 }
+
 .logo {
   display: flex;
   align-self: center;
@@ -121,10 +126,12 @@ pre {
   grid-row-start: 2;
   grid-row-end: span 3;
 }
+
 .alchemy{
   max-width: 100px;
   height: auto;
 }
+
 .header-links {
   font-size: 1.2em;
   color: white;
@@ -136,12 +143,14 @@ pre {
   grid-row-end: span 1;
   align-items: center;
 }
+
 .header-links > a {
   color: white;
   text-decoration: none;
   font-weight: bolder;
   padding: 10px 0px;
 }
+
 .header-links > a:hover {
   border-bottom: 1px solid white;
 }
@@ -149,6 +158,7 @@ pre {
 a.router-link-active {
   border-bottom: 1px solid white;
 }
+
 .fade-enter-active, .fade-leave-active {
   transition-property: opacity;
   transition-duration: .25s;
@@ -163,9 +173,9 @@ a.router-link-active {
 }
 
 a {
-  cursor:pointer;
-
+  cursor: pointer;
 }
+
 button {
   cursor: pointer;
 }
