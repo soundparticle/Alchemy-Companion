@@ -207,12 +207,14 @@ export default {
   grid-row-start: 2;
   grid-row-end: 2;
 }
+
 .advice-router {
   grid-column-start: 1;
   grid-column-end: span 5;
   grid-row-start: 4;
   grid-row-end: 4;
 }
+
 .advice-list {
   display: flex;
   align-items: center;
@@ -224,6 +226,7 @@ export default {
   grid-row-start: 5;
   grid-row-end: 5;
 }
+
 a {
   color: white;
   text-decoration: none;
@@ -233,13 +236,15 @@ a {
 ul {
   padding: 0;
   list-style-type: none;
-
 }
+
 pre {
   color: red;
 }
+
 h3 {
   color: white;
   display: inline;
 }
+
 </style>

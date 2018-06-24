@@ -2,7 +2,9 @@
   <div>
     <FormControl label="Comment">
       <textarea name="text" rows="8" cols="60" required
-          v-model="edit.text"></textarea>
+        v-model="edit.text"
+      >
+      </textarea>
     </FormControl>
     <button type="submit" @click.prevent="onEdit(edit)">Submit</button>
     &nbsp;

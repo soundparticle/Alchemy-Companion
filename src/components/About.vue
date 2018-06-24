@@ -11,7 +11,7 @@
         &nbsp;
       </div>
       <transition name="fade">
-      <router-view class="about-router"></router-view>
+        <router-view class="about-router"></router-view>
       </transition>
     </div>
   </div>
@@ -62,12 +62,14 @@ export default {
   grid-row-start: 2;
   grid-row-end: 2;
 }
+
 .about-router {
   grid-column-start: 1;
   grid-column-end: span 5;
   grid-row-start: 4;
   grid-row-end: 4;
 }
+
 a {
   color: white;
   text-decoration: none;
@@ -77,15 +79,17 @@ a {
 ul {
   padding: 0;
   list-style-type: none;
-
 }
+
 pre {
   color: red;
 }
+
 h3 {
   color: white;
   display: inline;
 }
+
 .fade-enter-active, .fade-leave-active {
   transition-property: opacity;
   transition-duration: .25s;
