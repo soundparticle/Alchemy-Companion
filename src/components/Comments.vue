@@ -8,9 +8,15 @@
       :onRemove="handleRemove"
       :onEdit="handleUpdate"
     />
-
-    <button v-if="!adding && user" type="submit" @click="adding=true">Add Comment</button>
-    <CommentForm v-if="adding"
+    <button
+      v-if="!adding && user"
+      type="submit"
+      @click="adding=true"
+    >
+      Add Comment
+    </button>
+    <CommentForm
+      v-if="adding"
       :onEdit="handleAdd"
       :onCancel="handleCancel"
     />
@@ -20,7 +26,14 @@
 <script>
 import Comment from './Comment';
 import CommentForm from './CommentForm';
-import { getAdviceComments, getResourcesComments, getWorkspacesComments, addComment, removeComment, updateComment } from '../services/api';
+import {
+  getAdviceComments,
+  getResourcesComments,
+  getWorkspacesComments,
+  addComment,
+  removeComment,
+  updateComment
+} from '../services/api';
 export default {
   data() {
     return {
@@ -77,7 +90,6 @@ export default {
           this.comments.splice(index, 1, saved);
         });
     },
-    
     handleCancel() {
       this.adding = false;
     },

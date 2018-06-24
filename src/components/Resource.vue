@@ -1,53 +1,61 @@
 <template>
-<div>
-  <li>
-    <div id="resource-grid">
-      <div class="votes">
-        <button
-          v-if="user"
-          :class="{ upvoted: votedPost }"
-          @click="handleVote"><font-awesome-icon class="icon-arrow" icon="arrow-circle-up" /></button>
-        <p class="vote-number">{{ resource.upvotes }}</p>
-      </div>
-      <div class="resource-title">
-        <h3><a :href="resource.url" target="_blank">{{ resource.title }}</a></h3>
-        <h4>{{ category }}</h4>
-      </div>
-      <div class="resource-description">
-        <p>{{ resource.description }}</p>
-        <h6 class="resource-submitted">Submitted by {{ resource.firstName }} {{ resource.lastName }}</h6>
-      </div>
-      <div class="user-controls" v-if="user">
-        <button v-if="user.id === resource.authorID" @click="onRemove(resource.id)"><font-awesome-icon class="icon" icon="trash-alt" /></button>
-        <button v-if="user.id === resource.authorID" @click="showModal"><font-awesome-icon class="icon" icon="edit" /></button>
-      </div>
-      <div class="always-buttons">
-        <div>
-          <button @click="showComments = !showComments"><font-awesome-icon class="icon" icon="comment-dots" /></button>
-          <h4>{{ commentCount }}</h4>
+  <div>
+    <li>
+      <div id="resource-grid">
+        <div class="votes">
+          <button v-if="user" :class="{ upvoted: votedPost }" @click="handleVote">
+            <font-awesome-icon class="icon-arrow" icon="arrow-circle-up" />
+          </button>
+          <p class="vote-number">{{ resource.upvotes }}</p>
         </div>
-        <button @click="handleSave" :class="{ hide: !user }" :disabled="savedPost === 'saved'"><font-awesome-icon class="icon" icon="star" /></button>
+        <div class="resource-title">
+          <h3><a :href="resource.url" target="_blank">{{ resource.title }}</a></h3>
+          <h4>{{ category }}</h4>
+        </div>
+        <div class="resource-description">
+          <p>{{ resource.description }}</p>
+          <h6 class="resource-submitted">Submitted by {{ resource.firstName }} {{ resource.lastName }}</h6>
+        </div>
+        <div class="user-controls" v-if="user">
+          <button v-if="user.id === resource.authorID" @click="onRemove(resource.id)">
+            <font-awesome-icon class="icon" icon="trash-alt" />
+          </button>
+          <button v-if="user.id === resource.authorID" @click="showModal">
+            <font-awesome-icon class="icon" icon="edit" />
+          </button>
+        </div>
+        <div class="always-buttons">
+          <div>
+            <button @click="showComments = !showComments">
+              <font-awesome-icon class="icon" icon="comment-dots" />
+            </button>
+            <h4>{{ commentCount }}</h4>
+          </div>
+          <button @click="handleSave" :class="{ hide: !user }" :disabled="savedPost === 'saved'">
+            <font-awesome-icon class="icon" icon="star" />
+          </button>
+        </div>
       </div>
-    </div>
-    <ModalTemplate
-      v-show="isModalVisible"
-      @close="closeModal"
-    >
-      <h2 slot="header">Edit Post</h2>
-      <ResourceForm slot="body"
-        :onCancel="closeModal"
-        :onEdit="handleUpdate"
-        :resource="resource"
-        :categories="categories"
+      <ModalTemplate
+        v-show="isModalVisible"
+        @close="closeModal"
+      >
+        <h2 slot="header">Edit Post</h2>
+        <ResourceForm slot="body"
+          :onCancel="closeModal"
+          :onEdit="handleUpdate"
+          :resource="resource"
+          :categories="categories"
+        />
+      </ModalTemplate>
+      <Comments
+        v-if="showComments"
+        :postID="resource.id"
+        :user="user"
+        :tableID=2
       />
-    </ModalTemplate>
-    <Comments v-if="showComments"
-      :postID="resource.id"
-      :user="user"
-      :tableID=2
-    />
-  </li>
-</div>
+    </li>
+  </div>
 </template>
 
 <script>
@@ -131,8 +139,6 @@ export default {
     ModalTemplate
   }
 };
-
-
 </script>
 
 
@@ -152,6 +158,7 @@ export default {
 .upvoted {
   color: rgb(0, 207, 0);
 }
+
 .resource-title {
   grid-area: title;
   display: flex;
@@ -159,30 +166,34 @@ export default {
   align-items: center;
   margin-right: 10px;
 }
+
 .resource-description {
   font-family: 'Slabo 27px', serif;
   grid-area: content;
   margin-right: 10px;
 }
+
 .resource-submitted {
   font-family: 'Slabo 27px', serif;
 }
-
-
 
 button {
     background-color: transparent;
     border: transparent;
 }
+
 .icon-arrow {
   font-size: 2em;
 }
+
 .icon {
   font-size: 1.5em;
 }
+
 h6 {
   margin: 10px 0px;
 }
+
 h4 {
   margin: 0px;
 }

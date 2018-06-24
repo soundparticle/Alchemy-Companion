@@ -5,42 +5,60 @@
         <h3>Welcome to your Dashboard, {{ userInfo.firstName }}. </h3>
         <button  @click="showModal">Edit Profile</button>
       </div>
-
       <div>
         <ModalTemplate
           v-show="isModalVisible"
           @close="closeModal"
         >
-        <h2 slot="header">Update Profile</h2>
-        <UserForm slot="body"
-          :onCancel="closeModal"
-          :onEdit="handleUpdate"
-          :userInfo="userInfo"
-        />
-      </ModalTemplate>
+          <h2 slot="header">Update Profile</h2>
+          <UserForm slot="body"
+            :onCancel="closeModal"
+            :onEdit="handleUpdate"
+            :userInfo="userInfo"
+          />
+        </ModalTemplate>
       </div>
 
       <section id="external-links">
-        <a :href="userInfo.githubProfile" target="_blank"><button class="btn"><img class="button-img" src="../assets/githubLogo.png">Your GitHub</button></a>
-        <a :href="userInfo.classworkRepo" target="_blank"><button class="btn"><img class="button-img" src="../assets/acl-logo.png">Class GitHub</button></a>
-        <a :href="userInfo.linkedin" target="_blank"><button class="btn"><img class="button-img" src="../assets/linkedin.png">LinkedIn</button></a>
+        <a :href="userInfo.githubProfile" target="_blank">
+          <button class="btn">
+            <img class="button-img" src="../assets/githubLogo.png">
+            Your GitHub
+          </button>
+        </a>
+        <a :href="userInfo.classworkRepo" target="_blank">
+          <button class="btn">
+            <img class="button-img" src="../assets/acl-logo.png">
+            Class GitHub
+          </button>
+        </a>
+        <a :href="userInfo.linkedin" target="_blank">
+          <button class="btn">
+            <img class="button-img" src="../assets/linkedin.png">
+            LinkedIn
+          </button>
+        </a>
       </section>
       <br>
 
       <section id="saved-posts">
-        <div id="saved-items">
+        <div class="saved-items">
           <ul v-if="savedAdvice">
             <h2>Advice</h2>
             <li v-for="advice in savedAdvice" :key="advice.id">
               <p class="post-title">{{ advice.title }}</p>
               <div class="post-item">
-              <p>{{ advice.text }}</p>
-              <p class="submitted">Submitted by {{ advice.firstName }} {{ advice.lastName }} &nbsp; <button @click="handleDelete(advice.id)" type="submit">Remove</button></p>
-            </div>
+                <p>{{ advice.text }}</p>
+                <p class="submitted">
+                  Submitted by {{ advice.firstName }} {{ advice.lastName }}
+                  &nbsp;
+                  <button @click="handleDelete(advice.id)" type="submit">Remove</button>
+                </p>
+              </div>
             </li>
           </ul>
         </div>
-        <div id="saved-items">
+        <div class="saved-items">
           <ul v-if="savedResources">
             <h2>Resources</h2>
             <li v-for="resource in savedResources" :key="resource.id">
@@ -53,7 +71,7 @@
             </li>
           </ul>
         </div>
-        <div id="saved-items">
+        <div class="saved-items">
           <ul v-if="savedWorkspaces">
             <h2>Workspaces</h2>
             <li v-for="workspace in savedWorkspaces" :key="workspace.id">
@@ -73,11 +91,8 @@
 </template>
 
 <script>
-
 import UserForm from './UserForm';
 import ModalTemplate from './ModalTemplate';
-
-
 import {
   getUser,
   getSavedAdvice,
@@ -99,7 +114,6 @@ export default {
       error: null
     };
   },
-
   created() {
     getUser(this.user.id)
       .then(info => {
@@ -121,7 +135,6 @@ export default {
         this.error = err;
       });
   },
-
   methods: {
     showModal() {
       this.isModalVisible = true;
@@ -152,17 +165,14 @@ export default {
         .then(saved => {
           this.userInfo = saved;
           this.closeModal();
-
         });
     },
   },
   props: ['user'],
-
   components: {
     UserForm,
     ModalTemplate
   }
-
 };
 
 </script>
@@ -184,6 +194,7 @@ export default {
   margin-bottom: 50px;
   color: white;
 }
+
 .post-title {
   font-size: 1.5em;
   background: #2c3e50;
@@ -193,6 +204,7 @@ export default {
   border-top-right-radius: 15px;
   margin-bottom: 5px;
 }
+
 .post-item {
   display: flex;
   flex-direction: column;
@@ -202,19 +214,24 @@ export default {
   margin-bottom: 5px;
   text-align: center;
 }
+
 h3 {
   line-height: 0%;
 }
+
 .submitted {
   font-size: .5em;
 }
+
 ul {
   list-style-type: none;
 }
+
 .button-img {
   width: 25px;
   margin-right: 10px;
 }
+
 #external-links {
   display: flex;
   justify-content: space-evenly;
@@ -230,6 +247,7 @@ ul {
 img {
   width: 150px;
 }
+
 .btn {
   display: flex;
   -webkit-border-radius: 10;
@@ -243,10 +261,12 @@ img {
   text-decoration: none;
   cursor: pointer;
 }
+
 a {
   cursor:pointer;
   text-decoration: none;
 }
+
 .btn:hover {
   background: #3cb0fd;
   text-decoration: none;

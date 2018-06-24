@@ -2,13 +2,13 @@
   <div>
     <div id="home">
       <div class="home-header">
-      <h2>Welcome to Your Bootcamp Companion App</h2>
+        <h2>Welcome to Your Bootcamp Companion App</h2>
       </div>
-    <section class="img-holder" v-if="humor">
-      <img class="daily-image" :src="humor[todaysDate].url"
-        :key="humor.id"
-        >
-    </section>
+      <section class="img-holder" v-if="humor">
+        <img class="daily-image" :src="humor[todaysDate].url"
+          :key="humor.id"
+          >
+      </section>
     </div>
   </div>
 </template>
@@ -65,6 +65,7 @@ export default {
   grid-template-columns: 20px 50px auto 50px 20px;
   grid-template-rows: 5px 40px 40px auto 40px 20px;
 }
+
 .home-header {
   border-radius: 0px 0px 15px 15px;
   background: linear-gradient(270deg, #2c3e50, #2980b9);
@@ -82,6 +83,7 @@ export default {
   grid-row-end: 2;
   color: white;
 }
+
 h2 {
   display: flex;
   align-items: center;
@@ -91,6 +93,7 @@ h2 {
   grid-row-start: 2;
   grid-row-end: span 1;
 }
+
 .img-holder {
   display: flex;
   align-items: center;
@@ -103,9 +106,9 @@ h2 {
   padding: 50px;
   border-radius: 15px;
 }
+
 .daily-image {
   max-height: 500px;
   width: auto;
-  
 }
 </style>
