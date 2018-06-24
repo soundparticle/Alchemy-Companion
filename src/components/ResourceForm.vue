@@ -17,27 +17,25 @@
           </option>
         </select>
       </FormControl>
-
       <FormControl label="Description">
         <textarea rows="8" cols="40" required
-          v-model="edit.description"></textarea>
+          v-model="edit.description">
+        </textarea>
       </FormControl>
-
       <FormControl label="URL">
         <input placeholder="URL" required
           v-model="edit.url">
       </FormControl>
-
       <FormControl>
         <button type="submit">Submit</button>
         <button
           v-if="onCancel"
-          @click.prevent="handleClose">
+          @click.prevent="handleClose"
+        >
           Cancel
         </button>
       </FormControl>
     </form>
-    <!-- <pre>{{ error }}</pre> -->
   </section>
 </template>
 

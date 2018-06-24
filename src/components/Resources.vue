@@ -19,20 +19,22 @@
       </ModalTemplate>
       <section class="resources-list">
         <div class="filter">
-          Filter: 
+          Filter:
           <select v-model="filter" class="category-select">
             <option disabled value="" selected>Filter by category</option>
             <option value="">None</option>
             <option
               v-for="category in categories"
               :key="category.id"
-              :value="category.id">
+              :value="category.id"
+            >
               {{ category.category }}
             </option>
           </select>
         </div>
         <ul v-if="resources">
-          <Resource class="resource" v-for="resource in filteredResources"
+          <Resource class="resource"
+            v-for="resource in filteredResources"
             :key="resource.id"
             :resource="resource"
             :user="user"
@@ -45,7 +47,7 @@
             :onUpdate="handleUpdate"
             :categories="categories"
             :comments="comments"
-            />
+          />
         </ul>
       </section>
     </div>
@@ -238,12 +240,14 @@ export default {
   grid-row-start: 2;
   grid-row-end: 2;
 }
+
 .resources-router {
   grid-column-start: 1;
   grid-column-end: span 5;
   grid-row-start: 4;
   grid-row-end: 4;
 }
+
 .resources-list {
   display: flex;
   align-items: center;
@@ -255,6 +259,7 @@ export default {
   grid-row-start: 5;
   grid-row-end: 5;
 }
+
 a {
   color: white;
   text-decoration: none;
@@ -266,9 +271,11 @@ ul {
   list-style-type: none;
 
 }
+
 pre {
   color: red;
 }
+
 h3 {
   color: white;
   display: inline;

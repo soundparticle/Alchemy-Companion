@@ -4,10 +4,8 @@
       <div class="workspaces-header">
         <h3>Great Places to Work with Wifi and Ammeneties</h3>
         <button v-if="user" @click="showModal">Add Workspace</button>
-
       </div>
-      <pre v-if="error">{{ error }}</pre>
-
+    <pre v-if="error">{{ error }}</pre>
     <ModalTemplate
       v-show="isModalVisible"
       @close="closeModal"
@@ -18,7 +16,6 @@
         :onEdit="handleAdd"
       />
     </ModalTemplate>
-
       <ul class="workspaces-list" v-if="workspaces">
         <Workspace class="workspace" v-for="workspace in workspaces"
           :key="workspace.id"
@@ -32,7 +29,7 @@
           :onNoVote="handleNoVote"
           :onUpdate="handleUpdate"
           :comments="comments"
-          />
+        />
       </ul>
     </div>
   </div>
@@ -166,7 +163,6 @@ export default {
     WorkspaceForm,
     ModalTemplate
   }
-
 };
 </script>
 
@@ -209,12 +205,14 @@ export default {
   grid-row-start: 2;
   grid-row-end: 2;
 }
+
 .workspaces-router {
   grid-column-start: 1;
   grid-column-end: span 5;
   grid-row-start: 4;
   grid-row-end: 4;
 }
+
 .workspaces-list {
   display: flex;
   align-items: center;
@@ -226,15 +224,18 @@ export default {
   grid-row-start: 5;
   grid-row-end: 5;
 }
+
 a {
   color: white;
   text-decoration: none;
   font-weight: bolder;
 }
+
 ul {
   padding: 0;
   list-style-type: none;
 }
+
 h3 {
   color: white;
   display: inline;

@@ -31,7 +31,7 @@
             </button>
             <h4>{{ commentCount }}</h4>
           </div>
-          <button @click="handleSave" :class="{ hide: !user }" :disabled="savedPost === 'saved'">
+          <button @click="handleSave" :class="{ hide: !user }" :disabled="savedPost">
             <font-awesome-icon class="icon" icon="star" />
           </button>
         </div>
@@ -97,7 +97,7 @@ export default {
     savedPost() {
       if(this.savedPosts) {
         const savedPostIDs = this.savedPosts.map(s => s.postID);
-        return savedPostIDs.includes(this.resource.id) ? 'saved' : '⭐';
+        return savedPostIDs.includes(this.resource.id);
       }
     },
     commentCount() {
