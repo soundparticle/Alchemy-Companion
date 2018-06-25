@@ -28,7 +28,7 @@
           <button @click="showComments = !showComments"><font-awesome-icon class="icon" icon="comment-dots" /></button>
           <h4>{{ commentCount }}</h4>
         </div>
-        <button @click="handleSave" :class="{ hide: !user }" :disabled="savedPost === 'saved'"><font-awesome-icon class="icon" icon="star" /></button>
+        <button @click="handleSave" :class="{ hide: !user }" :disabled="savedPost"><font-awesome-icon class="icon" icon="star" /></button>
       </div>
     </div>
 
@@ -87,7 +87,7 @@ export default {
     savedPost() {
       if(this.savedPosts) {
         const savedPostIDs = this.savedPosts.map(s => s.postID);
-        return savedPostIDs.includes(this.workspace.id) ? 'saved' : '⭐';
+        return savedPostIDs.includes(this.workspace.id);
       }
     },
     commentCount() {
@@ -129,8 +129,6 @@ export default {
     ModalTemplate
   }
 };
-
-
 </script>
 
 <style scoped>
@@ -149,6 +147,7 @@ export default {
 .upvoted {
   color: rgb(0, 207, 0);
 }
+
 .workspace-title {
   grid-area: title;
   display: flex;
@@ -156,11 +155,13 @@ export default {
   align-items: center;
   margin-right: 10px;
 }
+
 .workspace-description {
   font-family: 'Slabo 27px', serif;
   grid-area: content;
   margin-right: 10px;
 }
+
 .workspace-submitted {
   font-family: 'Slabo 27px', serif;
 }
@@ -169,12 +170,19 @@ button {
     background-color: transparent;
     border: transparent;
 }
+
+button[disabled] {
+  cursor: default;
+}
+
 .icon-arrow {
   font-size: 2em;
 }
+
 .icon {
   font-size: 1.5em;
 }
+
 h6 {
   margin: 10px 0px;
 }

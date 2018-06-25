@@ -1,52 +1,63 @@
 <template>
-<div>
-  <li>
-    <div id="tip-grid">
-      <div class="votes">
-        <button
-          v-if="user"
-          :class="{ upvoted: votedPost }"
-          @click="handleVote"><font-awesome-icon class="icon-arrow" icon="arrow-circle-up" /></button>
-        <p class="vote-number">{{ tip.upvotes }}</p>
-      </div>
-      <div class="tip-title">
-        <h3>{{ tip.title }}</h3>
-      </div>
-      <div class="tip-text">
-        <p>{{ tip.text }}</p>
-        <h6 class="tip-submitted">Submitted by {{ tip.firstName }} {{ tip.lastName }}</h6>
-      </div>
-      <div class="user-controls" v-if="user">
-        <button v-if="user.id === tip.authorID" @click="onRemove(tip.id)"><font-awesome-icon class="icon" icon="trash-alt" /></button>
-        <button v-if="user.id === tip.authorID" @click="showModal"><font-awesome-icon class="icon" icon="edit" /></button>
-      </div>
-      <div class="always-buttons">
-        <div>
-          <button @click="showComments = !showComments"><font-awesome-icon class="icon" icon="comment-dots" /></button>
-          <h4>{{ commentCount }}</h4>
+  <div>
+    <li>
+      <div id="tip-grid">
+        <div class="votes">
+          <button
+            v-if="user"
+            :class="{ upvoted: votedPost }"
+            @click="handleVote"
+          >
+            <font-awesome-icon class="icon-arrow" icon="arrow-circle-up" />
+          </button>
+          <p class="vote-number">{{ tip.upvotes }}</p>
         </div>
-        <button @click="handleSave" :class="{ hide: !user }" :disabled="savedPost === 'saved'"><font-awesome-icon class="icon" icon="star" /></button>
+        <div class="tip-title">
+          <h3>{{ tip.title }}</h3>
+        </div>
+        <div class="tip-text">
+          <p>{{ tip.text }}</p>
+          <h6 class="tip-submitted">Submitted by {{ tip.firstName }} {{ tip.lastName }}</h6>
+        </div>
+        <div class="user-controls" v-if="user">
+          <button v-if="user.id === tip.authorID" @click="onRemove(tip.id)">
+            <font-awesome-icon class="icon" icon="trash-alt" />
+          </button>
+          <button v-if="user.id === tip.authorID" @click="showModal">
+            <font-awesome-icon class="icon" icon="edit" />
+          </button>
+        </div>
+        <div class="always-buttons">
+          <div>
+            <button @click="showComments = !showComments">
+              <font-awesome-icon class="icon" icon="comment-dots" />
+            </button>
+            <h4>{{ commentCount }}</h4>
+          </div>
+          <button @click="handleSave" :class="{ hide: !user }" :disabled="savedPost">
+            <font-awesome-icon class="icon" icon="star" />
+          </button>
+        </div>
       </div>
-    </div>
-    <ModalTemplate
-      v-show="isModalVisible"
-      @close="closeModal"
-    >
-      <h2 slot="header">Edit Advice</h2>
-      <AdviceForm slot="body"
-        :onEdit="handleUpdate"
-        :onCancel="closeModal"
-        :tip="tip"
+      <ModalTemplate
+        v-show="isModalVisible"
+        @close="closeModal"
+      >
+        <h2 slot="header">Edit Advice</h2>
+        <AdviceForm slot="body"
+          :onEdit="handleUpdate"
+          :onCancel="closeModal"
+          :tip="tip"
+        />
+      </ModalTemplate>
+      <Comments
+        v-if="showComments"
+        :postID="tip.id"
+        :user="user"
+        :tableID=1
       />
-    </ModalTemplate>
-    <Comments v-if="showComments"
-      :postID="tip.id"
-      :user="user"
-      :tableID=1
-    />
-  </li>
-</div>
-
+    </li>
+  </div>
 </template>
 
 <script>
@@ -83,7 +94,7 @@ export default {
     savedPost() {
       if(this.savedPosts) {
         const savedPostIDs = this.savedPosts.map(s => s.postID);
-        return savedPostIDs.includes(this.tip.id) ? 'saved' : '';
+        return savedPostIDs.includes(this.tip.id);
       }
     },
     commentCount() {
@@ -125,13 +136,9 @@ export default {
     ModalTemplate
   }
 };
-
-
 </script>
 
 <style scoped>
-
-
 #tip-grid {
   display: grid;
   grid-template: 40px auto / 2fr 20fr 1.5fr;
@@ -144,10 +151,10 @@ export default {
   border-radius: 15px;
 }
 
-
 .upvoted {
   color: rgb(0, 207, 0);
 }
+
 .tip-title {
   grid-area: title;
   display: flex;
@@ -156,11 +163,13 @@ export default {
   margin-right: 10px;
 
 }
+
 .tip-text {
   font-family: 'Slabo 27px', serif;
   grid-area: content;
   margin-right: 10px;
 }
+
 .tip-submitted {
   font-family: 'Slabo 27px', serif;
 }
@@ -169,15 +178,19 @@ button {
     background-color: transparent;
     border: transparent;
 }
+
 .icon-arrow {
   font-size: 2em;
 }
+
 .icon {
   font-size: 1.5em;
 }
+
 h6 {
   margin: 10px 0px;
 }
+
 h4 {
   margin: 0px;
 }

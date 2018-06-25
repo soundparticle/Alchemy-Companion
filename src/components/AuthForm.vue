@@ -1,44 +1,44 @@
 <template>
-<div>
-  <div id="signup">
-    <div class="signup-header">
-    <h2>{{ label }}</h2>
-  </div>
-  </div>
+  <div>
+    <div id="signup">
+      <div class="signup-header">
+        <h2>{{ label }}</h2>
+      </div>
+    </div>
     <div class="auth-form">
       <h3>
-      <a href="" @click.prevent="type = isSignUp ? 'signIn' : 'signUp'">
-        {{
-          isSignUp
-          ? "Already a User? &nbsp; Sign in"
-          : "New Users Click Here to Sign up"
-        }}
-      </a>
+        <a href="" @click.prevent="type = isSignUp ? 'signIn' : 'signUp'">
+          {{
+            isSignUp
+            ? "Already a User? &nbsp; Sign in"
+            : "New Users Click Here to Sign up"
+          }}
+        </a>
       </h3>
       <br>
-    <form @submit.prevent="handleSubmit">
-      <FormControl v-if="isSignUp" label="First Name">
-        <input required type="text" v-model="credentials.firstName">
-      </FormControl>
-      <FormControl v-if="isSignUp" label="Last Name">
-        <input required type="text" v-model="credentials.lastName">
-      </FormControl>
-      <FormControl label="Email Address">
-        <input required type="text" v-model="credentials.email">
-      </FormControl>
-      <FormControl label="Password">
-        <input required type="password" v-model="credentials.password">
-      </FormControl>
-      <FormControl v-if="isSignUp" label="Retype Password">
-        <input required type="password" v-model="credentials.passwordAgain">
-      </FormControl>
-      <FormControl>
-        <button type="submit"> {{ label }}</button>
-      </FormControl>
-    </form>
+      <form @submit.prevent="handleSubmit">
+        <FormControl v-if="isSignUp" label="First Name">
+          <input required type="text" v-model="credentials.firstName">
+        </FormControl>
+        <FormControl v-if="isSignUp" label="Last Name">
+          <input required type="text" v-model="credentials.lastName">
+        </FormControl>
+        <FormControl label="Email Address">
+          <input required type="text" v-model="credentials.email">
+        </FormControl>
+        <FormControl label="Password">
+          <input required type="password" v-model="credentials.password">
+        </FormControl>
+        <FormControl v-if="isSignUp" label="Retype Password">
+          <input required type="password" v-model="credentials.passwordAgain">
+        </FormControl>
+        <FormControl>
+          <button type="submit"> {{ label }}</button>
+        </FormControl>
+      </form>
       <pre> {{ error }} </pre>
     </div>
-</div>
+  </div>
 </template>
 
 <script>
@@ -79,12 +79,10 @@ export default {
         this.error = 'Email not valid';
         return;
       }
-
       if(this.type === 'signUp' && this.password !== this.passwordAgain) {
         this.error = 'Passwords do not match';
         return;
       }
-
       this.error = null;
       const action = this.isSignUp ? signUp : signIn;
       action(this.credentials)
@@ -121,6 +119,7 @@ export default {
   grid-template-columns: 20px 50px auto 50px 20px;
   grid-template-rows: 5px 40px 40px auto 40px 20px;
 }
+
 .signup-header {
   border-radius: 0px 0px 15px 15px;
   background: linear-gradient(270deg, #2c3e50, #2980b9);
@@ -138,6 +137,7 @@ export default {
   grid-row-end: 2;
   color: white;
 }
+
 .auth-form > h3 > a {
   text-decoration: none;
 }
@@ -151,6 +151,7 @@ h2 {
   grid-row-start: 2;
   grid-row-end: span 1;
 }
+
 .auth-form {
   display:flex;
   align-items: center;
@@ -161,6 +162,7 @@ h2 {
   max-width: 350px;
   margin: auto;
 }
+
 pre {
   color: red;
 }

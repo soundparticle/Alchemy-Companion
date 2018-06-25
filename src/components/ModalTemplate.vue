@@ -1,7 +1,5 @@
 <!-- template for the modal component -->
 <template>
-
-
   <transition name="modal-fade">
     <div class="modal-backdrop">
       <div class="modal"
@@ -30,11 +28,11 @@
           id="modalDescription"
         >
           <slot name="body">
+
           </slot>
         </section>
         <footer class="modal-footer">
           <slot name="footer">
-
 
           </slot>
         </footer>
@@ -46,7 +44,6 @@
 <script>
 export default {
   name: 'modal',
-
   methods: {
     close() {
       this.$emit('close');
@@ -54,7 +51,6 @@ export default {
     },
   },
 };
-
 </script>
 
 <style>
