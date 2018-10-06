@@ -15,3 +15,5 @@ The front end of the App was made using Vue components and Vue routers. The fina
 
 
 The server utilizes Express for the server and PostgreSQL for the database.
+
+Checkout the app here: https://alchemy-companion.herokuapp.com/#/
